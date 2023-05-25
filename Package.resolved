@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FZSwiftUtils",
+        "repositoryURL": "https://github.com/flocked/FZSwiftUtils.git",
+        "state": {
+          "branch": "main",
+          "revision": "21b0d15bc0eb14e4211404d3f4aad5eda103ac96",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
