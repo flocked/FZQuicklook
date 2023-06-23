@@ -45,6 +45,7 @@ public extension NSCollectionView {
     }
 
     func quicklookSelectedItems() {
+        Swift.print("quicklookSelectedItems")
         let selectedItems = selectionIndexPaths.compactMap { self.item(at: $0) }
         quicklookItems(selectedItems, current: selectedItems.first)
     }
