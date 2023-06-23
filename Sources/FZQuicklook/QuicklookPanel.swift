@@ -237,7 +237,7 @@ public class QuicklookPanel: NSResponder {
         if let temporaryDirectory: URL = getAssociatedValue(key: "_QuicklookPanel_temporaryURL", object: self) {
             return temporaryDirectory
         } else {
-            let temporaryDirectory = FileManager.default.createTemporaryDirectory()
+            let temporaryDirectory = (try? FileManager.default.createTemporaryDirectory()) ?? URL(fileURLWithPath: "")
             set(associatedValue: temporaryDirectory, key: "_QuicklookPanel_temporaryURL", object: self)
             return temporaryDirectory
         }
