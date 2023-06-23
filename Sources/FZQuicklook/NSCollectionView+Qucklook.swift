@@ -58,25 +58,25 @@ public extension NSCollectionView {
     }
 }
 
-internal protocol PreviewableDataSource {
+public protocol PreviewableDataSource {
     func qlPreviewable(for indexPath: IndexPath) -> QLPreviewable?
 }
 
-internal extension PreviewableDataSource {
+extension PreviewableDataSource {
     func qlPreviewable(for indexPaths: [IndexPath]) -> [QLPreviewable] {
         indexPaths.compactMap { self.qlPreviewable(for: $0) }
     }
 }
 
 extension NSCollectionViewDiffableDataSource: PreviewableDataSource where ItemIdentifierType: QLPreviewable {
-    func qlPreviewable(for indexPath: IndexPath) -> QLPreviewable? {
+    public func qlPreviewable(for indexPath: IndexPath) -> QLPreviewable? {
         itemIdentifier(for: indexPath)
     }
 }
 
 @available(macOS 11.0, *)
 extension NSTableViewDiffableDataSource: PreviewableDataSource where ItemIdentifierType: QLPreviewable {
-    func qlPreviewable(for indexPath: IndexPath) -> QLPreviewable? {
+    public func qlPreviewable(for indexPath: IndexPath) -> QLPreviewable? {
         itemIdentifier(forRow: indexPath.item)
     }
 }
