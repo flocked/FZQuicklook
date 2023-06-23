@@ -47,10 +47,10 @@ public class QuicklookView: NSView {
     /**
      The content to preview.
      */
-    public var conzent: QLPreviewableContent? {
+    public var content: QLPreviewableContent? {
         get { item?.previewContent }
         set {
-            if conzent?.previewURL != newValue?.previewURL {
+            if content?.previewURL != newValue?.previewURL {
                 if let newValue = newValue { item = QuicklookItem(content: newValue)
                 } else { item = nil }
             }
