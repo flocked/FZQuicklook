@@ -71,6 +71,8 @@ public extension NSCollectionView {
             }
         }
         
+        Swift.print("quicklookItems(at", indexPaths.count, previewables.count)
+        
         QuicklookPanel.shared.keyDownResponder = self
         QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
     }
@@ -85,6 +87,9 @@ public extension NSCollectionView {
     
     internal func quicklookItems(_ items: [NSCollectionViewItem], current: NSCollectionViewItem? = nil) {
         let indexPaths = items.compactMap({self.indexPath(for: $0)})
+  //      let abc = self.quicklookItems(at: Set(indexPaths))
+        
+     //   Swift.print("quicklookItems", indexPaths.count, abc.count)
         var currentIndexPath: IndexPath? = nil
         if let current = current {
             currentIndexPath = self.indexPath(for: current)
