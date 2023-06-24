@@ -81,8 +81,9 @@ public extension NSCollectionView {
      Opens `QuicklookPanel` that presents quicklook previews of the selected items.
      */
     func quicklookSelectedItems() {
-        let selectedItems = selectionIndexPaths.compactMap { self.item(at: $0) }
-        quicklookItems(selectedItems, current: selectedItems.first)
+        Swift.print("quicklookSelectedItems", selectionIndexPaths.count)
+        guard selectionIndexPaths.isEmpty == false else { return }
+        quicklookItems(at: selectionIndexPaths)
     }
     
     internal func quicklookItems(_ items: [NSCollectionViewItem], current: NSCollectionViewItem? = nil) {
@@ -98,6 +99,8 @@ public extension NSCollectionView {
     }
     
     internal func QuicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
+        Swift.print("QuicklookPreviewable(for", (self.dataSource as? CollectionViewQuicklookPreviewProvider), (self.dataSource as? CollectionViewQuicklookPreviewProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath))
+
         return (self.dataSource as? CollectionViewQuicklookPreviewProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
     }
 }
