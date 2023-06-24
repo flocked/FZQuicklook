@@ -14,9 +14,9 @@ public protocol NSTableViewQuicklookProvider {
 
 
 @available(macOS 11.0, *)
-extension NSTableViewDiffableDataSource: NSTableViewQuicklookProvider where ItemIdentifierType: QuicklookPreviewable {
+extension NSTableViewDiffableDataSource: NSTableViewQuicklookProvider {
     public func tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int) -> QuicklookPreviewable? {
-        if let previewable = itemIdentifier(forRow: row) {
+        if let previewable = itemIdentifier(forRow: row) as? QuicklookPreviewable {
             let rowView = tableView.rowView(atRow: row, makeIfNecessary: false)
             return QuicklookPreviewItem(previewable, view: rowView)
         }

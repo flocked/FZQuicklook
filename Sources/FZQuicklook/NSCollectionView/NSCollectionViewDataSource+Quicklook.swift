@@ -16,9 +16,9 @@ public protocol NSCollectionViewQuicklookProvider {
     func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable?
 }
 
-extension NSCollectionViewDiffableDataSource: NSCollectionViewQuicklookProvider where ItemIdentifierType: QuicklookPreviewable {
+extension NSCollectionViewDiffableDataSource: NSCollectionViewQuicklookProvider {
     public func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
-        if let item = collectionView.item(at: indexPath), let previewable = itemIdentifier(for: indexPath)  {
+        if let item = collectionView.item(at: indexPath), let previewable = itemIdentifier(for: indexPath) as? QuicklookPreviewable {
             return QuicklookPreviewItem(previewable, view: item.view)
         }
         return nil
