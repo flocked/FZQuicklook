@@ -5,7 +5,6 @@
 //  Created by Florian Zand on 25.05.23.
 //
 
-#if os(macOS)
 import AppKit
 import FZSwiftUtils
 import Quartz
@@ -32,30 +31,19 @@ public class QuicklookView: NSView {
     /**
      The item to preview.
 
-     Quick Look requires Items you wish to conform to the QLPreviewable protocol. When you set this property, the QuicklookView loads the preview asynchronously. Due to this asynchronous behavior, don’t assume that the preview is ready immediately after assigning it to this property.
+     Quick Look requires Items you wish to conform to the QuicklookPreviewable protocol. When you set this property, the QuicklookView loads the preview asynchronously. Due to this asynchronous behavior, don’t assume that the preview is ready immediately after assigning it to this property.
      */
-    public var item: QLPreviewable? {
-        get { qlPreviewView.previewItem as? QLPreviewable }
+    public var item: QuicklookPreviewable? {
+        get { (qlPreviewView.previewItem as? QuicklookPreviewItem)?.preview }
         set {
-            if self.item?.previewItemURL != newValue?.previewItemURL {
-                try? (self.item as? QLTemporaryFile)?.deleteTemporaryQLFile()
-                qlPreviewView.previewItem = newValue
+            if let newValue = newValue {
+                qlPreviewView.previewItem =  QuicklookPreviewItem(newValue)
+            } else {
+                qlPreviewView.previewItem = nil
             }
         }
     }
 
-    /**
-     The content to preview.
-     */
-    public var content: QLPreviewableContent? {
-        get { item?.previewContent }
-        set {
-            if content?.previewURL != newValue?.previewURL {
-                if let newValue = newValue { item = QuicklookItem(content: newValue)
-                } else { item = nil }
-            }
-        }
-    }
 
     /**
      Updates the preview to display the currently previewed item.
@@ -102,20 +90,9 @@ public class QuicklookView: NSView {
      - Returns: Returns a QuicklookView object with the designated item and style.
 
      */
-    public init(item: QLPreviewable, style _: QLPreviewViewStyle = .normal) {
+    public init(item: QuicklookPreviewable, style _: QLPreviewViewStyle = .normal) {
         super.init(frame: .zero)
         self.item = item
-    }
-
-    /**
-     Creates a preview view with the provided item and style.
-     - Parameter fileURL: The url to the file to preview.
-     - Parameter style: The desired style for the QuicklookView object.
-     - Returns: Returns a QuicklookView object with the designated item and style.
-
-     */
-    public convenience init(content: QLPreviewableContent, style: QLPreviewViewStyle = .normal) {
-        self.init(item: QuicklookItem(content: content), style: style)
     }
 
     override public init(frame frameRect: NSRect) {
@@ -134,4 +111,3 @@ public class QuicklookView: NSView {
     }
 }
 
-#endif

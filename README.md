@@ -17,8 +17,33 @@ QuicklookPanel.shared.present(fileURLs)
 let quicklookView = QuicklookView(content: URL(fileURLWithPath: imageFileURL)
 ```
 
-## Extensions to NSTableView & NSCollectionView
-If a NSCollectionViewItem/NSTableCellView conforms to QLPreviable, it also provides easy quicklock of selected items/cells
+## Quicklook NSTableView & NSCollectionView
+- NSTableViewDataSource
+```
+func tableView(tableView: NSTableView, quicklookPreviewForRow row: Int) -> QLPreviewable? {
+    let item = items[row]
+    return QuicklookItem(content: item.fileURL)
+}
+
+// …
+tableView.quicklookSelectedRows()
+```
+
+- NSCollectionViewDataSource
+```
+func collectionView(collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QLPreviewable? {
+    let item = items[indexPath.item]
+    return QuicklookItem(content: item.fileURL)
+}
+
+// …
+collectionView.quicklookSelectedItems()
+
+```
+
+- When NSTableView/NScollectionView quicklookSelectedItemsEnabled is true, 
+
+If a NSCollectionViewItem/NSTableCellView conforms to QLPreviable, it also provides easy quicklock of selected items/cells.
 ```
 class CustomCollectionItem: NSCollectionItem, QLPreviable {
     var fileURL: URL?

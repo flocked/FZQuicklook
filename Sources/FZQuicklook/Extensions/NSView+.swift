@@ -1,9 +1,10 @@
 //
-//  File.swift
+//  NSView+.swift
 //  
 //
 //  Created by Florian Zand on 25.05.23.
 //
+
 
 import AppKit
 
@@ -40,5 +41,19 @@ internal extension NSView {
 
         image.unlockFocus()
         return image
+    }
+    
+    func firstSuperview<V: NSView>(for viewClass: V.Type) -> V? {
+        return self.firstSuperview(where: {$0 is V}) as? V
+    }
+    
+    func firstSuperview(where predicate: (NSView)->(Bool)) -> NSView? {
+        if let superview = superview {
+            if predicate(superview) == true {
+                return superview
+            }
+            return superview.firstSuperview(where: predicate)
+        }
+        return nil
     }
 }
