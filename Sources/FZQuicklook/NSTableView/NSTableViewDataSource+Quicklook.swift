@@ -8,13 +8,13 @@
 import AppKit
 import FZSwiftUtils
 
-public protocol TableViewQuicklookPreviewProvider {
+public protocol NSTableViewQuicklookProvider {
     func tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int) -> QuicklookPreviewable?
 }
 
 
 @available(macOS 11.0, *)
-extension NSTableViewDiffableDataSource: TableViewQuicklookPreviewProvider where ItemIdentifierType: QuicklookPreviewable {
+extension NSTableViewDiffableDataSource: NSTableViewQuicklookProvider where ItemIdentifierType: QuicklookPreviewable {
     public func tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int) -> QuicklookPreviewable? {
         if let previewable = itemIdentifier(forRow: row) {
             let rowView = tableView.rowView(atRow: row, makeIfNecessary: false)
@@ -24,7 +24,7 @@ extension NSTableViewDiffableDataSource: TableViewQuicklookPreviewProvider where
     }
 }
 
-extension TableViewQuicklookPreviewProvider {
+extension NSTableViewQuicklookProvider {
     public func tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int) -> QuicklookPreviewable? {
         if let rowView = tableView.rowView(atRow: row, makeIfNecessary: false), let preview = rowView.cellViews.first(where: {$0.quicklookPreview != nil})?.quicklookPreview {
             return QuicklookPreviewItem(preview, view: rowView)

@@ -83,6 +83,6 @@ public extension NSTableView {
     }
     
     internal func QuicklookPreviewable(for row: Int) -> QuicklookPreviewable? {
-        (self.dataSource as? TableViewQuicklookPreviewProvider)?.tableView(self, quicklookPreviewForRow: row)
+        (self.dataSource as? NSTableViewQuicklookProvider)?.tableView(self, quicklookPreviewForRow: row)
     }
 }

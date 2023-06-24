@@ -99,8 +99,8 @@ public extension NSCollectionView {
     }
     
     internal func QuicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
-        Swift.print("QuicklookPreviewable(for", (self.dataSource as? CollectionViewQuicklookPreviewProvider), (self.dataSource as? CollectionViewQuicklookPreviewProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath))
+        Swift.print("QuicklookPreviewable(for", (self.dataSource as? NSCollectionViewQuicklookProvider), (self.dataSource as? NSCollectionViewQuicklookProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath))
 
-        return (self.dataSource as? CollectionViewQuicklookPreviewProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
+        return (self.dataSource as? NSCollectionViewQuicklookProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
     }
 }

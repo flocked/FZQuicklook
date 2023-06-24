@@ -8,8 +8,7 @@
 import AppKit
 import FZSwiftUtils
 
-
-public protocol CollectionViewQuicklookPreviewProvider {
+public protocol NSCollectionViewQuicklookProvider {
     /**
      Asks your data source object for the quicklook preview that corresponds to the specified item in the collection view.
      
@@ -17,7 +16,7 @@ public protocol CollectionViewQuicklookPreviewProvider {
     func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable?
 }
 
-extension NSCollectionViewDiffableDataSource: CollectionViewQuicklookPreviewProvider where ItemIdentifierType: QuicklookPreviewable {
+extension NSCollectionViewDiffableDataSource: NSCollectionViewQuicklookProvider where ItemIdentifierType: QuicklookPreviewable {
     public func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
         if let item = collectionView.item(at: indexPath), let previewable = itemIdentifier(for: indexPath)  {
             return QuicklookPreviewItem(previewable, view: item.view)
@@ -26,7 +25,7 @@ extension NSCollectionViewDiffableDataSource: CollectionViewQuicklookPreviewProv
     }
 }
 
-extension CollectionViewQuicklookPreviewProvider {
+extension NSCollectionViewQuicklookProvider {
     public func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
         if let item = collectionView.item(at: indexPath), let preview = item.quicklookPreview {
             return QuicklookPreviewItem(preview, view: item.view)
