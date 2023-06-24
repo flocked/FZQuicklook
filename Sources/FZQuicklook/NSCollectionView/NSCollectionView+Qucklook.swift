@@ -73,8 +73,15 @@ public extension NSCollectionView {
         
         Swift.print("quicklookItems(at", indexPaths.count, previewables.count)
         
-        QuicklookPanel.shared.keyDownResponder = self
-        QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
+        if QuicklookPanel.shared.isVisible == false {
+            QuicklookPanel.shared.keyDownResponder = self
+            QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
+        } else {
+            QuicklookPanel.shared.items = previewables
+            if currentIndex != QuicklookPanel.shared.currentItemIndex {
+                QuicklookPanel.shared.currentItemIndex = currentIndex
+            }
+        }
     }
     
     /**

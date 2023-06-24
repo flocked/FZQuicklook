@@ -20,7 +20,11 @@ internal extension NSTableView {
                 self.quicklookSelectedRows()
             }
         } else {
+            let previousSelectedRowIndexes = self.selectedRowIndexes
             self.swizzledKeyDown(with: event)
+            if QuicklookPanel.shared.isVisible, selectedRowIndexes != previousSelectedRowIndexes {
+                self.quicklookSelectedRows()
+            }
         }
     }
     
