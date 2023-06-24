@@ -15,6 +15,7 @@ internal extension NSCollectionView {
     }
     
     @objc func swizzledKeyDown(with event: NSEvent) {
+        Swift.print("swizzledKeyDown", event.keyCode)
         if isQuicklookPreviewable, event.keyCode == 49 {
             if QuicklookPanel.shared.isVisible == false {
                 self.quicklookSelectedItems()
@@ -25,6 +26,7 @@ internal extension NSCollectionView {
     }
     
     @objc static func swizzleCollectionViewResponderEvents() {
+        Swift.print("swizzleCollectionViewResponderEvents")
         if (didSwizzleResponderEvents == false) {
             self.didSwizzleResponderEvents = true
             do {
