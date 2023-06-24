@@ -15,22 +15,16 @@ internal extension NSCollectionView {
     }
     
     @objc func swizzledKeyDown(with event: NSEvent) {
-        Swift.print("swizzledKeyDown", event)
         if isQuicklookPreviewable, event.keyCode == 49 {
             if QuicklookPanel.shared.isVisible == false {
                 self.quicklookSelectedItems()
-            } else {
-                QuicklookPanel.shared.close()
             }
-        } else if event.keyCode == 51, let dataSource = self.dataSource as? DeletableCollectionViewDataSource, dataSource.allowsDeleting == true {
-            dataSource.deleteItems(for: self.selectionIndexPaths)
         } else {
             self.swizzledKeyDown(with: event)
         }
     }
     
     @objc static func swizzleCollectionViewResponderEvents() {
-        Swift.print("swizzleCollectionViewResponderEvents")
         if (didSwizzleResponderEvents == false) {
             self.didSwizzleResponderEvents = true
             do {

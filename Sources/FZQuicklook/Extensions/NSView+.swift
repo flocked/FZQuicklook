@@ -56,4 +56,29 @@ internal extension NSView {
         }
         return nil
     }
+    
+    @discardableResult
+    func addSubview(withConstraint view: NSView) -> [NSLayoutConstraint] {
+        addSubview(view)
+        return view.constraint(to: self)
+    }
+    
+    func insertSubview(_ view: NSView, at index: Int) {
+        guard index < self.subviews.count else { return }
+        var subviews = self.subviews
+        subviews.insert(view, at: index)
+        self.subviews = subviews
+    }
+
+    @discardableResult
+    func constraint(to view: NSView) -> [NSLayoutConstraint] {
+        translatesAutoresizingMaskIntoConstraints = false
+        let left: NSLayoutConstraint = .init(item: self, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0)
+        let bottom: NSLayoutConstraint = .init(item: self, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        let width: NSLayoutConstraint = .init(item: self, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)
+        let height: NSLayoutConstraint = .init(item: self, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1, constant: 0)
+        let constraints = [left, bottom, width, height]
+        NSLayoutConstraint.activate(constraints)
+        return constraints
+    }
 }

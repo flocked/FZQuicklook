@@ -15,23 +15,16 @@ internal extension NSTableView {
     }
     
     @objc func swizzledKeyDown(with event: NSEvent) {
-        Swift.print("swizzledKeyDown", event)
         if isQuicklookPreviewable, event.keyCode == 49 {
             if QuicklookPanel.shared.isVisible == false {
                 self.quicklookSelectedRows()
-            } else {
-                QuicklookPanel.shared.close()
             }
-        } else if event.keyCode == 51, let dataSource = self.dataSource as? DeletableTableViewDataSource, dataSource.allowsDeleting == true {
-            let indexPaths = Set(self.selectedRowIndexes.compactMap({IndexPath(item: $0, section: 0)}))
-            dataSource.deleteItems(for: indexPaths)
         } else {
             self.swizzledKeyDown(with: event)
         }
     }
     
     @objc static func swizzleTableViewResponderEvents() {
-        Swift.print("swizzleCollectionViewResponderEvents")
         if (didSwizzleResponderEvents == false) {
             self.didSwizzleResponderEvents = true
             do {

@@ -16,19 +16,6 @@ public class QuicklookView: NSView {
     internal var qlPreviewView: QLPreviewView!
 
     /**
-     The style of the view.
-     */
-    public var style: QLPreviewViewStyle = .normal {
-        didSet {
-            if style != oldValue {
-                qlPreviewView.removeFromSuperview()
-                qlPreviewView = QLPreviewView(frame: .zero, style: style)
-                addSubview(withConstraint: qlPreviewView)
-            }
-        }
-    }
-
-    /**
      The item to preview.
 
      Quick Look requires Items you wish to conform to the QuicklookPreviewable protocol. When you set this property, the QuicklookView loads the preview asynchronously. Due to this asynchronous behavior, don’t assume that the preview is ready immediately after assigning it to this property.
@@ -44,7 +31,6 @@ public class QuicklookView: NSView {
         }
     }
 
-
     /**
      Updates the preview to display the currently previewed item.
 
@@ -52,6 +38,17 @@ public class QuicklookView: NSView {
      */
     public func refreshItem() {
         qlPreviewView.refreshPreviewItem()
+    }
+    
+    /// The style of the preview.
+    public var style: QLPreviewViewStyle = .normal {
+        didSet {
+            if style != oldValue {
+                qlPreviewView.removeFromSuperview()
+                qlPreviewView = QLPreviewView(frame: .zero, style: style)
+                addSubview(withConstraint: qlPreviewView)
+            }
+        }
     }
 
     /**

@@ -1,5 +1,5 @@
 //
-//  NSCollectionViewItem.swift
+//  NSTableCellView+.swift
 //  QuicklookNew
 //
 //  Created by Florian Zand on 24.06.23.
@@ -8,12 +8,18 @@
 import AppKit
 import FZSwiftUtils
 
-public extension NSCollectionViewItem {
+
+public extension NSTableCellView {
+    /**
+     The quicklook preview for the ce,,.
+     
+     To present the preview use `NSTableView` `quicklookSelectedRows()`or `quicklookRows(at:_, current:)`.
+     */
     var quicklookPreview: QuicklookPreviewable? {
         get { getAssociatedValue(key: "NSCollectionView_isQuicklookPreviewable", object: self, initialValue: nil) }
         set {  set(associatedValue: newValue, key: "NSCollectionView_isQuicklookPreviewable", object: self)
             if newValue != nil {
-                self.collectionView?.isQuicklookPreviewable = true
+                self.tableView?.isQuicklookPreviewable = true
             }
         }
     }

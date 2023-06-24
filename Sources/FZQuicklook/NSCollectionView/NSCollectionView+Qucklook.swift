@@ -10,8 +10,40 @@ import FZSwiftUtils
 
 public extension NSCollectionView {
     /**
-     A Boolean value that indicates whether the user can quicklook preview selected items via pressing space bar.
+     A Boolean value that indicates whether the user can quicklook preview selected items via space bar.
      
+     There are several ways to provide quicklook previews:
+     - NSCollectionViewItems's `quicklookPreview`:
+     ```
+     collectionViewItem.quicklookPreview = URL(fileURLWithPath: "someFile.png")
+     ```
+     - NSCollectionView's datasource `tableView(_:,  quicklookPreviewForRow:)`:
+     ```
+     func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
+        let item = collectionItems[indexPath.item]
+        return item.fileURL
+     }
+
+     ```
+     - A NSCollectionViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`:
+     ```
+     struct FileItem: Hashable, QuicklookPreviewable {
+        let title: String
+        let image: NSImage
+        let previewItemURL: URL?
+     }
+     
+    collectionView.dataSource = NSCollectionViewDiffableDataSource<Section, FileItem>(collectionView: collectionView) { collectionView, indexPath, fileItem in
+     
+        let collectionViewItem = collectionView.makeItem(withIdentifier: "FileCollectionViewItem", for: indexPath)
+        collectionViewItem.textField?.stringValue = fileItem.title
+        collectionViewItem.imageView?.image = fileItem.image
+
+        return collectionViewItem
+    }
+     // …
+     collectionView.quicklookSelectedItems()
+     ```
      */
     var isQuicklookPreviewable: Bool {
         get { getAssociatedValue(key: "NSCollectionView_isQuicklookPreviewable", object: self, initialValue: false) }
@@ -22,7 +54,12 @@ public extension NSCollectionView {
         }
     }
     
-    func quicklookItems(at indexPaths: [IndexPath], current: IndexPath? = nil) {
+    /**
+     Opens `QuicklookPanel` that presents quicklook previews for the items at the specified indexPaths.
+     - Parameters indexPaths: The index paths the quicklook panel previews.
+     - Parameters current: 
+     */
+    func quicklookItems(at indexPaths: Set<IndexPath>, current: IndexPath? = nil) {
         var previewables: [QuicklookPreviewable] = []
         var currentIndex = 0
         for indexPath in indexPaths {
@@ -37,23 +74,25 @@ public extension NSCollectionView {
         QuicklookPanel.shared.keyDownResponder = self
         QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
     }
-
-    func quicklookItems(_ items: [NSCollectionViewItem], current: NSCollectionViewItem? = nil) {
+    
+    /**
+     Opens `QuicklookPanel` that presents quicklook previews of the selected items.
+     */
+    func quicklookSelectedItems() {
+        let selectedItems = selectionIndexPaths.compactMap { self.item(at: $0) }
+        quicklookItems(selectedItems, current: selectedItems.first)
+    }
+    
+    internal func quicklookItems(_ items: [NSCollectionViewItem], current: NSCollectionViewItem? = nil) {
         let indexPaths = items.compactMap({self.indexPath(for: $0)})
         var currentIndexPath: IndexPath? = nil
         if let current = current {
             currentIndexPath = self.indexPath(for: current)
         }
-        self.quicklookItems(at: indexPaths, current: currentIndexPath)
-    }
-
-    func quicklookSelectedItems() {
-        Swift.print("quicklookSelectedItems")
-        let selectedItems = selectionIndexPaths.compactMap { self.item(at: $0) }
-        quicklookItems(selectedItems, current: selectedItems.first)
+        self.quicklookItems(at: Set(indexPaths), current: currentIndexPath)
     }
     
     internal func QuicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
-        return (self.dataSource as? CollectionViewQLPreviewProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
+        return (self.dataSource as? CollectionViewQuicklookPreviewProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
     }
 }

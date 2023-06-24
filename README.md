@@ -1,17 +1,16 @@
 # FZQuicklook
 
-Create previews of content to be presented either in a panel similar to Finder's Quicklook or in a view.
 
-It supports the preview of either a URL/NSURL to a file, NSImage, AVURLAsset, NSView, NSDocument or any object conforming to QLPreviewableContent.
+Create previews of files presented either in a panel similar to Finder's Quicklook or in a view.
 
 ## QuicklookPanel
-Present files in a Quicklook panel simliar to Finder`s Quicklook. 
+Presents previews of files in a panel simliar to Finder`s Quicklook. 
 ```
 QuicklookPanel.shared.present(fileURLs)
 ```
 
 ## QuicklookView
- A Quick Look preview of an item that you can embed into your view hierarchy.
+ A preview of a file that you can embed into your view hierarchy.
  
 ```
 let quicklookView = QuicklookView(content: URL(fileURLWithPath: imageFileURL)
