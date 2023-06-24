@@ -63,16 +63,14 @@ public extension NSCollectionView {
         var previewables: [QuicklookPreviewable] = []
         var currentIndex = 0
         for indexPath in indexPaths {
-            if let previewable = self.QuicklookPreviewable(for: indexPath) {
+            if let previewable = self.quicklookPreviewable(for: indexPath) {
                 previewables.append(previewable)
                 if indexPath == current {
                     currentIndex = previewables.count - 1
                 }
             }
         }
-        
-        Swift.print("quicklookItems(at", indexPaths.count, previewables.count)
-        
+                
         if QuicklookPanel.shared.isVisible == false {
             QuicklookPanel.shared.keyDownResponder = self
             QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
@@ -88,26 +86,11 @@ public extension NSCollectionView {
      Opens `QuicklookPanel` that presents quicklook previews of the selected items.
      */
     func quicklookSelectedItems() {
-        Swift.print("quicklookSelectedItems", selectionIndexPaths.count)
         guard selectionIndexPaths.isEmpty == false else { return }
         quicklookItems(at: selectionIndexPaths)
     }
     
-    internal func quicklookItems(_ items: [NSCollectionViewItem], current: NSCollectionViewItem? = nil) {
-        let indexPaths = items.compactMap({self.indexPath(for: $0)})
-  //      let abc = self.quicklookItems(at: Set(indexPaths))
-        
-     //   Swift.print("quicklookItems", indexPaths.count, abc.count)
-        var currentIndexPath: IndexPath? = nil
-        if let current = current {
-            currentIndexPath = self.indexPath(for: current)
-        }
-        self.quicklookItems(at: Set(indexPaths), current: currentIndexPath)
-    }
-    
-    internal func QuicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
-        Swift.print("QuicklookPreviewable(for", (self.dataSource as? NSCollectionViewQuicklookProvider), (self.dataSource as? NSCollectionViewQuicklookProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath))
-
+    internal func quicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
         return (self.dataSource as? NSCollectionViewQuicklookProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
     }
 }

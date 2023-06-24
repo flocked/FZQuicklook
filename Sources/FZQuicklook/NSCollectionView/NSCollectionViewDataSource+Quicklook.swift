@@ -10,19 +10,9 @@ import FZSwiftUtils
 
 public protocol NSCollectionViewQuicklookProvider {
     /**
-     Asks your data source object for the quicklook preview that corresponds to the specified item in the collection view.
-     
+     Asks your data source object for a quicklook preview that corresponds to the specified item in the collection view.
      */
     func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable?
-}
-
-extension NSCollectionViewDiffableDataSource: NSCollectionViewQuicklookProvider {
-    public func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
-        if let item = collectionView.item(at: indexPath), let previewable = itemIdentifier(for: indexPath) as? QuicklookPreviewable {
-            return QuicklookPreviewItem(previewable, view: item.view)
-        }
-        return nil
-    }
 }
 
 extension NSCollectionViewQuicklookProvider {
@@ -34,3 +24,13 @@ extension NSCollectionViewQuicklookProvider {
     }
 }
 
+extension NSCollectionViewDiffableDataSource: NSCollectionViewQuicklookProvider {
+    public func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
+        if let item = collectionView.item(at: indexPath), let previewable = itemIdentifier(for: indexPath) as? QuicklookPreviewable {
+            return QuicklookPreviewItem(previewable, view: item.view)
+        } else if let item = collectionView.item(at: indexPath), let preview = item.quicklookPreview {
+            return QuicklookPreviewItem(preview, view: item.view)
+        }
+        return nil
+    }
+}

@@ -70,7 +70,7 @@ public extension NSTableView {
         var previewables: [QuicklookPreviewable] = []
         var currentIndex = 0
         for row in rowIndexes {
-            if let previewable = self.QuicklookPreviewable(for: row) {
+            if let previewable = self.quicklookPreviewable(for: row) {
                 previewables.append(previewable)
                 if row == current {
                     currentIndex = previewables.count - 1
@@ -89,7 +89,7 @@ public extension NSTableView {
         }
     }
     
-    internal func QuicklookPreviewable(for row: Int) -> QuicklookPreviewable? {
+    internal func quicklookPreviewable(for row: Int) -> QuicklookPreviewable? {
         (self.dataSource as? NSTableViewQuicklookProvider)?.tableView(self, quicklookPreviewForRow: row)
     }
 }
