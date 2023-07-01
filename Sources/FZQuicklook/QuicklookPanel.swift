@@ -138,14 +138,12 @@ public class QuicklookPanel: NSResponder {
             itemsProviderWindow = NSApp.keyWindow
             NSApp.nextResponder = self
             previewPanel.updateController()
+            previewPanel.makeKeyAndOrderFront(nil)
             
             if needsReload {
                 needsReload = false
                 self.previewPanel.reloadData()
             }
-            
-            previewPanel.makeKeyAndOrderFront(nil)
-
         }
     }
 
@@ -270,7 +268,9 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
         return _items.count
     }
 
+    /*
     public func previewPanel(_: QLPreviewPanel!, transitionImageFor item: QLPreviewItem!, contentRect _: UnsafeMutablePointer<NSRect>!) -> Any! {
         return (item as? QuicklookPreviewable)?.previewItemTransitionImage
     }
+     */
 }
