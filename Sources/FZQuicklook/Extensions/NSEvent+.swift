@@ -7,7 +7,7 @@
 
 import AppKit
 
-public extension NSEvent {
+internal extension NSEvent {
     /**
      The location of the event inside the specified view.
      - Parameters view: The view for the location.
