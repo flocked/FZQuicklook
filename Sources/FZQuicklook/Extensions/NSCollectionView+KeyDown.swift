@@ -54,6 +54,9 @@ internal extension NSCollectionView {
     func setupMouseDownMonitor() {
         Swift.print("setupMouseDownMonitor")
         self.selectionObserver = self.observeChanges(for: \.selectionIndexPaths, handler: { old, new in
+            if old != new, new.isEmpty == false {
+                self.quicklookSelectedItems()
+            }
             Swift.print("selectionObserv")
         })
         /*
