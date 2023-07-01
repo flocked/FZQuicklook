@@ -51,14 +51,25 @@ internal extension NSCollectionView {
         }
     }
     
+    func addSelectionObserver() {
+        if self.selectionObserver == nil {
+            self.selectionObserver = self.observeChanges(for: \.selectionIndexPaths, handler: { old, new in
+                if old != new, new.isEmpty == false {
+                    self.quicklookSelectedItems()
+                }
+                Swift.print("selectionObserv")
+            })
+        }
+    }
+    
+    func removeSelectionObserver() {
+        self.selectionObserver?.invalidate()
+        self.selectionObserver = nil
+    }
+    
     func setupMouseDownMonitor() {
         Swift.print("setupMouseDownMonitor")
-        self.selectionObserver = self.observeChanges(for: \.selectionIndexPaths, handler: { old, new in
-            if old != new, new.isEmpty == false {
-                self.quicklookSelectedItems()
-            }
-            Swift.print("selectionObserv")
-        })
+
         /*
         if isQuicklookPreviewable {
             guard mouseDownMonitor == nil else { return }

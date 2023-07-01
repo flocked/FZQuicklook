@@ -81,9 +81,9 @@ public extension NSCollectionView {
         QuicklookPanel.shared.panelDidCloseHandler = { [weak self] in
             guard let self = self else { return }
             Swift.print("quicklook_PanelDidCloseHandler")
-            self.setupMouseDownMonitor()
+            self.removeSelectionObserver()
         }
-        self.setupMouseDownMonitor()
+        self.addSelectionObserver()
     }
     
     /**
