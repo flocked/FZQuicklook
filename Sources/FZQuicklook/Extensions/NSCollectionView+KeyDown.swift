@@ -33,9 +33,7 @@ internal extension NSCollectionView {
                     if QuicklookPanel.shared.isVisible == false {
                         self.quicklookSelectedItems()
                     }
-                }
-                /*
-                else {
+                } else {
                     if QuicklookPanel.shared.isVisible {
                         let previousSelectionIndexPaths = self.selectionIndexPaths
                         self.keyDown(with: event)
@@ -45,7 +43,6 @@ internal extension NSCollectionView {
                         return nil
                     }
                 }
-                 */
                 return event
             })
         } else if let keyDownMonitor = self.keyDownMonitor {
