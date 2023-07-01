@@ -236,6 +236,7 @@ public class QuicklookPanel: NSResponder {
 
 extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     public func previewPanel(_: QLPreviewPanel!, handle event: NSEvent!) -> Bool {
+        Swift.print("QLPreviewPanel.event", event.type, event.keyCode)
         if let keyDownResponder = keyDownResponder, event.type == .keyUp {
             keyDownResponder.keyDown(with: event)
         }
@@ -268,9 +269,8 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
         return _items.count
     }
 
-    /*
     public func previewPanel(_: QLPreviewPanel!, transitionImageFor item: QLPreviewItem!, contentRect _: UnsafeMutablePointer<NSRect>!) -> Any! {
         return (item as? QuicklookPreviewable)?.previewItemTransitionImage
     }
-     */
+    
 }
