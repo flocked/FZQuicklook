@@ -27,9 +27,6 @@ internal extension NSCollectionView {
                 if self.isQuicklookPreviewable, event.keyCode == 49 {
                     if QuicklookPanel.shared.isVisible == false {
                         self.quicklookSelectedItems()
-                        if QuicklookPanel.shared.isVisible == true {
-                            self.setupMouseDownMonitor()
-                        }
                     }
                 } else {
                     if QuicklookPanel.shared.isVisible {

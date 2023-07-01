@@ -78,6 +78,7 @@ public extension NSCollectionView {
                 QuicklookPanel.shared.currentItemIndex = currentIndex
             }
         }
+        self.setupMouseDownMonitor()
     }
     
     /**
