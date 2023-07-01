@@ -18,7 +18,6 @@ internal extension NSCollectionView {
         if isQuicklookPreviewable {
             guard keyDownMonitor == nil else { return }
             keyDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown, handler: { [weak self] event in
-                Swift.print("keydownMonitor", self?.window?.firstResponder ?? "")
                 guard let self = self, self.window?.firstResponder == self else { return event }
                 if self.isQuicklookPreviewable, event.keyCode == 49 {
                     if QuicklookPanel.shared.isVisible == false {
@@ -27,7 +26,9 @@ internal extension NSCollectionView {
                 } else {
                     if QuicklookPanel.shared.isVisible {
                         let previousSelectionIndexPaths = self.selectionIndexPaths
+                        Swift.print("QuicklookPanel.isVisible previous",  previousSelectionIndexPaths.first?.item ?? "")
                         self.keyDown(with: event)
+                        Swift.print("QuicklookPanel.isVisible new",  self.selectionIndexPaths.first?.item ?? "")
                         if self.selectionIndexPaths != previousSelectionIndexPaths {
                             self.quicklookSelectedItems()
                         }
