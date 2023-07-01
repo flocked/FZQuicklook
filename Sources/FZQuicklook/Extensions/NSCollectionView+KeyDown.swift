@@ -48,7 +48,7 @@ internal extension NSCollectionView {
     
     func setupMouseDownMonitor() {
         Swift.print("setupMouseDownMonitor")
-        if isQuicklookPreviewable, QuicklookPanel.shared.isVisible {
+        if isQuicklookPreviewable {
             guard mouseDownMonitor == nil else { return }
             mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown, handler: { [weak self] event in
                 guard let self = self else { return event }
