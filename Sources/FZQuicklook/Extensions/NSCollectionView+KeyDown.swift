@@ -33,7 +33,9 @@ internal extension NSCollectionView {
                     if QuicklookPanel.shared.isVisible == false {
                         self.quicklookSelectedItems()
                     }
-                } else {
+                }
+                /*
+                else {
                     if QuicklookPanel.shared.isVisible {
                         let previousSelectionIndexPaths = self.selectionIndexPaths
                         self.keyDown(with: event)
@@ -43,6 +45,7 @@ internal extension NSCollectionView {
                         return nil
                     }
                 }
+                 */
                 return event
             })
         } else if let keyDownMonitor = self.keyDownMonitor {
@@ -53,11 +56,16 @@ internal extension NSCollectionView {
     
     func addSelectionObserver() {
         if self.selectionObserver == nil {
-            self.selectionObserver = self.observeChanges(for: \.selectionIndexPaths, handler: { old, new in
-                if old != new, new.isEmpty == false {
-                    self.quicklookSelectedItems()
+            self.selectionObserver = self.observeChanges(for: \.selectionIndexPaths, handler: { [weak self] old, new in
+                guard let self = self else { return }
+                Swift.print("selectionObserver")
+                if QuicklookPanel.shared.isVisible {
+                    if old != new, new.isEmpty == false {
+                        self.quicklookSelectedItems()
+                    }
+                } else {
+                    removeSelectionObserver()
                 }
-                Swift.print("selectionObserv")
             })
         }
     }
