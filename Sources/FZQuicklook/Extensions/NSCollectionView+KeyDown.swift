@@ -55,7 +55,6 @@ internal extension NSCollectionView {
         if self.selectionObserver == nil {
             self.selectionObserver = self.observeChanges(for: \.selectionIndexPaths, handler: { [weak self] old, new in
                 guard let self = self else { return }
-                Swift.print("selectionObserver")
                 if QuicklookPanel.shared.isVisible {
                     if old != new, new.isEmpty == false {
                         self.quicklookSelectedItems()
@@ -73,8 +72,6 @@ internal extension NSCollectionView {
     }
     
     func setupMouseDownMonitor() {
-        Swift.print("setupMouseDownMonitor")
-
         /*
         if isQuicklookPreviewable {
             guard mouseDownMonitor == nil else { return }
