@@ -19,6 +19,11 @@ internal extension NSCollectionView {
         set {  set(associatedValue: newValue, key: "NSCollectionView_mouseDownMonitor", object: self) }
     }
     
+    var selectionObserver: NSKeyValueObservation? {
+        get { getAssociatedValue(key: "NSCollectionView_selectionObserver_", object: self, initialValue: nil) }
+        set {  set(associatedValue: newValue, key: "NSCollectionView_selectionObserver_", object: self) }
+    }
+    
     func setupKeyDownMonitor() {
         if isQuicklookPreviewable {
             guard keyDownMonitor == nil else { return }
@@ -48,6 +53,10 @@ internal extension NSCollectionView {
     
     func setupMouseDownMonitor() {
         Swift.print("setupMouseDownMonitor")
+        self.selectionObserver = self.observeChanges(for: \.selectionIndexPaths, handler: { old, new in
+            Swift.print("selectionObserv")
+        })
+        /*
         if isQuicklookPreviewable {
             guard mouseDownMonitor == nil else { return }
             mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown, handler: { [weak self] event in
@@ -85,5 +94,6 @@ internal extension NSCollectionView {
             NSEvent.removeMonitor(mouseDownMonitor)
             self.mouseDownMonitor = nil
         }
+         */
     }
 }
