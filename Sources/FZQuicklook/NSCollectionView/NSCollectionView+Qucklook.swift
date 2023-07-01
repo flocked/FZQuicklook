@@ -69,7 +69,7 @@ public extension NSCollectionView {
             }
         }
         if QuicklookPanel.shared.isVisible == false {
-            QuicklookPanel.shared.keyDownResponder = self
+        //    QuicklookPanel.shared.keyDownResponder = self
             QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
             QuicklookPanel.shared.hidesOnAppDeactivate = true
         } else {
@@ -77,6 +77,11 @@ public extension NSCollectionView {
             if currentIndex != QuicklookPanel.shared.currentItemIndex {
                 QuicklookPanel.shared.currentItemIndex = currentIndex
             }
+        }
+        QuicklookPanel.shared.panelDidCloseHandler = { [weak self] in
+            guard let self = self else { return }
+            Swift.print("quicklook_PanelDidCloseHandler")
+            self.setupMouseDownMonitor()
         }
         self.setupMouseDownMonitor()
     }

@@ -77,6 +77,7 @@ public class QuicklookPanel: NSResponder {
         get { previewPanel.currentPreviewItemIndex }
         set { previewPanel.currentPreviewItemIndex = newValue }
     }
+    
 
     /**
      The currently previewed item.
@@ -107,6 +108,12 @@ public class QuicklookPanel: NSResponder {
 
      */
     public weak var keyDownResponder: NSResponder? = nil
+    
+    
+    /**
+     The handler gets called when the panel did close.
+     */
+    public var panelDidCloseHandler: (()->())? = nil
 
     /**
      Opens the quicklook panel and previews the items.
@@ -209,6 +216,8 @@ public class QuicklookPanel: NSResponder {
     override public func endPreviewPanelControl(_ panel: QLPreviewPanel!) {
         panel.dataSource = nil
         panel.delegate = nil
+        self.panelDidCloseHandler?()
+        self.panelDidCloseHandler = nil
     }
 
     internal var previewPanel: QLPreviewPanel {
