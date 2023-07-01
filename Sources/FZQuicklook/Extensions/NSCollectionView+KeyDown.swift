@@ -21,7 +21,7 @@ internal extension NSCollectionView {
             }
         } else {
             let previousSelectionIndexPaths = self.selectionIndexPaths
-            self.swizzledKeyDown(with: event)
+         //   self.swizzledKeyDown(with: event)
             if QuicklookPanel.shared.isVisible, selectionIndexPaths != previousSelectionIndexPaths {
                 self.quicklookSelectedItems()
             }
