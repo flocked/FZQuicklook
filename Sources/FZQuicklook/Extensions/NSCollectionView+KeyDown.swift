@@ -57,13 +57,24 @@ internal extension NSCollectionView {
                 
                 if let window = event.window {
                     let previousSelectionIndexPaths = self.selectionIndexPaths
-                    window.mouseDown(with: event)
+                    window.contentView?.mouseDown(with: event)
                     if self.selectionIndexPaths != previousSelectionIndexPaths {
                         self.quicklookSelectedItems()
                     }
                     return nil
                 }
                 
+                /*
+                if let contentView = event.window?.contentView {
+                    let location = event.location(in: contentView)
+                    if let hitView = contentView.hitTest(location) {
+                        
+                        
+                        Swift.print("mouseMonitor hitview", hitView)
+                    }
+                    
+                }
+*/
                 return event
             })
         } else if let mouseDownMonitor = self.mouseDownMonitor {
