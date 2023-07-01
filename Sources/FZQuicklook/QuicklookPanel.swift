@@ -236,6 +236,7 @@ public class QuicklookPanel: NSResponder {
 
 extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     public func previewPanel(_: QLPreviewPanel!, handle event: NSEvent!) -> Bool {
+        Swift.print("QuicklookPanel.keydown", event.type.rawValue)
         if let keyDownResponder = keyDownResponder, event.type == .keyUp {
             keyDownResponder.keyDown(with: event)
         }

@@ -10,7 +10,7 @@ import FZSwiftUtils
 
 public extension NSTableView {
     /**
-     A Boolean value that indicates whether the user can quicklook selected rows via space bar.
+     A Boolean value that indicates whether the user can quicklook selected rows by pressing space bar.
      
      There are several ways to provide quicklook previews:
      - NSTableCellView's `quicklookPreview`:
