@@ -68,10 +68,10 @@ public extension NSCollectionView {
                 }
             }
         }
-                
         if QuicklookPanel.shared.isVisible == false {
             QuicklookPanel.shared.keyDownResponder = self
             QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
+            QuicklookPanel.shared.hidesOnAppDeactivate = true
         } else {
             QuicklookPanel.shared.items = previewables
             if currentIndex != QuicklookPanel.shared.currentItemIndex {
