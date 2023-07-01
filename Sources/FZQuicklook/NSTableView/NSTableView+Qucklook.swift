@@ -48,9 +48,7 @@ public extension NSTableView {
     var isQuicklookPreviewable: Bool {
         get { getAssociatedValue(key: "NSTableView_isQuicklookPreviewable", object: self, initialValue: false) }
         set {  set(associatedValue: newValue, key: "NSTableView_isQuicklookPreviewable", object: self)
-            if newValue == true {
-                Self.swizzleTableViewResponderEvents()
-            }
+            self.setupKeyDownMonitor()
         }
     }
     

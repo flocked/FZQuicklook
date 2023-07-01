@@ -8,36 +8,37 @@
 import AppKit
 import FZSwiftUtils
 
+
 internal extension NSTableView {
-    static var didSwizzleResponderEvents: Bool {
-        get { getAssociatedValue(key: "NSTableView_didSwizzleResponderEvents", object: self, initialValue: false) }
-        set {  set(associatedValue: newValue, key: "NSTableView_didSwizzleResponderEvents", object: self) }
+    var keyDownMonitor: Any? {
+        get { getAssociatedValue(key: "NSTableView_keyDownMonitor", object: self, initialValue: nil) }
+        set {  set(associatedValue: newValue, key: "NSTableView_keyDownMonitor", object: self) }
     }
     
-    @objc func swizzledKeyDown(with event: NSEvent) {
-        if isQuicklookPreviewable, event.keyCode == 49 {
-            if QuicklookPanel.shared.isVisible == false {
-                self.quicklookSelectedRows()
-            }
-        } else {
-            let previousSelectedRowIndexes = self.selectedRowIndexes
-            self.swizzledKeyDown(with: event)
-            if QuicklookPanel.shared.isVisible, selectedRowIndexes != previousSelectedRowIndexes {
-                self.quicklookSelectedRows()
-            }
-        }
-    }
-    
-    @objc static func swizzleTableViewResponderEvents() {
-        if (didSwizzleResponderEvents == false) {
-            self.didSwizzleResponderEvents = true
-            do {
-                _ = try Swizzle(NSCollectionView.self) {
-                    #selector(keyDown(with: )) <-> #selector(swizzledKeyDown(with:))
+    func setupKeyDownMonitor() {
+        if isQuicklookPreviewable {
+            guard keyDownMonitor == nil else { return }
+            keyDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown, handler: { [weak self] event in
+                guard let self = self, self.window?.firstResponder == self else { return event }
+                if self.isQuicklookPreviewable, event.keyCode == 49 {
+                    if QuicklookPanel.shared.isVisible == false {
+                        self.quicklookSelectedRows()
+                    }
+                } else {
+                    if QuicklookPanel.shared.isVisible {
+                        let previousSelectedRowIndexes = self.selectedRowIndexes
+                        self.keyDown(with: event)
+                        if self.selectedRowIndexes != previousSelectedRowIndexes {
+                            self.quicklookSelectedRows()
+                        }
+                        return nil
+                    }
                 }
-            } catch {
-                Swift.print(error)
-            }
+                return event
+            })
+        } else if let keyDownMonitor = self.keyDownMonitor {
+            NSEvent.removeMonitor(keyDownMonitor)
+            self.keyDownMonitor = nil
         }
     }
 }
