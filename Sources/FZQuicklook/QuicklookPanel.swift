@@ -152,9 +152,6 @@ public class QuicklookPanel: NSResponder {
         if previewPanel.isVisible == true {
             previewPanel.close()
           //  previewPanel.orderOut(nil)
-            items.removeAll()
-            itemsProviderWindow = nil
-            keyDownResponder = nil
         }
     }
 
@@ -189,6 +186,14 @@ public class QuicklookPanel: NSResponder {
     internal var needsReload = false
     internal weak var itemsProviderWindow: NSWindow? = nil
     
+    internal func reset() {
+        items.removeAll()
+        itemsProviderWindow = nil
+        keyDownResponder = nil
+        needsReload = false
+        panelDidCloseHandler = nil
+    }
+    
     internal var _items: [QuicklookPreviewItem] = [] {
         didSet {
             if isVisible {
@@ -216,8 +221,9 @@ public class QuicklookPanel: NSResponder {
     override public func endPreviewPanelControl(_ panel: QLPreviewPanel!) {
         panel.dataSource = nil
         panel.delegate = nil
+        
         self.panelDidCloseHandler?()
-        self.panelDidCloseHandler = nil
+        self.reset()
     }
 
     internal var previewPanel: QLPreviewPanel {
@@ -240,7 +246,6 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
             self.close()
             return true
         }
-        Swift.print("QLPreviewPanel.event", event.type, event.keyCode)
         if let keyDownResponder = keyDownResponder, event.type == .keyUp {
             keyDownResponder.keyDown(with: event)
         }
