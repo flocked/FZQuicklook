@@ -48,9 +48,7 @@ public extension NSCollectionView {
     var isQuicklookPreviewable: Bool {
         get { getAssociatedValue(key: "NSCollectionView_isQuicklookPreviewable", object: self, initialValue: false) }
         set {  set(associatedValue: newValue, key: "NSCollectionView_isQuicklookPreviewable", object: self)
-            if newValue == true {
-                Self.swizzleCollectionViewResponderEvents()
-            }
+            self.setupKeyDownMonitor()
         }
     }
     
