@@ -20,29 +20,36 @@ public extension NSTableView {
      - NSTableView's datasource `tableView(_:,  quicklookPreviewForRow:)`
      ```
      func tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int) -> QuicklookPreviewable? {
-        let item = tableItems[row]
-        return item.fileURL
+        let galleryItem = galleryItems[row]
+        return galleryItem.fileURL
      }
 
      ```
      - A NSTableViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`
      ```
-     struct TableItem: Hashable, QuicklookPreviewable {
-        let text: String
-        let image: NSImage
-        let previewItemURL: URL?
+     struct GalleryItem: Hashable, QuicklookPreviewable {
+         let title: String
+         let imageURL: URL
+         
+         let previewItemURL: URL? {
+         return imageURL
+         }
+         
+         let previewItemTitle: String? {
+         return title
+         }
      }
      
-    tableView.dataSource = NSTableViewDiffableDataSource<Section, TableItem>(tableView: tableView) { tableView, tableColumn, row, tableItem in
+    tableView.dataSource = NSTableViewDiffableDataSource<Section, TableItem>(tableView: tableView) { tableView, tableColumn, row, galleryItem in
      
         let tableCell = tableView.makeView(withIdentifier: "TableItemCell", owner: nil) as! NSTableCellView
-        tableCell.imageView?.image = tableItem.image
-        tableCell.textField?.stringValue = tableItem.text
+        tableCell.imageView?.image = NSImage(contentsOf: galleryItem.imageURL)
+        tableCell.textField?.stringValue = galleryItem.title
      
         return tableCell
     }
      // …
-     tableView.quicklookSelectedItems()
+     tableView.quicklookSelectedRows()
      ```
      */
     var isQuicklookPreviewable: Bool {

@@ -20,27 +20,34 @@ public extension NSCollectionView {
      - NSCollectionView's datasource `collectionView(_:,  quicklookPreviewForItemAt:)`
      ```
      func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
-        let item = collectionItems[indexPath.item]
-        return item.fileURL
+        let galleryItem = galleryItems[indexPath.item]
+        return galleryItem.fileURL
      }
 
      ```
      - A NSCollectionViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`
      ```
-     struct FileItem: Hashable, QuicklookPreviewable {
-        let title: String
-        let image: NSImage
-        let previewItemURL: URL?
+     struct GalleryItem: Hashable, QuicklookPreviewable {
+         let title: String
+         let imageURL: URL
+         
+         let previewItemURL: URL? {
+         return imageURL
+         }
+         
+         let previewItemTitle: String? {
+         return title
+         }
      }
-     
-    collectionView.dataSource = NSCollectionViewDiffableDataSource<Section, FileItem>(collectionView: collectionView) { collectionView, indexPath, fileItem in
-     
-        let collectionViewItem = collectionView.makeItem(withIdentifier: "FileCollectionViewItem", for: indexPath)
-        collectionViewItem.textField?.stringValue = fileItem.title
-        collectionViewItem.imageView?.image = fileItem.image
+          
+     collectionView.dataSource = NSCollectionViewDiffableDataSource<Section, GalleryItem>(collectionView: collectionView) { collectionView, indexPath, galleryItem in
+          
+     let collectionViewItem = collectionView.makeItem(withIdentifier: "FileCollectionViewItem", for: indexPath)
+     collectionViewItem.textField?.stringValue = galleryItem.title
+     collectionViewItem.imageView?.image = NSImage(contentsOf: galleryItem.imageURL)
 
-        return collectionViewItem
-    }
+     return collectionViewItem
+     }
      // …
      collectionView.quicklookSelectedItems()
      ```

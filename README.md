@@ -46,23 +46,30 @@ collectionViewItem.quicklookPreview = URL(fileURLWithPath: "someFile.png")
 - NSCollectionView's datasource `collectionView(_:,  quicklookPreviewForItemAt:)` & NSTableView's datasource `tableView(_:,  quicklookPreviewForRow:)`
 ```
 func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
-    let item = collectionItems[indexPath.item]
-    return item.fileURL
+    let galleryItem = galleryItems[indexPath.item]
+    return galleryItem.fileURL
 }
 ```
 - A NSCollectionViewDiffableDataSource & NSTableViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`
 ```
-struct FileItem: Hashable, QuicklookPreviewable {
+struct GalleryItem: Hashable, QuicklookPreviewable {
     let title: String
-    let image: NSImage
-    let previewItemURL: URL?
+    let imageURL: URL
+    
+    let previewItemURL: URL? {
+    return imageURL
+    }
+    
+    let previewItemTitle: String? {
+    return title
+    }
 }
      
-collectionView.dataSource = NSCollectionViewDiffableDataSource<Section, FileItem>(collectionView: collectionView) { collectionView, indexPath, fileItem in
+collectionView.dataSource = NSCollectionViewDiffableDataSource<Section, GalleryItem>(collectionView: collectionView) { collectionView, indexPath, galleryItem in
      
 let collectionViewItem = collectionView.makeItem(withIdentifier: "FileCollectionViewItem", for: indexPath)
-collectionViewItem.textField?.stringValue = fileItem.title
-collectionViewItem.imageView?.image = fileItem.image
+collectionViewItem.textField?.stringValue = galleryItem.title
+collectionViewItem.imageView?.image = NSImage(contentsOf: galleryItem.imageURL)
 
 return collectionViewItem
 }
