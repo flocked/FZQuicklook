@@ -72,6 +72,8 @@ public class QuicklookPanel: NSResponder {
 
     /**
      The index of the current preview item.
+     
+     Changing the index will change to current previewed item.
      */
     public var currentItemIndex: Int {
         get { previewPanel.currentPreviewItemIndex }
@@ -114,9 +116,11 @@ public class QuicklookPanel: NSResponder {
      The handler gets called when the panel did close.
      */
     public var panelDidCloseHandler: (()->())? = nil
-
+    
     /**
      Opens the quicklook panel and previews the items.
+     
+     To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use `keyDownResponder`.
 
      - Parameters items: The items to preview.
      - Parameters currentItemIndex: The index of the current preview item. The default value is 0.
@@ -132,7 +136,11 @@ public class QuicklookPanel: NSResponder {
         }
     }
     
-    /// Opens the quicklook panel and displays the previews thr `items`.
+    /**
+     Opens the quicklook panel and displays the previews thr `items`.
+     
+     To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use `keyDownResponder`.
+     */
     public func open() {
         if previewPanel.isVisible == false {
             itemsProviderWindow = NSApp.keyWindow
@@ -147,7 +155,11 @@ public class QuicklookPanel: NSResponder {
         }
     }
 
-    /// Closes the quicklook panel.
+    /**
+     Closes the quicklook panel.
+     
+     After closing the panel, both `keyDownResponder`and `panelDidCloseHandler` will be reset to nil.
+     */
     public func close() {
         if previewPanel.isVisible == true {
             previewPanel.close()
