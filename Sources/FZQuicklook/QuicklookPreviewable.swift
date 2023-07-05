@@ -16,17 +16,19 @@ import FZSwiftUtils
  `URL`, `NSURL` and `AVURLAsset` conform to QuicklookPreviewable.
  
  ```
- struct GalleryItem: QuicklookPreviewable {
- let title: String
- let imageURL: URL
- 
- var previewItemURL: URL? {
-    return imageURL
- }
- 
- var previewItemTitle: String? {
-    return title
- }
+ struct GalleryItem: Hashable, QuicklookPreviewable {
+     let title: String
+     let imageURL: URL
+     
+     // The file url for quicklook preview.
+     let previewItemURL: URL? {
+     return imageURL
+     }
+     
+    // The tile for quicklook preview.
+     let previewItemTitle: String? {
+     return title
+     }
  }
  
  QuicklookPanel.shared.preset(aGalleryItem)
@@ -48,7 +50,7 @@ public protocol QuicklookPreviewable {
           
      The system invokes this optional property when the preview panel opens or closes to provide a zoom effect.
      
-     `NSView` and `NSCollectionViewItem` conforming to `QuicklookPreviewable` provide their frame as default value.
+     `NSView` and `NSCollectionViewItem` conforming to `QuicklookPreviewable` provide their frame as default value of their `frame`.
      */
     var previewItemFrame: CGRect? { get }
     /**

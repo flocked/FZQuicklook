@@ -56,6 +56,7 @@ struct GalleryItem: Hashable, QuicklookPreviewable {
     let title: String
     let imageURL: URL
     
+    // The file url for quicklook preview.
     let previewItemURL: URL? {
     return imageURL
     }
