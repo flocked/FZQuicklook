@@ -233,6 +233,7 @@ public class QuicklookPanel: NSResponder {
 
     override internal init() {
         super.init()
+        self.hidesOnAppDeactivate = true
     }
 
     @available(*, unavailable)
