@@ -151,6 +151,7 @@ public class QuicklookPanel: NSResponder {
     public func close() {
         if previewPanel.isVisible == true {
             previewPanel.close()
+            reset()
           //  previewPanel.orderOut(nil)
         }
     }
