@@ -16,6 +16,8 @@ public extension NSCollectionView {
      - NSCollectionViewItems's `quicklookPreview`
      ```
      collectionViewItem.quicklookPreview = URL(fileURLWithPath: "someFile.png")
+     // …
+     collectionView.quicklookSelectedItems()
      ```
      - NSCollectionView's datasource `collectionView(_:,  quicklookPreviewForItemAt:)`
      ```
@@ -23,7 +25,6 @@ public extension NSCollectionView {
         let galleryItem = galleryItems[indexPath.item]
         return galleryItem.fileURL
      }
-
      ```
      - A NSCollectionViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`
      ```
@@ -48,8 +49,6 @@ public extension NSCollectionView {
 
      return collectionViewItem
      }
-     // …
-     collectionView.quicklookSelectedItems()
      ```
      */
     var isQuicklookPreviewable: Bool {

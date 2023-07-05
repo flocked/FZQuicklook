@@ -16,6 +16,8 @@ public extension NSTableView {
      - NSTableCellView's `quicklookPreview`
      ```
      tableCell.quicklookPreview = URL(fileURLWithPath: "someFile.png")
+     // …
+     tableView.quicklookSelectedCells()
      ```
      - NSTableView's datasource `tableView(_:,  quicklookPreviewForRow:)`
      ```
@@ -48,8 +50,6 @@ public extension NSTableView {
      
         return tableCell
     }
-     // …
-     tableView.quicklookSelectedRows()
      ```
      */
     var isQuicklookPreviewable: Bool {
