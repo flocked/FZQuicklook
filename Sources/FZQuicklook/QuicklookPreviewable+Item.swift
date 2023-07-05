@@ -8,6 +8,7 @@
 import AppKit
 import QuickLookUI
 
+/// An item used internally to preset items conforming to `QuicklookPreviewable` inside `QuicklookPanel` and `QuicklookView`.
 internal class QuicklookPreviewItem: NSObject, QLPreviewItem, QuicklookPreviewable {
     let preview: QuicklookPreviewable
     var view: NSView?

@@ -8,6 +8,7 @@
 import AppKit
 import FZSwiftUtils
 
+// Configurates a monitor for keyDown events on collection views with `isQuicklookPreviewable` enabled. A spacebar event will open the `QuicklookPanel`.
 internal extension NSCollectionView {
     var keyDownMonitor: Any? {
         get { getAssociatedValue(key: "NSCollectionView_keyDownMonitor", object: self, initialValue: nil) }

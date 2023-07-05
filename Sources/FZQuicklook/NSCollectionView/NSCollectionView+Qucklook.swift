@@ -8,37 +8,16 @@
 import AppKit
 import FZSwiftUtils
 
-/**
-    # Lists
-
-    You can apply *italic*, **bold**, or `code` inline styles.
-
-    ## Unordered Lists
-
-    - NSCollectionViewItems's `quicklookPreview`:
-    - but perhaps don't nest;
-    - Sub-list formatting...
-
-      - ...isn't the best.
-
-    ## Ordered Lists
-
-    1. Ordered lists, too,
-    2. for things that are sorted;
-    3. Arabic numerals
-    4. are the only kind supported.
-*/
-
 public extension NSCollectionView {
     /**
      A Boolean value that indicates whether the user can quicklook preview selected items by pressing space bar.
      
      There are several ways to provide quicklook previews:
-     - NSCollectionViewItems's `quicklookPreview`:
+     - NSCollectionViewItems's `quicklookPreview`
      ```
      collectionViewItem.quicklookPreview = URL(fileURLWithPath: "someFile.png")
      ```
-     - NSCollectionView's datasource `tableView(_:,  quicklookPreviewForRow:)`:
+     - NSCollectionView's datasource `collectionView(_:,  quicklookPreviewForItemAt:)`
      ```
      func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
         let item = collectionItems[indexPath.item]
@@ -46,7 +25,7 @@ public extension NSCollectionView {
      }
 
      ```
-     - A NSCollectionViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`:
+     - A NSCollectionViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`
      ```
      struct FileItem: Hashable, QuicklookPreviewable {
         let title: String

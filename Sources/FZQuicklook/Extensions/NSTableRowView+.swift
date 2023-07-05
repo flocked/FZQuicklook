@@ -16,6 +16,5 @@ internal extension NSTableRowView {
      */
     var cellViews: [NSTableCellView] {
         (0 ..< numberOfColumns).compactMap { self.view(atColumn: $0) as? NSTableCellView }
-        //    self.subviews.compactMap({$0 as? NSTableCellView})
     }
 }

@@ -64,7 +64,7 @@ public class QuicklookPanel: NSResponder {
     /**
      A Boolean value that indicates whether the panel is visible onscreen (even when it’s obscured by other windows).
 
-     The value of this property is true when the panel is onscreen (even if it’s obscured by other windows); otherwise, false.
+     The value of this property is `true` when the panel is onscreen (even if it’s obscured by other windows); otherwise, `false.
      */
     public var isVisible: Bool {
         return previewPanel.isVisible
@@ -72,8 +72,10 @@ public class QuicklookPanel: NSResponder {
 
     /**
      The index of the current preview item.
-     
+          
      Changing the index will change to current previewed item.
+     
+     The value is `NSNotFound` if there’s no current preview item.
      */
     public var currentItemIndex: Int {
         get { previewPanel.currentPreviewItemIndex }

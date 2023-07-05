@@ -13,11 +13,11 @@ public extension NSTableView {
      A Boolean value that indicates whether the user can quicklook selected rows by pressing space bar.
      
      There are several ways to provide quicklook previews:
-     - NSTableCellView's `quicklookPreview`:
+     - NSTableCellView's `quicklookPreview`
      ```
      tableCell.quicklookPreview = URL(fileURLWithPath: "someFile.png")
      ```
-     - NSTableView's datasource `tableView(_:,  quicklookPreviewForRow:)`:
+     - NSTableView's datasource `tableView(_:,  quicklookPreviewForRow:)`
      ```
      func tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int) -> QuicklookPreviewable? {
         let item = tableItems[row]

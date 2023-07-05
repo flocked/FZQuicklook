@@ -11,8 +11,10 @@ import FZSwiftUtils
 public extension NSCollectionViewItem {
     /**
      The quicklook preview for the item.
-     
+          
      To present the preview use `NSCollectionView` `quicklookSelectedItems()`or `quicklookItems(at:_, current:)`.
+     
+     Make sure to reset it's value inside `prepareForReuse()`.
      */
     var quicklookPreview: QuicklookPreviewable? {
         get { getAssociatedValue(key: "NSCollectionView_isQuicklookPreviewable", object: self, initialValue: nil) }

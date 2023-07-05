@@ -14,6 +14,23 @@ import FZSwiftUtils
  A protocol that defines a set of properties you implement to make a preview that can be displayed by `QuicklookPanel` and `QuicklookView`.
  
  `URL`, `NSURL` and `AVURLAsset` conform to QuicklookPreviewable.
+ 
+ ```
+ struct GalleryItem: QuicklookPreviewable {
+ let title: String
+ let imageURL: URL
+ 
+ var previewItemURL: URL? {
+    return imageURL
+ }
+ 
+ var previewItemTitle: String? {
+    return title
+ }
+ }
+ 
+ QuicklookPanel.shared.preset(aGalleryItem)
+ ```
  */
 public protocol QuicklookPreviewable {
     /**
@@ -48,6 +65,20 @@ public protocol QuicklookPreviewable {
      If you don’t implement this property, Quick Look examines the URL or content of the previewed item to determine an appropriate title. Return a non-nil value for this property to provide a custom title.
      */
     var previewItemTitle: String? { get }
+}
+
+extension QuicklookPreviewable {
+    public var previewItemFrame: CGRect? {
+        return nil
+    }
+    
+    public var previewItemTransitionImage: NSImage? {
+        return nil
+    }
+    
+    public var previewItemTitle: String? {
+        return previewItemURL?.deletingPathExtension().lastPathComponent
+    }
 }
 
 extension URL: QuicklookPreviewable {
@@ -101,93 +132,3 @@ extension QuicklookPreviewable where Self: NSCollectionViewItem {
         return self.view.renderedImage
     }
 }
-
-extension QuicklookPreviewable {
-    public var previewItemFrame: CGRect? {
-        return nil
-    }
-    
-    public var previewItemTransitionImage: NSImage? {
-        return nil
-    }
-    
-    public var previewItemTitle: String? {
-        return previewItemURL?.deletingPathExtension().lastPathComponent
-    }
-}
-
-/*
-internal extension QuicklookPanel {
-    var temporaryDirectory: URL? {
-        if let temporaryDirectory: URL = getAssociatedValue(key: "QuicklookPanel_temporaryDirectory", object: self, initialValue: nil) {
-            return temporaryDirectory
-        }
-        let temporaryDirectory = try? FileManager.default.createTemporaryDirectory()
-        set(associatedValue: temporaryDirectory, key: "QuicklookPanel_temporaryDirectory", object: self)
-        return temporaryDirectory
-    }
-}
-
- extension NSImage: QuicklookPreviewable {
-     public var previewItemURL: URL? {
-         if let temporaryFile: URL = self.temporaryFile {
-             return temporaryFile
-         } else {
-
-             DispatchQueue.global(qos: .userInitiated).async {
-                 self.createTemporaryFile()
-                 DispatchQueue.main.async {
-                 QuicklookPanel.shared.refreshCurrentPreviewItem()
-                 }
-             }
-             return nil
-             
-         }
-     }
-     
-     public var previewItemTitle: String? {
-         return ""
-     }
-     
-     var temporaryFile: URL? {
-         get { getAssociatedValue(key: "NSImage_temporaryIFile", object: self, initialValue: nil) }
-         set {  set(associatedValue: newValue, key: "NSImage_temporaryIFile", object: self)
-         }
-     }
-     
-     var isCreatingTemporaryFile: Bool {
-         get { getAssociatedValue(key: "NSImage_isCreatingTemporaryFile", object: self, initialValue: false) }
-         set {  set(associatedValue: newValue, key: "NSImage_isCreatingTemporaryFile", object: self)
-         }
-     }
-     
-     internal func createTemporaryFile() {
-         if isCreatingTemporaryFile == false {
-             isCreatingTemporaryFile = true
-             Swift.print("createTemporaryFile 1")
-             guard let temporaryDirectory = QuicklookPanel.shared.temporaryDirectory, let data = self.pngData else { return  }
-             Swift.print("createTemporaryFile 2")
-             let temporaryFile = temporaryDirectory.appendingPathComponent(NSUUID().uuidString).appendingPathExtension("jpeg")
-             do {
-                 try data.write(to: temporaryFile)
-                 Swift.print("createTemporaryFile 3")
-                 self.temporaryFile = temporaryFile
-             } catch {
-                 Swift.print(error)
-             }
-             isCreatingTemporaryFile = false
-         }
-     }
-             
-     internal func deleteTemporaryFile() {
-         if let temporaryFile = self.temporaryFile {
-             do {
-                 try FileManager.default.removeItem(at: temporaryFile)
-                 self.temporaryFile = nil
-             } catch {
-                 Swift.print(error)
-             }
-         }
-     }
- }
- */
