@@ -144,14 +144,17 @@ public class QuicklookPanel: NSResponder {
      To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use `keyDownResponder`.
      */
     public func open() {
+        Swift.print("QuicklookPanel open")
         if previewPanel.isVisible == false {
             itemsProviderWindow = NSApp.keyWindow
             NSApp.nextResponder = self
             previewPanel.updateController()
+            Swift.print("QuicklookPanel makeKeyAndOrderFront")
             previewPanel.makeKeyAndOrderFront(nil)
             
             if needsReload {
                 needsReload = false
+                Swift.print("QuicklookPanel reloadData")
                 self.previewPanel.reloadData()
             }
         }
@@ -269,6 +272,7 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     }
 
     public func previewPanel(_: QLPreviewPanel!, sourceFrameOnScreenFor item: QLPreviewItem!) -> NSRect {
+        Swift.print("QuicklookPanel sourceFrameOnScreenFor")
         if let frame = (item as? QuicklookPreviewItem)?.previewItemFrame {
             return frame
         }
@@ -287,10 +291,12 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     }
 
     public func previewPanel(_: QLPreviewPanel!, previewItemAt index: Int) -> QLPreviewItem! {
+        Swift.print("QuicklookPanel previewItemAt")
         return _items[index]
     }
 
     public func numberOfPreviewItems(in _: QLPreviewPanel!) -> Int {
+        Swift.print("QuicklookPanel numberOfPreviewItems")
         return _items.count
     }
 
