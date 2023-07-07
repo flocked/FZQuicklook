@@ -24,6 +24,7 @@ internal extension NSTableView {
                 if self.isQuicklookPreviewable, event.keyCode == 49 {
                     if QuicklookPanel.shared.isVisible == false {
                         self.quicklookSelectedRows()
+                        return nil
                     }
                 } else {
                     if QuicklookPanel.shared.isVisible {

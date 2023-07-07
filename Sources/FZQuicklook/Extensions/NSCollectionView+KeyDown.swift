@@ -34,6 +34,9 @@ internal extension NSCollectionView {
                     if QuicklookPanel.shared.isVisible == false {
                         self.quicklookSelectedItems()
                         return nil
+                    } else {
+                        QuicklookPanel.shared.close()
+                        return nil
                     }
                 } else {
                     if QuicklookPanel.shared.isVisible {
