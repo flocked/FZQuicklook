@@ -272,7 +272,9 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     }
 
     public func previewPanel(_: QLPreviewPanel!, sourceFrameOnScreenFor item: QLPreviewItem!) -> NSRect {
-        Swift.print("QuicklookPanel sourceFrameOnScreenFor")
+        let preFrame = (item as? QuicklookPreviewItem)?.previewItemFrame
+        
+        Swift.print("QuicklookPanel sourceFrameOnScreenFor", preFrame ?? "")
         if let frame = (item as? QuicklookPreviewItem)?.previewItemFrame {
             return frame
         }
@@ -291,12 +293,12 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     }
 
     public func previewPanel(_: QLPreviewPanel!, previewItemAt index: Int) -> QLPreviewItem! {
-        Swift.print("QuicklookPanel previewItemAt")
+        Swift.print("QuicklookPanel previewItemAt", _items[index])
         return _items[index]
     }
 
     public func numberOfPreviewItems(in _: QLPreviewPanel!) -> Int {
-        Swift.print("QuicklookPanel numberOfPreviewItems")
+        Swift.print("QuicklookPanel numberOfPreviewItems", _items.count)
         return _items.count
     }
 
