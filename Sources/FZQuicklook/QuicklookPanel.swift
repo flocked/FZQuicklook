@@ -148,6 +148,9 @@ public class QuicklookPanel: NSResponder {
         if previewPanel.isVisible == false {
             itemsProviderWindow = NSApp.keyWindow
             NSApp.nextResponder = self
+            
+            NSApp.keyWindow?.makeFirstResponder(previewPanel)
+
             previewPanel.updateController()
             Swift.print("previewPanel.currentController", previewPanel.currentController)
             Swift.print("NSApp nextResponder", NSApp.nextResponder ?? "nil")
