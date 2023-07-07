@@ -138,6 +138,10 @@ public class QuicklookPanel: NSResponder {
         }
     }
     
+    public override var acceptsFirstResponder: Bool {
+        return true
+    }
+    
     /**
      Opens the quicklook panel and displays the previews thr `items`.
      
