@@ -33,11 +33,10 @@ internal extension NSCollectionView {
                 if self.isQuicklookPreviewable, event.keyCode == 49 {
                     if QuicklookPanel.shared.isVisible == false {
                         self.quicklookSelectedItems()
-                        return nil
                     } else {
                         QuicklookPanel.shared.close()
-                        return nil
                     }
+                    return nil
                 } else {
                     if QuicklookPanel.shared.isVisible {
                         let previousSelectionIndexPaths = self.selectionIndexPaths
