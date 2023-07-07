@@ -150,6 +150,9 @@ public class QuicklookPanel: NSResponder {
             NSApp.nextResponder = self
             previewPanel.updateController()
             Swift.print("previewPanel.currentController", previewPanel.currentController)
+            Swift.print("NSApp nextResponder", NSApp.nextResponder ?? "nil")
+            Swift.print("NSApp keyWindow nextResponder", NSApp.keyWindow?.nextResponder ?? "nil")
+
             Swift.print("QuicklookPanel makeKeyAndOrderFront")
             previewPanel.makeKeyAndOrderFront(nil)
             
