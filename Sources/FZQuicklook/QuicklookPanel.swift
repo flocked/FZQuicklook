@@ -138,34 +138,20 @@ public class QuicklookPanel: NSResponder {
         }
     }
     
-    public override var acceptsFirstResponder: Bool {
-        return true
-    }
-    
     /**
      Opens the quicklook panel and displays the previews thr `items`.
      
      To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use `keyDownResponder`.
      */
     public func open() {
-        Swift.print("QuicklookPanel open")
         if previewPanel.isVisible == false {
             itemsProviderWindow = NSApp.keyWindow
             NSApp.nextResponder = self
-            
-            NSApp.keyWindow?.makeFirstResponder(self)
-
             previewPanel.updateController()
-            Swift.print("previewPanel.currentController", previewPanel.currentController)
-            Swift.print("NSApp nextResponder", NSApp.nextResponder ?? "nil")
-            Swift.print("NSApp keyWindow nextResponder", NSApp.keyWindow?.nextResponder ?? "nil")
-
-            Swift.print("QuicklookPanel makeKeyAndOrderFront")
             previewPanel.makeKeyAndOrderFront(nil)
             
             if needsReload {
                 needsReload = false
-                Swift.print("QuicklookPanel reloadData")
                 self.previewPanel.reloadData()
             }
         }
@@ -283,9 +269,6 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     }
 
     public func previewPanel(_: QLPreviewPanel!, sourceFrameOnScreenFor item: QLPreviewItem!) -> NSRect {
-        let preFrame = (item as? QuicklookPreviewItem)?.previewItemFrame
-        
-        Swift.print("QuicklookPanel sourceFrameOnScreenFor", preFrame ?? "")
         if let frame = (item as? QuicklookPreviewItem)?.previewItemFrame {
             return frame
         }
@@ -304,12 +287,10 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     }
 
     public func previewPanel(_: QLPreviewPanel!, previewItemAt index: Int) -> QLPreviewItem! {
-        Swift.print("QuicklookPanel previewItemAt", _items[index])
         return _items[index]
     }
 
     public func numberOfPreviewItems(in _: QLPreviewPanel!) -> Int {
-        Swift.print("QuicklookPanel numberOfPreviewItems", _items.count)
         return _items.count
     }
 
