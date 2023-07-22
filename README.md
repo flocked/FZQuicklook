@@ -52,7 +52,7 @@ func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemA
 ```
 - A NSCollectionViewDiffableDataSource & NSTableViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`
 ```
-struct GalleryItem: Hashable, QuicklookPreviewable {
+struct GalleryItem: QuicklookPreviewable {
     let title: String
     let imageURL: URL
     
