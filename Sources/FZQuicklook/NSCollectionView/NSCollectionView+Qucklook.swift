@@ -1,5 +1,5 @@
 //
-//  NSCollectionView+QuicklookPreviewable.swift
+//  NSCollectionView+Qucklook.swift
 //
 //
 //  Created by Florian Zand on 06.03.23.

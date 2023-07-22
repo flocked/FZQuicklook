@@ -1,6 +1,6 @@
 //
-//  aa.swift
-//  QuicklookNew
+//  NSTableViewDataSource+Quicklook.swift
+//  
 //
 //  Created by Florian Zand on 24.06.23.
 //

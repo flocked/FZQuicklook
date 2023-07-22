@@ -1,5 +1,5 @@
 //
-//  PreviewableDataSource.swift
+//  NSCollectionViewDataSource+Quicklook.swift
 //  
 //
 //  Created by Florian Zand on 23.06.23.

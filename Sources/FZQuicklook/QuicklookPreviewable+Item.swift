@@ -1,6 +1,6 @@
 //
 //  QuicklookPreviewItem.swift
-//  QuicklookNew
+//  
 //
 //  Created by Florian Zand on 23.06.23.
 //

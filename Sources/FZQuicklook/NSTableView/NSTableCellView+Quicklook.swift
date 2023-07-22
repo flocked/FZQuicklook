@@ -1,6 +1,6 @@
 //
-//  NSTableCellView+.swift
-//  QuicklookNew
+//  NSTableCellView+Quicklook.swift
+//
 //
 //  Created by Florian Zand on 24.06.23.
 //

@@ -1,6 +1,6 @@
 //
 //  QuicklookPanel.swift
-//  FZExtensions
+//  
 //
 //  Created by Florian Zand on 08.05.22.
 //
