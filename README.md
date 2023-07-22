@@ -36,14 +36,14 @@ let quicklookView = QuicklookView(content: URL(fileURLWithPath: imageFileURL)
 ```
 
 ## Quicklook for NSTableView & NSCollectionView
-`isQuicklookPreviewable` enables quicklook of NSCollectionView items and NSTableView cells/rows.
+NSCollectionView/NSTableView `isQuicklookPreviewable` enables quicklook of items/cells.
 
 There are several ways to provide quicklook previews:
-- NSCollectionViewItems's & NSTableCellView's `quicklookPreview`
+- NSCollectionViewItems's & NSTableCellView's `var quicklookPreview: QuicklookPreviewable?`
 ```
 collectionViewItem.quicklookPreview = URL(fileURLWithPath: "someFile.png")
 ```
-- NSCollectionView's datasource `collectionView(_:,  quicklookPreviewForItemAt:)` & NSTableView's datasource `tableView(_:,  quicklookPreviewForRow:)`
+- NSCollectionView's datasource `collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath)` & NSTableView's datasource `tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int)`
 ```
 func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
     let galleryItem = galleryItems[indexPath.item]
