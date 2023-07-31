@@ -1,7 +1,8 @@
 # FZQuicklook
 
-
 Create previews of files presented either in a panel similar to Finder's Quicklook or in a view.
+
+*For a full documentation take a look at the included documentation accessible via Xcodes documentation browser.*
 
 ## QuicklookPreviewable
  A protocol that defines a set of properties you implement to make a preview that can be displayed by `QuicklookPanel` and `QuicklookView`. `URL`, `NSURL` and `AVURLAsset` conform to QuicklookPreviewable.
