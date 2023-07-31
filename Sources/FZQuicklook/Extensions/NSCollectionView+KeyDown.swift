@@ -82,7 +82,7 @@ internal extension NSCollectionView {
             mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown, handler: { [weak self] event in
                 guard let self = self else { return event }
                 
-                Swift.print("mouseMonitor window", event.window ?? "")
+                Swift.debugPrint("mouseMonitor window", event.window ?? "")
                 /*
                 if let window = event.window {
                     let previousSelectionIndexPaths = self.selectionIndexPaths
@@ -97,7 +97,7 @@ internal extension NSCollectionView {
                 if let contentView = event.window?.contentView {
                     let location = event.location(in: contentView)
                     if let hitView = contentView.hitTest(location) {
-                        Swift.print("mouseMonitor hitview", hitView)
+                        Swift.debugPrint("mouseMonitor hitview", hitView)
                         let previousSelectionIndexPaths = self.selectionIndexPaths
                         hitView.mouseDown(with: event)
                         if self.selectionIndexPaths != previousSelectionIndexPaths {
