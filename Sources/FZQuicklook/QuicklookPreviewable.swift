@@ -89,6 +89,25 @@ extension URL: QuicklookPreviewable {
     }
 }
 
+extension Optional: QuicklookPreviewable where Wrapped: QuicklookPreviewable {
+    public var previewItemURL: URL? {
+        self.optional?.previewItemURL
+    }
+    
+    public var previewItemFrame: CGRect? {
+        self.optional?.previewItemFrame
+    }
+    
+    public var previewItemTitle: String? {
+        self.optional?.previewItemTitle
+    }
+    
+    public var previewItemTransitionImage: NSImage? {
+        self.optional?.previewItemTransitionImage
+    }
+}
+
+
 extension NSURL: QuicklookPreviewable {
     public var previewItemURL: URL? {
         return self as URL
@@ -105,16 +124,6 @@ extension AVURLAsset: QuicklookPreviewable {
     }
 }
 
-extension QuicklookPreviewable where Self: NSImageView {
-    public var previewItemFrame: CGRect? {
-        return self.frameOnScreen
-    }
-    
-    public var previewItemTransitionImage: NSImage? {
-        self.image
-    }
-}
-
 extension QuicklookPreviewable where Self: NSView {
     public var previewItemFrame: CGRect? {
         return self.frameOnScreen
@@ -122,6 +131,12 @@ extension QuicklookPreviewable where Self: NSView {
     
     public var previewItemTransitionImage: NSImage? {
         return self.renderedImage
+    }
+}
+
+extension QuicklookPreviewable where Self: NSImageView {
+    public var previewItemTransitionImage: NSImage? {
+        self.image
     }
 }
 
