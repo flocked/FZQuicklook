@@ -83,12 +83,6 @@ extension QuicklookPreviewable {
     }
 }
 
-extension URL: QuicklookPreviewable {
-    public var previewItemURL: URL? {
-        return self
-    }
-}
-
 extension Optional: QuicklookPreviewable where Wrapped: QuicklookPreviewable {
     public var previewItemURL: URL? {
         self.optional?.previewItemURL
@@ -107,6 +101,11 @@ extension Optional: QuicklookPreviewable where Wrapped: QuicklookPreviewable {
     }
 }
 
+extension URL: QuicklookPreviewable {
+    public var previewItemURL: URL? {
+        return self
+    }
+}
 
 extension NSURL: QuicklookPreviewable {
     public var previewItemURL: URL? {

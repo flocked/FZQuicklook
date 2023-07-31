@@ -9,8 +9,7 @@ import AppKit
 import QuickLookUI
 
 /**
- An item that is previable by `QuicklookPanel` and `QuicklookView`.
-
+ An item that is previewable by `QuicklookPanel` and `QuicklookView`.
  */
 public struct QuicklookItem: QuicklookPreviewable, Hashable {
      /**
