@@ -8,6 +8,7 @@
 import AppKit
 import FZSwiftUtils
 
+/// A `NSCollectionView` Quicklook preview provider.
 public protocol NSCollectionViewQuicklookProvider {
     /**
      Asks your data source object for a quicklook preview that corresponds to the specified item in the collection view.     

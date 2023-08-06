@@ -8,6 +8,7 @@
 import AppKit
 import FZSwiftUtils
 
+/// A `NSTableView` Quicklook preview provider.
 public protocol NSTableViewQuicklookProvider {
     /**
      Asks your data source object for a quicklook preview that corresponds to the specified row in the table view.

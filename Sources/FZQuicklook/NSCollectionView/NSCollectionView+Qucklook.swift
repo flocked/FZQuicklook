@@ -19,14 +19,14 @@ public extension NSCollectionView {
      // …
      collectionView.quicklookSelectedItems()
      ```
-     - NSCollectionView's datasource `collectionView(_:,  quicklookPreviewForItemAt:)`
+     - NSCollectionViewDataSource `collectionView(_:,  quicklookPreviewForItemAt:)`
      ```swift
      func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
         let galleryItem = galleryItems[indexPath.item]
         return galleryItem.fileURL
      }
      ```
-     - A NSCollectionViewDiffableDataSource` with an ItemIdentifierType conforming to ``QuicklookPreviewable``
+     - A `NSCollectionViewDiffableDataSource` with an ItemIdentifierType conforming to ``QuicklookPreviewable``
      ```swift
      struct GalleryItem: Hashable, QuicklookPreviewable {
          let title: String
@@ -42,12 +42,7 @@ public extension NSCollectionView {
      }
           
      collectionView.dataSource = NSCollectionViewDiffableDataSource<Section, GalleryItem>(collectionView: collectionView) { collectionView, indexPath, galleryItem in
-          
-     let collectionViewItem = collectionView.makeItem(withIdentifier: "FileCollectionViewItem", for: indexPath)
-     collectionViewItem.textField?.stringValue = galleryItem.title
-     collectionViewItem.imageView?.image = NSImage(contentsOf: galleryItem.imageURL)
-
-     return collectionViewItem
+        // Configurate collection view item
      }
      ```
      */
@@ -100,6 +95,7 @@ public extension NSCollectionView {
     }
     
     internal func quicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
+     //   ((self.dataSource as? KeyValueCodable)?.call("quicklookPreviewForItemAt", values: [self, indexPath]) as? QuicklookPreviewable)
         return (self.dataSource as? NSCollectionViewQuicklookProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
     }
 }

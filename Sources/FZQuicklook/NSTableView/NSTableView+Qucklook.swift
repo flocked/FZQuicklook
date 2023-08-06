@@ -26,7 +26,7 @@ public extension NSTableView {
         return galleryItem.fileURL
      }
      ```
-     - A `NSTableViewDiffableDataSource with an ItemIdentifierType conforming to ``QuicklookPreviewable``
+     - A `NSTableViewDiffableDataSource` with an ItemIdentifierType conforming to ``QuicklookPreviewable``
      ```swift
      struct GalleryItem: Hashable, QuicklookPreviewable {
          let title: String
@@ -40,14 +40,9 @@ public extension NSTableView {
          return title
          }
      }
-     
-    tableView.dataSource = NSTableViewDiffableDataSource<Section, TableItem>(tableView: tableView) { tableView, tableColumn, row, galleryItem in
-     
-        let tableCell = tableView.makeView(withIdentifier: "TableItemCell", owner: nil) as! NSTableCellView
-        tableCell.imageView?.image = NSImage(contentsOf: galleryItem.imageURL)
-        tableCell.textField?.stringValue = galleryItem.title
-     
-        return tableCell
+
+    tableView.dataSource = NSTableViewDiffableDataSource<Section, GalleryItem>(tableView: tableView) { tableView, tableColumn, row, galleryItem in
+        // configurate cell
     }
      ```
      */
@@ -94,6 +89,6 @@ public extension NSTableView {
     }
     
     internal func quicklookPreviewable(for row: Int) -> QuicklookPreviewable? {
-        (self.dataSource as? NSTableViewQuicklookProvider)?.tableView(self, quicklookPreviewForRow: row)
+        return (self.dataSource as? NSTableViewQuicklookProvider)?.tableView(self, quicklookPreviewForRow: row)
     }
 }
