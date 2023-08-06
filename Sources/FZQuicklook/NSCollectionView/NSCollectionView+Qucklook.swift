@@ -13,21 +13,21 @@ public extension NSCollectionView {
      A Boolean value that indicates whether the user can quicklook preview selected items by pressing space bar.
      
      There are several ways to provide quicklook previews:
-     - NSCollectionViewItems's `quicklookPreview`
-     ```
+     - NSCollectionViewItems's ``AppKit/NSCollectionViewItem/quicklookPreview``
+     ```swift
      collectionViewItem.quicklookPreview = URL(fileURLWithPath: "someFile.png")
      // …
      collectionView.quicklookSelectedItems()
      ```
      - NSCollectionView's datasource `collectionView(_:,  quicklookPreviewForItemAt:)`
-     ```
+     ```swift
      func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
         let galleryItem = galleryItems[indexPath.item]
         return galleryItem.fileURL
      }
      ```
-     - A NSCollectionViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`
-     ```
+     - A NSCollectionViewDiffableDataSource` with an ItemIdentifierType conforming to ``QuicklookPreviewable``
+     ```swift
      struct GalleryItem: Hashable, QuicklookPreviewable {
          let title: String
          let imageURL: URL

@@ -5,17 +5,18 @@
 //  Created by Florian Zand on 06.03.23.
 //
 
+import Foundation
 import AppKit
 import Quartz
 import AVKit
 import FZSwiftUtils
 
 /**
- A protocol that defines a set of properties you implement to make a preview that can be displayed by `QuicklookPanel` and `QuicklookView`.
+ A protocol that defines a set of properties you implement to make a preview that can be displayed by ``QuicklookPanel`` and ``QuicklookView`.
  
- `URL`, `NSURL` and `AVURLAsset` conform to QuicklookPreviewable.
+ `URL`, `NSURL` and `AVURLAsset` conform to `QuicklookPreviewable`.
  
- ```
+ ```swift
  struct GalleryItem: Hashable, QuicklookPreviewable {
      let title: String
      let imageURL: URL
@@ -38,11 +39,11 @@ public protocol QuicklookPreviewable {
     /**
      The URL of the item to preview.
      
-     `QuicklookPanel` and `QuicklookView` use this property to get an item’s URL. In typical use, you’d implement a getter method in your preview item class to provide this value.
+     ``QuicklookPanel`` and ``QuicklookView`` use this property to get an item’s URL. In typical use, you’d implement a getter method in your preview item class to provide this value.
      
      The value of this property must be a file-type URL.
      
-     If the item isn’t available for preview, this property’s getter method should return nil. In this case, the `QuicklookPanel` and `QuicklookView` displays a “loading” view. Use refreshCurrentPreviewItem() to reload the item once the URL content is available.
+     If the item isn’t available for preview, this property’s getter method should return nil. In this case, the ``QuicklookPanel`` and ``QuicklookView`` displays a “loading” view. Use refreshCurrentPreviewItem() to reload the item once the URL content is available.
      */
     var previewItemURL: URL? { get }
     /**
@@ -50,7 +51,7 @@ public protocol QuicklookPreviewable {
           
      The system invokes this optional property when the preview panel opens or closes to provide a zoom effect.
      
-     `NSView` and `NSCollectionViewItem` conforming to `QuicklookPreviewable` provide their frame as default value of their `frame`.
+     ``AppKit/NSView`` and ``AppKit/NSCollectionViewItem`` conforming to `QuicklookPreviewable` provide their frame as default value.
      */
     var previewItemFrame: CGRect? { get }
     /**
@@ -58,7 +59,7 @@ public protocol QuicklookPreviewable {
           
      The system invokes this optional property when the preview panel opens or closes to provide a transition image.
      
-     `NSView`, `NSCollectionViewItem` and `NSImageView` conforming to `QuicklookPreviewable` provide default values.
+     ``AppKit/NSView`` and ``AppKit/NSCollectionViewItem`` conforming to `QuicklookPreviewable` provide default values.
      */
     var previewItemTransitionImage: NSImage? { get }
     /**

@@ -9,10 +9,16 @@ import AppKit
 import FZSwiftUtils
 
 public protocol NSTableViewQuicklookProvider {
+    /**
+     Asks your data source object for a quicklook preview that corresponds to the specified row in the table view.
+     */
     func tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int) -> QuicklookPreviewable?
 }
 
 extension NSTableViewQuicklookProvider {
+    /**
+     Asks your data source object for a quicklook preview that corresponds to the specified row in the table view.
+     */
     public func tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int) -> QuicklookPreviewable? {
         if let rowView = tableView.rowView(atRow: row, makeIfNecessary: false), let preview = rowView.cellViews.first(where: {$0.quicklookPreview != nil})?.quicklookPreview {
             return QuicklookPreviewItem(preview, view: rowView)

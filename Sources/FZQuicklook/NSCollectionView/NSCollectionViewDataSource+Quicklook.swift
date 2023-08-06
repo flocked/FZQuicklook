@@ -10,12 +10,15 @@ import FZSwiftUtils
 
 public protocol NSCollectionViewQuicklookProvider {
     /**
-     Asks your data source object for a quicklook preview that corresponds to the specified item in the collection view.
+     Asks your data source object for a quicklook preview that corresponds to the specified item in the collection view.     
      */
     func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable?
 }
 
 extension NSCollectionViewQuicklookProvider {
+    /**
+     Asks your data source object for a quicklook preview that corresponds to the specified item in the collection view.
+     */
     public func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
         if let item = collectionView.item(at: indexPath), let preview = item.quicklookPreview {
             return QuicklookPreviewItem(preview, view: item.view)

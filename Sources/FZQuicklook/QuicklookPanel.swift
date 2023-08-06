@@ -12,11 +12,12 @@ import Quartz
 /**
   QuicklookPanel presents Quick Look previews of files to a panel simliar to Finder's Quick Look.
 
-  Every application has a single shared instance of QuicklookPanel accessible through *shared*.
+  Every application has a single shared instance of QuicklookPanel accessible through ``shared``.
 
-  QuicklookPanel previews any object conforming to QLPreviable. The protocol requires a file URL *quicklookURL* and optionally a title *quicklookTitle*.
+  QuicklookPanel previews any object conforming to ``QuicklookPreviewable``. The protocol requires a file
+ URL to preview via  ``QuicklookPreviewable/previewItemURL`` and optionally a title  via  ``QuicklookPreviewable/previewItemTitle-65rix``.
 
-  ```
+  ```swift
  struct Item: QLPreviable {
  let quicklookURL: URL
  let quicklookTitle: String?
@@ -25,7 +26,7 @@ import Quartz
 
   NSCollectionView can present Quick Look previews of selected items that conform to QLPreviable.
 
-  ```
+  ```swift
   MyCollectionItem: NSCollectionViewItem, QLPreviable {
   var quicklookURL: URL
   var quicklookTitle: String?
@@ -38,7 +39,7 @@ import Quartz
 
   NSTableView can  preset Quick Look previews of selected rows that conform to QLPreviable.
 
-  ```
+  ```swift
   MyTableRowView: NSTableRowView, QLPreviable {
   var quicklookURL: URL
   var quicklookTitle: String?
@@ -120,9 +121,9 @@ public class QuicklookPanel: NSResponder {
     public var panelDidCloseHandler: (()->())? = nil
     
     /**
-     Opens the quicklook panel and previews the items.
+     Opens the quicklook panel and previews the specified items.
      
-     To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use `keyDownResponder`.
+     To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use ``keyDownResponder``.
 
      - Parameters items: The items to preview.
      - Parameters currentItemIndex: The index of the current preview item. The default value is 0.
@@ -139,9 +140,9 @@ public class QuicklookPanel: NSResponder {
     }
     
     /**
-     Opens the quicklook panel and displays the previews thr `items`.
+     Opens the quicklook panel and displays the previews the current ``items``.
      
-     To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use `keyDownResponder`.
+     To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use ``keyDownResponder``.
      */
     public func open() {
         if previewPanel.isVisible == false {
@@ -160,7 +161,7 @@ public class QuicklookPanel: NSResponder {
     /**
      Closes the quicklook panel.
      
-     After closing the panel, both `keyDownResponder`and `panelDidCloseHandler` will be reset to nil.
+     After closing the panel, both ``keyDownResponder`` and ``panelDidCloseHandler`` will be reset to nil.
      */
     public func close() {
         if previewPanel.isVisible == true {

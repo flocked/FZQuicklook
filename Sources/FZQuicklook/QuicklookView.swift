@@ -18,7 +18,7 @@ public class QuicklookView: NSView {
     /**
      The item to preview.
 
-     Quick Look requires Items you wish to conform to the QuicklookPreviewable protocol. When you set this property, the QuicklookView loads the preview asynchronously. Due to this asynchronous behavior, don’t assume that the preview is ready immediately after assigning it to this property.
+     Quick Look requires Items you wish to conform to the ``QuicklookPreviewable`` protocol. When you set this property, the QuicklookView loads the preview asynchronously. Due to this asynchronous behavior, don’t assume that the preview is ready immediately after assigning it to this property.
      */
     public var item: QuicklookPreviewable? {
         get { (qlPreviewView.previewItem as? QuicklookPreviewItem)?.preview }
@@ -74,7 +74,7 @@ public class QuicklookView: NSView {
     /**
      Closes the view, releasing the current  item.
 
-     Once a QuicklookView is closed, it won’t accept any more preview items. You only need to call this method if shouldCloseWithWindow is set to false. If you don’t close a QuicklookView when you are done using it, your app will leak memory.
+     Once a QuicklookView is closed, it won’t accept any more preview items. You only need to call this method if ``shouldCloseWithWindow`` is set to false. If you don’t close a `QuicklookView when you are done using it, your app will leak memory.
      */
     public func close() {
         qlPreviewView.close()
