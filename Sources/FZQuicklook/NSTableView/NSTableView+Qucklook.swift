@@ -62,8 +62,8 @@ public extension NSTableView {
     
     /**
      Opens `QuicklookPanel` that presents quicklook previews for the rows at the specified indexes.
-     - Parameters rowIndexes: The indexes of the rows.
-     - Parameters current:
+     - Parameter rowIndexes: The indexes of the rows.
+     - Parameter current:
      */
     func quicklookRows(at rowIndexes: [Int], current: Int? = nil) {
         var previewables: [QuicklookPreviewable] = []

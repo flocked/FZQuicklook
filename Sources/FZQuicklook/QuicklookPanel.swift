@@ -123,8 +123,8 @@ public class QuicklookPanel: NSResponder {
      
      To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use ``keyDownResponder``.
 
-     - Parameters items: The items to preview.
-     - Parameters currentItemIndex: The index of the current preview item. The default value is 0.
+     - Parameter items: The items to preview.
+     - Parameter currentItemIndex: The index of the current preview item. The default value is 0.
 
      */
     public func present(_ items: [QuicklookPreviewable], currentItemIndex: Int = 0) {

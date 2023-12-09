@@ -55,8 +55,8 @@ public extension NSCollectionView {
     
     /**
      Opens `QuicklookPanel` that presents quicklook previews for the items at the specified indexPaths.
-     - Parameters indexPaths: The index paths the quicklook panel previews.
-     - Parameters current: 
+     - Parameter indexPaths: The index paths the quicklook panel previews.
+     - Parameter current: 
      */
     func quicklookItems(at indexPaths: Set<IndexPath>, current: IndexPath? = nil) {
         var previewables: [QuicklookPreviewable] = []
