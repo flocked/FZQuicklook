@@ -6,7 +6,7 @@ Create previews of files presented either in a panel similar to Finder's Quicklo
 
 ## QuicklookPreviewable
  A protocol that defines a set of properties you implement to make a preview that can be displayed by `QuicklookPanel` and `QuicklookView`. `URL`, `NSURL` and `AVURLAsset` conform to QuicklookPreviewable.
- ```
+ ```swift
  struct GalleryItem: QuicklookPreviewable {
  let title: String
  let imageURL: URL

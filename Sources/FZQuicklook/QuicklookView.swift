@@ -82,13 +82,17 @@ public class QuicklookView: NSView {
 
     /**
      Creates a preview view with the provided item and style.
-     - Parameter item: The item to preview.
-     - Parameter style: The desired style for the QuicklookView object.
-     - Returns: Returns a QuicklookView object with the designated item and style.
+     
+     - Parameters:
+        - item: The item to preview.
+        - style: The desired style for the QuicklookView object.
+        - frame: The frame rectangle for the initialized `PreviewView` object.
+
+     - Returns: Returns a `QuicklookView` object with the designated item, style and frame.
 
      */
-    public init(item: QuicklookPreviewable, style _: QLPreviewViewStyle = .normal) {
-        super.init(frame: .zero)
+    public init(item: QuicklookPreviewable, style _: QLPreviewViewStyle = .normal, frame: NSRect) {
+        super.init(frame: frame)
         self.item = item
     }
 
@@ -97,7 +101,7 @@ public class QuicklookView: NSView {
         sharedInit()
     }
 
-    public required init?(coder: NSCoder) {
+    internal required init?(coder: NSCoder) {
         super.init(coder: coder)
         sharedInit()
     }

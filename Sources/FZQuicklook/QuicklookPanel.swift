@@ -51,9 +51,7 @@ import Quartz
   ```
   */
 public class QuicklookPanel: NSResponder {
-    /**
-     The singleton quicklook panel instance.
-     */
+    /// The singleton quicklook panel instance.
     public static let shared = QuicklookPanel()
 
     /// The items the quicklook panel is previewing.
@@ -172,7 +170,7 @@ public class QuicklookPanel: NSResponder {
     }
 
     /// Recomputes the preview of the current preview item.
-    public func refreshCurrentPreviewItem() {
+    public func refreshCurrentItem() {
         previewPanel.refreshCurrentPreviewItem()
     }
 
