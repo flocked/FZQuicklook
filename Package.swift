@@ -18,8 +18,5 @@ let package = Package(
         .target(
             name: "FZQuicklook",
             dependencies: ["FZSwiftUtils"]),
-        .testTarget(
-            name: "FZQuicklookTests",
-            dependencies: ["FZQuicklook"]),
     ]
 )
