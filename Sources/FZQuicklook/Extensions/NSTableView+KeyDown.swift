@@ -30,12 +30,14 @@ internal extension NSTableView {
                     return nil
                 } else {
                     if QuicklookPanel.shared.isVisible {
-                        let previousSelectedRowIndexes = self.selectedRowIndexes
-                        self.keyDown(with: event)
-                        if self.selectedRowIndexes != previousSelectedRowIndexes {
-                            self.quicklookSelectedRows()
+                        let currentSelectedRowIndexes = self.selectedRowIndexes
+                        if currentSelectedRowIndexes.count <= 1 {
+                            self.keyDown(with: event)
+                            if self.selectedRowIndexes != currentSelectedRowIndexes {
+                                self.quicklookSelectedRows()
+                            }
+                            return nil
                         }
-                        return nil
                     }
                 }
                 return event

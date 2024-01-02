@@ -8,7 +8,7 @@
 
 import AppKit
 
-internal extension NSTableRowView {
+extension NSTableRowView {
     /**
      The array of cell views embedded in the current row.
 

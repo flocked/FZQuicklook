@@ -57,7 +57,7 @@ public extension NSTableView {
      Opens `QuicklookPanel` that presents quicklook previews of the selected rows.
      */
     func quicklookSelectedRows() {
-        self.quicklookRows(at: Array(self.selectedRowIndexes))
+        self.quicklookRows(at: self.selectedRowIndexes.sorted())
     }
     
     /**
