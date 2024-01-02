@@ -108,14 +108,11 @@ public class QuicklookPanel: NSResponder {
      The responder to handle keyDown events.
 
      The responder that handles events whenever the user presses a key when the panel is open.
-
      */
     public weak var keyDownResponder: NSResponder? = nil
     
     
-    /**
-     The handler gets called when the panel did close.
-     */
+    /// The handler gets called when the panel did close.
     public var panelDidCloseHandler: (()->())? = nil
     
     /**
@@ -160,7 +157,7 @@ public class QuicklookPanel: NSResponder {
     /**
      Closes the quicklook panel.
      
-     After closing the panel, both ``keyDownResponder`` and ``panelDidCloseHandler`` will be reset to nil.
+     After closing the panel, both ``keyDownResponder`` and ``panelDidCloseHandler`` will be reset to `nil`.
      */
     public func close() {
         if previewPanel.isVisible == true {
@@ -178,7 +175,7 @@ public class QuicklookPanel: NSResponder {
     /**
      Enters the panel in full screen mode.
 
-     - Returns: true if the panel was able to enter full screen mode; otherwise, false.
+     - Returns: `true` if the panel was able to enter full screen mode; otherwise, `false`.
      */
     public func enterFullScreen() -> Bool {
         return previewPanel.enterFullScreenMode(nil)
@@ -198,10 +195,10 @@ public class QuicklookPanel: NSResponder {
         return previewPanel.isInFullScreenMode
     }
     
-    internal var needsReload = false
-    internal weak var itemsProviderWindow: NSWindow? = nil
+    var needsReload = false
+    weak var itemsProviderWindow: NSWindow? = nil
     
-    internal func reset() {
+    func reset() {
         items.removeAll()
         itemsProviderWindow = nil
         keyDownResponder = nil
@@ -209,7 +206,7 @@ public class QuicklookPanel: NSResponder {
         panelDidCloseHandler = nil
     }
     
-    internal var _items: [QuicklookPreviewItem] = [] {
+    var _items: [QuicklookPreviewItem] = [] {
         didSet {
             if isVisible {
                 self.previewPanel.reloadData()
@@ -241,7 +238,7 @@ public class QuicklookPanel: NSResponder {
         self.reset()
     }
 
-    internal var previewPanel: QLPreviewPanel {
+    var previewPanel: QLPreviewPanel {
         QLPreviewPanel.shared()
     }
 
@@ -251,7 +248,7 @@ public class QuicklookPanel: NSResponder {
     }
 
     @available(*, unavailable)
-    internal required init?(coder _: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

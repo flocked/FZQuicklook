@@ -8,7 +8,7 @@
 import AppKit
 import FZSwiftUtils
 
-public extension NSTableView {
+extension NSTableView {
     /**
      A Boolean value that indicates whether the user can quicklook selected rows by pressing space bar.
      
@@ -46,9 +46,9 @@ public extension NSTableView {
     }
      ```
      */
-    var isQuicklookPreviewable: Bool {
-        get { getAssociatedValue(key: "NSTableView_isQuicklookPreviewable", object: self, initialValue: false) }
-        set {  set(associatedValue: newValue, key: "NSTableView_isQuicklookPreviewable", object: self)
+    public var isQuicklookPreviewable: Bool {
+        get { getAssociatedValue(key: "isQuicklookPreviewable", object: self, initialValue: false) }
+        set {  set(associatedValue: newValue, key: "isQuicklookPreviewable", object: self)
             self.setupKeyDownMonitor()
         }
     }
@@ -56,7 +56,7 @@ public extension NSTableView {
     /**
      Opens `QuicklookPanel` that presents quicklook previews of the selected rows.
      */
-    func quicklookSelectedRows() {
+    public func quicklookSelectedRows() {
         self.quicklookRows(at: self.selectedRowIndexes.sorted())
     }
     
@@ -65,7 +65,7 @@ public extension NSTableView {
      - Parameter rowIndexes: The indexes of the rows.
      - Parameter current:
      */
-    func quicklookRows(at rowIndexes: [Int], current: Int? = nil) {
+    public func quicklookRows(at rowIndexes: [Int], current: Int? = nil) {
         var previewables: [QuicklookPreviewable] = []
         var currentIndex = 0
         for row in rowIndexes {
@@ -88,7 +88,7 @@ public extension NSTableView {
         }
     }
     
-    internal func quicklookPreviewable(for row: Int) -> QuicklookPreviewable? {
+    func quicklookPreviewable(for row: Int) -> QuicklookPreviewable? {
         return (self.dataSource as? NSTableViewQuicklookProvider)?.tableView(self, quicklookPreviewForRow: row)
     }
 }

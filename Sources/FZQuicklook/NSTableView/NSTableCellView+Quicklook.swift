@@ -9,17 +9,17 @@ import AppKit
 import FZSwiftUtils
 
 
-public extension NSTableCellView {
+extension NSTableCellView {
     /**
-     The quicklook preview for the ce,,.
+     The quicklook preview for the table cell.
      
      To present the preview use `NSTableView` ``AppKit/NSTableView/quicklookSelectedRows()`` or ``AppKit/NSTableView/quicklookRows(at:current:)``.
      
-     Make sure to reset it's value inside ``prepareForReuse()``.
+     Make sure to reset it's value inside `prepareForReuse()`.
      */
-    var quicklookPreview: QuicklookPreviewable? {
-        get { getAssociatedValue(key: "NSCollectionView_isQuicklookPreviewable", object: self, initialValue: nil) }
-        set {  set(associatedValue: newValue, key: "NSCollectionView_isQuicklookPreviewable", object: self)
+    public var quicklookPreview: QuicklookPreviewable? {
+        get { getAssociatedValue(key: "quicklookPreview", object: self, initialValue: nil) }
+        set {  set(associatedValue: newValue, key: "quicklookPreview", object: self)
             if newValue != nil {
                 self.tableView?.isQuicklookPreviewable = true
             }

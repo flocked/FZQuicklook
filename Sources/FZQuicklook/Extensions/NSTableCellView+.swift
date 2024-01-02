@@ -7,7 +7,7 @@
 
 import AppKit
 
-internal extension NSTableCellView {
+extension NSTableCellView {
     /**
      The table view this cell is currently displaying.
      */

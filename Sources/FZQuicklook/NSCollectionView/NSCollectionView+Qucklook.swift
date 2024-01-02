@@ -8,7 +8,7 @@
 import AppKit
 import FZSwiftUtils
 
-public extension NSCollectionView {
+extension NSCollectionView {
     /**
      A Boolean value that indicates whether the user can quicklook preview selected items by pressing space bar.
      
@@ -46,9 +46,9 @@ public extension NSCollectionView {
      }
      ```
      */
-    var isQuicklookPreviewable: Bool {
-        get { getAssociatedValue(key: "NSCollectionView_isQuicklookPreviewable", object: self, initialValue: false) }
-        set {  set(associatedValue: newValue, key: "NSCollectionView_isQuicklookPreviewable", object: self)
+    public var isQuicklookPreviewable: Bool {
+        get { getAssociatedValue(key: "isQuicklookPreviewable", object: self, initialValue: false) }
+        set {  set(associatedValue: newValue, key: "isQuicklookPreviewable", object: self)
             self.setupKeyDownMonitor()
         }
     }
@@ -58,7 +58,7 @@ public extension NSCollectionView {
      - Parameter indexPaths: The index paths the quicklook panel previews.
      - Parameter current: 
      */
-    func quicklookItems(at indexPaths: [IndexPath], current: IndexPath? = nil) {
+    public func quicklookItems(at indexPaths: [IndexPath], current: IndexPath? = nil) {
         var previewables: [QuicklookPreviewable] = []
         var currentIndex = 0
         for indexPath in indexPaths {
@@ -89,12 +89,12 @@ public extension NSCollectionView {
     /**
      Opens `QuicklookPanel` that presents quicklook previews of the selected items.
      */
-    func quicklookSelectedItems() {
+    public func quicklookSelectedItems() {
         guard selectionIndexPaths.isEmpty == false else { return }
         quicklookItems(at: Array(selectionIndexPaths).sorted())
     }
     
-    internal func quicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
+    func quicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
      //   ((self.dataSource as? KeyValueCodable)?.call("quicklookPreviewForItemAt", values: [self, indexPath]) as? QuicklookPreviewable)
         return (self.dataSource as? NSCollectionViewQuicklookProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
     }

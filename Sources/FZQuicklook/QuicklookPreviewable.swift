@@ -12,10 +12,11 @@ import AVKit
 import FZSwiftUtils
 
 /**
- A protocol that defines a set of properties you implement to make a preview that can be displayed by ``QuicklookPanel`` and ``QuicklookView`.
+ A type that can be previewed  by ``QuicklookPanel`` and ``QuicklookView`.
  
  `URL`, `NSURL` and `AVURLAsset` conform to `QuicklookPreviewable`.
  
+ Example conformance:
  ```swift
  struct GalleryItem: Hashable, QuicklookPreviewable {
      let title: String
@@ -23,12 +24,12 @@ import FZSwiftUtils
      
      // The file url for quicklook preview.
      let previewItemURL: URL? {
-     return imageURL
+        return imageURL
      }
      
-    // The tile for quicklook preview.
+    // The title for quicklook preview.
      let previewItemTitle: String? {
-     return title
+        return title
      }
  }
  
