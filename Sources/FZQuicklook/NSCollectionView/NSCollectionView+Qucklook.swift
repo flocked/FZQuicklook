@@ -58,7 +58,7 @@ public extension NSCollectionView {
      - Parameter indexPaths: The index paths the quicklook panel previews.
      - Parameter current: 
      */
-    func quicklookItems(at indexPaths: Set<IndexPath>, current: IndexPath? = nil) {
+    func quicklookItems(at indexPaths: [IndexPath], current: IndexPath? = nil) {
         var previewables: [QuicklookPreviewable] = []
         var currentIndex = 0
         Swift.print(indexPaths)
@@ -92,7 +92,7 @@ public extension NSCollectionView {
      */
     func quicklookSelectedItems() {
         guard selectionIndexPaths.isEmpty == false else { return }
-        quicklookItems(at: selectionIndexPaths)
+        quicklookItems(at: Array(selectionIndexPaths).sorted())
     }
     
     internal func quicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
