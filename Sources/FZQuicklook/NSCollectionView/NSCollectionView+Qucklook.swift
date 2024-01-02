@@ -61,6 +61,7 @@ public extension NSCollectionView {
     func quicklookItems(at indexPaths: Set<IndexPath>, current: IndexPath? = nil) {
         var previewables: [QuicklookPreviewable] = []
         var currentIndex = 0
+        Swift.print(indexPaths)
         for indexPath in indexPaths {
             if let previewable = self.quicklookPreviewable(for: indexPath) {
                 previewables.append(previewable)

@@ -130,6 +130,7 @@ public class QuicklookPanel: NSResponder {
     public func present(_ items: [QuicklookPreviewable], currentItemIndex: Int = 0) {
         DispatchQueue.main.async {
             self.items = items
+            self.currentItemIndex = 0
             self.open()
             if items.isEmpty == false {
                 self.currentItemIndex = currentItemIndex
