@@ -1,21 +1,19 @@
 # ``QuicklookPanel``
 
-Extensions for `NSTableView`.
-
 ## Topics
 
-### Creating a Preview View
+### Accessing The Preview Panel
 
 - ``shared``
 
-### Managing the Preview Items
+### Managing The Preview Items
 
 - ``items``
 - ``currentItemIndex``
 - ``currentItem``
 - ``refreshCurrentItem()``
 
-### Managing the panel
+### Managing The Panel
 
 - ``open()``
 - ``close()``
@@ -25,7 +23,7 @@ Extensions for `NSTableView`.
 - ``panelDidCloseHandler``
 
 
-### Managing keyboard events
+### Managing Keyboard Events
 
 - ``keyDownResponder``
 
@@ -34,3 +32,9 @@ Extensions for `NSTableView`.
 - ``enterFullScreen()``
 - ``exitFullScreen()``
 - ``isInFullScreen``
+
+### Protocol Implementations
+
+- ``acceptsPreviewPanelControl(_:)``
+- ``beginPreviewPanelControl(_:)``
+- ``endPreviewPanelControl(_:)``

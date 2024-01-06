@@ -1,7 +1,5 @@
 # ``QuicklookView``
 
-Extensions for `NSTableView`.
-
 ## Topics
 
 ### Creating a Preview View
@@ -9,13 +7,17 @@ Extensions for `NSTableView`.
 - ``init(frame:)``
 - ``init(item:style:frame:)``
 
-### Displaying a preview
+### Configurating The Style
+
+- ``style``
+
+### Displaying A Preview
 
 - ``item``
 - ``refreshItem()``
 - ``autostarts``
 
-### Closing a preview
+### Closing a Preview
 
 - ``shouldCloseWithWindow``
 - ``close()``     
