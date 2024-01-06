@@ -1,10 +1,12 @@
 # ``FZQuicklook``
 
-A collection of classes and extensions for `NSCollectionView` and `NSTableView`, many of them ported from modern `UIKit`.
+Create previews of files presented either in a panel similar to Finder's Quicklook or in a view.
 
 ## Overview
 
-`AdvancedCollectionTableView` provides a collection of classes and extensions for `NSCollectionView` and `NSTableView`.
+`FZQuicklook`lets you preview files conforming to `QuicklookPreviewable.
+
+The files can be previewed in `QuicklookView` and `QuicklookPanel` and panel simliar to Finder`s Quicklook panel.
 
 ## Topics
 
