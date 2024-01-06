@@ -1,6 +1,6 @@
 # NSTableView
 
-Extensions for `NSTableView`.
+Quicklook previews of table view cells.
 
 ## Topics
 
@@ -10,6 +10,6 @@ Extensions for `NSTableView`.
 - ``AppKit/NSTableView/quicklookSelectedRows()``
 - ``AppKit/NSTableView/quicklookRows(at:current:)``
 
-### Table cell preview
+### Providing a table cell preview
 
 - ``AppKit/NSTableCellView/quicklookPreview``

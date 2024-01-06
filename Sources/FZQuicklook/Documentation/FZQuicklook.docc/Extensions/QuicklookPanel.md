@@ -6,32 +6,31 @@ Extensions for `NSTableView`.
 
 ### Creating a Preview View
 
-``shared``
-``init(item:style:frame:)``
+- ``shared``
 
 ### Managing the Preview Items
 
-``items``
-``currentItemIndex``
-``currentItem``
-``refreshCurrentItem()``
+- ``items``
+- ``currentItemIndex``
+- ``currentItem``
+- ``refreshCurrentItem()``
 
 ### Managing the panel
 
-``open()``
-``close()``
-``present(_:currentItemIndex:)``
-``isVisible``
-``hidesOnAppDeactivate``
-``panelDidCloseHandler``
+- ``open()``
+- ``close()``
+- ``present(_:currentItemIndex:)``
+- ``isVisible``
+- ``hidesOnAppDeactivate``
+- ``panelDidCloseHandler``
 
 
 ### Managing keyboard events
 
-``keyDownResponder``
+- ``keyDownResponder``
 
 ### Managing Full Screen Mode
 
-``enterFullScreen()``
-``exitFullScreen()``
-``isInFullScreen``
+- ``enterFullScreen()``
+- ``exitFullScreen()``
+- ``isInFullScreen``

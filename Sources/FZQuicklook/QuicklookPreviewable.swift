@@ -12,11 +12,12 @@ import AVKit
 import FZSwiftUtils
 
 /**
- A type that can be previewed  by ``QuicklookPanel`` and ``QuicklookView`.
+ A type that can be previewed  by ``QuicklookPanel`` and ``QuicklookView``.
  
  `URL`, `NSURL` and `AVURLAsset` conform to `QuicklookPreviewable`.
  
- Example conformance:
+ Example:
+ 
  ```swift
  struct GalleryItem: Hashable, QuicklookPreviewable {
      let title: String
@@ -52,7 +53,7 @@ public protocol QuicklookPreviewable {
           
      The system invokes this optional property when the preview panel opens or closes to provide a zoom effect.
      
-     ``AppKit/NSView`` and ``AppKit/NSCollectionViewItem`` conforming to `QuicklookPreviewable` provide their frame as default value.
+     `NSView` and `NSCollectionViewItem` conforming to `QuicklookPreviewable` provide their frame as default value.
      */
     var previewItemFrame: CGRect? { get }
     /**
@@ -60,7 +61,7 @@ public protocol QuicklookPreviewable {
           
      The system invokes this optional property when the preview panel opens or closes to provide a transition image.
      
-     ``AppKit/NSView`` and ``AppKit/NSCollectionViewItem`` conforming to `QuicklookPreviewable` provide default values.
+     `NSView` and `NSCollectionViewItem` conforming to `QuicklookPreviewable` provide default values.
      */
     var previewItemTransitionImage: NSImage? { get }
     /**

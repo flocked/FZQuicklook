@@ -1,6 +1,6 @@
 # NSCollectionView
 
-Extensions for `NSTableView`.
+Quicklook previews of collection view items.
 
 ## Topics
 
@@ -10,6 +10,6 @@ Extensions for `NSTableView`.
 - ``AppKit/NSCollectionView/quicklookSelectedItems()``
 - ``AppKit/NSCollectionView/quicklookItems(at:current:)``
 
-### Item preview
+### Providing an item preview
 
 - ``AppKit/NSCollectionViewItem/quicklookPreview``
