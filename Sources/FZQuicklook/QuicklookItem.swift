@@ -11,7 +11,7 @@ import QuickLookUI
 /**
  An item that is previewable by `QuicklookPanel` and `QuicklookView`.
  */
-public struct QuicklookItem: QuicklookPreviewable, Hashable {
+open class QuicklookItem: QuicklookPreviewable {
      /**
      The URL of the item to preview.
      
@@ -21,23 +21,23 @@ public struct QuicklookItem: QuicklookPreviewable, Hashable {
      
      If the item isn’t available for preview, this property’s getter method should return nil. In this case, the `QuicklookPanel` displays a “loading” view. Use refreshCurrentPreviewItem() to reload the item once the URL content is available.
      */
-    public var previewItemURL: URL?
+    open var previewItemURL: URL?
     /**
      The item frame on the screen.
           
      The system invokes this optional property when the preview panel opens or closes to provide a zoom effect.
      */
-    public var previewItemFrame: CGRect?
+    open var previewItemFrame: CGRect?
     /**
      The transition image for the item.
           
      The system invokes this optional property when the preview panel opens or closes to provide a transition image.
      */
-    public var previewItemTransitionImage: NSImage?
+    open var previewItemTransitionImage: NSImage?
     /**
      The title to display for the preview item.
      */
-    public var previewItemTitle: String?
+    open var previewItemTitle: String?
 
     public init(url: URL, frame: CGRect? = nil, title: String? = nil, transitionImage: NSImage? = nil) {
         self.previewItemURL = url
@@ -46,3 +46,18 @@ public struct QuicklookItem: QuicklookPreviewable, Hashable {
         self.previewItemTransitionImage = transitionImage
     }
 }
+
+/*
+extension QuicklookItem: Hashable {
+    public static func == (lhs: QuicklookItem, rhs: QuicklookItem) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(previewItemURL)
+        hasher.combine(previewItemFrame)
+        hasher.combine(previewItemTitle)
+        hasher.combine(previewItemTransitionImage)
+    }
+}
+*/
