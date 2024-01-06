@@ -124,7 +124,7 @@ public class QuicklookView: NSView {
 
     /**
      Creates a preview view with the provided item and style.
-     ````
+
      - Parameters:
         - item: The item to preview.
         - style: The desired style for the QuicklookView object.
@@ -153,12 +153,3 @@ public class QuicklookView: NSView {
         addSubview(withConstraint: qlPreviewView)
     }
 }
-
-
-
-/*
- Provide previews
- 
- Present previews
- 
- */

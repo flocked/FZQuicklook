@@ -6,6 +6,7 @@ Create previews of files presented either in a panel similar to Finder's Quicklo
 
 ## QuicklookPreviewable
  A protocol that defines a set of properties you implement to make a preview that can be displayed by `QuicklookPanel` and `QuicklookView`. `URL`, `NSURL` and `AVURLAsset` conform to QuicklookPreviewable.
+ 
  ```swift
  struct GalleryItem: QuicklookPreviewable {
  let title: String
@@ -25,14 +26,15 @@ Create previews of files presented either in a panel similar to Finder's Quicklo
 
 ## QuicklookPanel
 Presents previews of files in a panel simliar to Finder`s Quicklook. 
-```
+
+```swift
 QuicklookPanel.shared.present(fileURLs)
 ```
 
 ## QuicklookView
  A preview of a file that you can embed into your view hierarchy.
  
-```
+```swift
 let quicklookView = QuicklookView(content: URL(fileURLWithPath: imageFileURL)
 ```
 
@@ -41,18 +43,21 @@ NSCollectionView/NSTableView `isQuicklookPreviewable` enables quicklook of items
 
 There are several ways to provide quicklook previews:
 - NSCollectionViewItems's & NSTableCellView's `var quicklookPreview: QuicklookPreviewable?`
-```
+
+```swift
 collectionViewItem.quicklookPreview = URL(fileURLWithPath: "someFile.png")
 ```
 - NSCollectionView's datasource `collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath)` & NSTableView's datasource `tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int)`
-```
+
+```swift
 func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
     let galleryItem = galleryItems[indexPath.item]
     return galleryItem.fileURL
 }
 ```
 - A NSCollectionViewDiffableDataSource & NSTableViewDiffableDataSource with an ItemIdentifierType conforming to `QuicklookPreviewable`
-```
+
+```swift
 struct GalleryItem: QuicklookPreviewable {
     let title: String
     let imageURL: URL

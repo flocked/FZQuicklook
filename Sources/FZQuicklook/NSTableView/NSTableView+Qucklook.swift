@@ -18,9 +18,9 @@ extension NSTableView {
      tableCell.quicklookPreview = URL(fileURLWithPath: "someFile.png")
      // …
      tableView.quicklookSelectedCells()
-     ```swift
-     - NSTableView's datasource `tableView(_:,  quicklookPreviewForRow:)`
      ```
+     - NSTableView's datasource `tableView(_:,  quicklookPreviewForRow:)`
+     ```swift
      func tableView(_ tableView: NSTableView, quicklookPreviewForRow row: Int) -> QuicklookPreviewable? {
         let galleryItem = galleryItems[row]
         return galleryItem.fileURL
