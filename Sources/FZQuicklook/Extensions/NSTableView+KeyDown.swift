@@ -8,14 +8,13 @@
 import AppKit
 import FZSwiftUtils
 
-
 // Configurates a monitor for keyDown events on table views with `isQuicklookPreviewable` enabled. A spacebar event will open the `QuicklookPanel`.
 extension NSTableView {
     var keyDownMonitor: Any? {
         get { getAssociatedValue(key: "NSTableView_keyDownMonitor", object: self, initialValue: nil) }
-        set {  set(associatedValue: newValue, key: "NSTableView_keyDownMonitor", object: self) }
+        set { set(associatedValue: newValue, key: "NSTableView_keyDownMonitor", object: self) }
     }
-    
+
     func setupKeyDownMonitor() {
         if isQuicklookPreviewable {
             guard keyDownMonitor == nil else { return }
@@ -42,7 +41,7 @@ extension NSTableView {
                 }
                 return event
             })
-        } else if let keyDownMonitor = self.keyDownMonitor {
+        } else if let keyDownMonitor = keyDownMonitor {
             NSEvent.removeMonitor(keyDownMonitor)
             self.keyDownMonitor = nil
         }

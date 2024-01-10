@@ -1,6 +1,6 @@
 //
 //  QuicklookPanel.swift
-//  
+//
 //
 //  Created by Florian Zand on 08.05.22.
 //
@@ -56,31 +56,30 @@ public class QuicklookPanel: NSResponder {
 
     /// The items the quicklook panel is previewing.
     public var items: [QuicklookPreviewable] {
-        get { _items.compactMap({$0.preview}) }
-        set { _items = newValue.compactMap({ QuicklookPreviewItem($0) }) }
+        get { _items.compactMap(\.preview) }
+        set { _items = newValue.compactMap { QuicklookPreviewItem($0) } }
     }
-    
+
     /**
      A Boolean value that indicates whether the panel is visible onscreen (even when it’s obscured by other windows).
 
      The value of this property is `true` when the panel is onscreen (even if it’s obscured by other windows); otherwise, `false.
      */
     public var isVisible: Bool {
-        return previewPanel.isVisible
+        previewPanel.isVisible
     }
 
     /**
      The index of the current preview item.
-          
+
      Changing the index will change to current previewed item.
-     
+
      The value is `NSNotFound` if there’s no current preview item.
      */
     public var currentItemIndex: Int {
         get { previewPanel.currentPreviewItemIndex }
         set { previewPanel.currentPreviewItemIndex = newValue }
     }
-    
 
     /**
      The currently previewed item.
@@ -103,21 +102,20 @@ public class QuicklookPanel: NSResponder {
         get { previewPanel.hidesOnDeactivate }
         set { previewPanel.hidesOnDeactivate = newValue }
     }
-    
+
     /**
      The responder to handle keyDown events.
 
      The responder that handles events whenever the user presses a key when the panel is open.
      */
     public weak var keyDownResponder: NSResponder? = nil
-    
-    
+
     /// The handler gets called when the panel did close.
-    public var panelDidCloseHandler: (()->())? = nil
-    
+    public var panelDidCloseHandler: (() -> Void)? = nil
+
     /**
      Opens the quicklook panel and previews the specified items.
-     
+
      To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use ``keyDownResponder``.
 
      - Parameter items: The items to preview.
@@ -134,10 +132,10 @@ public class QuicklookPanel: NSResponder {
             }
         }
     }
-    
+
     /**
      Opens the quicklook panel and displays the previews the current ``items``.
-     
+
      To respond to keyDown events (e.g. to advance the selection of a table view or collection view), use ``keyDownResponder``.
      */
     public func open() {
@@ -146,24 +144,24 @@ public class QuicklookPanel: NSResponder {
             NSApp.nextResponder = self
             previewPanel.updateController()
             previewPanel.makeKeyAndOrderFront(nil)
-            
+
             if needsReload {
                 needsReload = false
-                self.previewPanel.reloadData()
+                previewPanel.reloadData()
             }
         }
     }
 
     /**
      Closes the quicklook panel.
-     
+
      After closing the panel, both ``keyDownResponder`` and ``panelDidCloseHandler`` will be reset to `nil`.
      */
     public func close() {
         if previewPanel.isVisible == true {
             previewPanel.close()
             reset()
-          //  previewPanel.orderOut(nil)
+            //  previewPanel.orderOut(nil)
         }
     }
 
@@ -178,7 +176,7 @@ public class QuicklookPanel: NSResponder {
      - Returns: `true` if the panel was able to enter full screen mode; otherwise, `false`.
      */
     public func enterFullScreen() -> Bool {
-        return previewPanel.enterFullScreenMode(nil)
+        previewPanel.enterFullScreenMode(nil)
     }
 
     /// Exists the panels full screen mode.
@@ -192,12 +190,12 @@ public class QuicklookPanel: NSResponder {
      The value is true if the panel is currently open and in full screen mode; otherwise it’s false.
      */
     public var isInFullScreen: Bool {
-        return previewPanel.isInFullScreenMode
+        previewPanel.isInFullScreenMode
     }
-    
+
     var needsReload = false
     weak var itemsProviderWindow: NSWindow? = nil
-    
+
     func reset() {
         items.removeAll()
         itemsProviderWindow = nil
@@ -205,7 +203,7 @@ public class QuicklookPanel: NSResponder {
         needsReload = false
         panelDidCloseHandler = nil
     }
-    
+
     var _items: [QuicklookPreviewItem] = [] {
         didSet {
             if isVisible {
@@ -220,9 +218,9 @@ public class QuicklookPanel: NSResponder {
             }
         }
     }
-        
+
     override public func acceptsPreviewPanelControl(_: QLPreviewPanel!) -> Bool {
-        return true
+        true
     }
 
     override public func beginPreviewPanelControl(_ panel: QLPreviewPanel!) {
@@ -233,18 +231,18 @@ public class QuicklookPanel: NSResponder {
     override public func endPreviewPanelControl(_ panel: QLPreviewPanel!) {
         panel.dataSource = nil
         panel.delegate = nil
-        
-        self.panelDidCloseHandler?()
-        self.reset()
+
+        panelDidCloseHandler?()
+        reset()
     }
 
     var previewPanel: QLPreviewPanel {
         QLPreviewPanel.shared()
     }
 
-    override internal init() {
+    override init() {
         super.init()
-        self.hidesOnAppDeactivate = true
+        hidesOnAppDeactivate = true
     }
 
     @available(*, unavailable)
@@ -256,7 +254,7 @@ public class QuicklookPanel: NSResponder {
 extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     public func previewPanel(_: QLPreviewPanel!, handle event: NSEvent!) -> Bool {
         if event.type == .keyUp, event.keyCode == 53 {
-            self.close()
+            close()
             return true
         }
         if let keyDownResponder = keyDownResponder, event.type == .keyUp {
@@ -284,15 +282,14 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
     }
 
     public func previewPanel(_: QLPreviewPanel!, previewItemAt index: Int) -> QLPreviewItem! {
-        return _items[index]
+        _items[index]
     }
 
     public func numberOfPreviewItems(in _: QLPreviewPanel!) -> Int {
-        return _items.count
+        _items.count
     }
 
     public func previewPanel(_: QLPreviewPanel!, transitionImageFor item: QLPreviewItem!, contentRect _: UnsafeMutablePointer<NSRect>!) -> Any! {
-        return (item as? QuicklookPreviewable)?.previewItemTransitionImage
+        (item as? QuicklookPreviewable)?.previewItemTransitionImage
     }
-    
 }

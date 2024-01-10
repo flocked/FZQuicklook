@@ -21,13 +21,13 @@ public class QuicklookView: NSView {
         get { (qlPreviewView.previewItem as? QuicklookPreviewItem)?.preview }
         set {
             if let newValue = newValue {
-                qlPreviewView.previewItem =  QuicklookPreviewItem(newValue)
+                qlPreviewView.previewItem = QuicklookPreviewItem(newValue)
             } else {
                 qlPreviewView.previewItem = nil
             }
         }
     }
-    
+
     func replaceQLPreviewView(includingItem: Bool) {
         qlPreviewView.removeFromSuperview()
         let autostarts = autostarts
@@ -35,7 +35,7 @@ public class QuicklookView: NSView {
         let item = includingItem ? item : nil
         qlPreviewView = QLPreviewView(frame: .zero, style: style)
         self.autostarts = autostarts
-        self.shouldCloseWithWindow = shouldClose
+        shouldCloseWithWindow = shouldClose
         self.item = item
         addSubview(withConstraint: qlPreviewView)
     }
@@ -48,7 +48,7 @@ public class QuicklookView: NSView {
     public func refreshItem() {
         qlPreviewView.refreshPreviewItem()
     }
-    
+
     /// The style of the preview.
     public var style: QLPreviewViewStyle = .normal {
         didSet {
@@ -75,7 +75,7 @@ public class QuicklookView: NSView {
      */
     public var shouldCloseWithWindow: Bool {
         get { qlPreviewView.shouldCloseWithWindow }
-        set { 
+        set {
             guard newValue != shouldCloseWithWindow else { return }
             qlPreviewView.shouldCloseWithWindow = newValue
             // setupWindowObserver()
@@ -91,36 +91,36 @@ public class QuicklookView: NSView {
         qlPreviewView.close()
         isClosed = true
     }
-    
+
     var isClosed: Bool = false
     var windowObserver: NSKeyValueObservation? = nil
     var windowCloseObserver: NotificationToken? = nil
-    
+
     /*
-    func setupWindowCloseObserver() {
-        
-    }
-    
-    func setupWindowObserver() {
-        if shouldCloseWithWindow {
-            windowObserver = self.observeChanges(for: \.window) { [weak self] old, new in
-                guard let self = self, old != new else { return }
-                if let new = new {
-                    self.windowCloseObserver =    NotificationCenter.default.observe(NSWindow.willCloseNotification, object: new) { _ in
-                        self.isClosed = true
-                        self.windowCloseObserver = nil
-                        self.windowObserver = nil
-                    }
-                } else {
-                    self.isClosed = true
-                }
-            }
-        } else {
-            windowObserver = nil
-            windowCloseObserver = nil
-        }
-    }
-     */
+     func setupWindowCloseObserver() {
+
+     }
+
+     func setupWindowObserver() {
+         if shouldCloseWithWindow {
+             windowObserver = self.observeChanges(for: \.window) { [weak self] old, new in
+                 guard let self = self, old != new else { return }
+                 if let new = new {
+                     self.windowCloseObserver =    NotificationCenter.default.observe(NSWindow.willCloseNotification, object: new) { _ in
+                         self.isClosed = true
+                         self.windowCloseObserver = nil
+                         self.windowObserver = nil
+                     }
+                 } else {
+                     self.isClosed = true
+                 }
+             }
+         } else {
+             windowObserver = nil
+             windowCloseObserver = nil
+         }
+     }
+      */
 
     /**
      Creates a preview view with the provided item and style.

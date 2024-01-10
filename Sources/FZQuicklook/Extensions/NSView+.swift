@@ -1,10 +1,9 @@
 //
 //  NSView+.swift
-//  
+//
 //
 //  Created by Florian Zand on 25.05.23.
 //
-
 
 import AppKit
 
@@ -24,11 +23,11 @@ extension NSView {
      This rectangle defines the size and position of the view in its screen’s coordinate system.
      */
     var frameOnScreen: CGRect? {
-        return window?.convertToScreen(frameInWindow)
+        window?.convertToScreen(frameInWindow)
     }
-    
+
     static var currentContext: CGContext? {
-        return NSGraphicsContext.current?.cgContext
+        NSGraphicsContext.current?.cgContext
     }
 
     var renderedImage: NSImage {
@@ -42,12 +41,12 @@ extension NSView {
         image.unlockFocus()
         return image
     }
-    
-    func firstSuperview<V: NSView>(for viewClass: V.Type) -> V? {
-        return self.firstSuperview(where: {$0 is V}) as? V
+
+    func firstSuperview<V: NSView>(for _: V.Type) -> V? {
+        firstSuperview(where: { $0 is V }) as? V
     }
-    
-    func firstSuperview(where predicate: (NSView)->(Bool)) -> NSView? {
+
+    func firstSuperview(where predicate: (NSView) -> (Bool)) -> NSView? {
         if let superview = superview {
             if predicate(superview) == true {
                 return superview
@@ -56,16 +55,16 @@ extension NSView {
         }
         return nil
     }
-    
+
     @discardableResult
     func addSubview(withConstraint view: NSView) -> [NSLayoutConstraint] {
         addSubview(view)
         return view.constraint(to: self)
     }
-    
+
     func insertSubview(_ view: NSView, at index: Int) {
         guard index < self.subviews.count else { return }
-        var subviews = self.subviews
+        var subviews = subviews
         subviews.insert(view, at: index)
         self.subviews = subviews
     }

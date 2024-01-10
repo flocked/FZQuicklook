@@ -5,20 +5,20 @@ Create previews of files presented either in a panel similar to Finder's Quicklo
 **For a full documentation take a look at the** [Online Documentation](https://swiftpackageindex.com/flocked/FZQuicklook/documentation/).
 
 ## QuicklookPreviewable
- A protocol that defines a set of properties you implement to make a preview that can be displayed by `QuicklookPanel` and `QuicklookView`. `URL`, `NSURL` and `AVURLAsset` conform to QuicklookPreviewable.
+ A protocol that defines a set of properties you implement to make a preview that can be displayed by `QuicklookPanel` and `QuicklookView`. `URL`, `NSURL` and `AVURLAsset` conform to `QuicklookPreviewable`.
  
  ```swift
  struct GalleryItem: QuicklookPreviewable {
- let title: String
- let imageURL: URL
+    let title: String
+    let imageURL: URL
  
- var previewItemURL: URL? {
-    return imageURL
- }
+    var previewItemURL: URL? {
+        return imageURL
+    }
  
- var previewItemTitle: String? {
-    return title
- }
+    var previewItemTitle: String? {
+        return title
+    }
  }
  
  QuicklookPanel.shared.preset(aGalleryItem)
@@ -28,6 +28,7 @@ Create previews of files presented either in a panel similar to Finder's Quicklo
 Presents previews of files in a panel simliar to Finder`s Quicklook. 
 
 ```swift
+// URL is compatible `QuicklookPreviewable`
 QuicklookPanel.shared.present(fileURLs)
 ```
 
@@ -35,7 +36,7 @@ QuicklookPanel.shared.present(fileURLs)
  A preview of a file that you can embed into your view hierarchy.
  
 ```swift
-let quicklookView = QuicklookView(content: URL(fileURLWithPath: imageFileURL)
+let quicklookView = QuicklookView(content: fileURL)
 ```
 
 ## Quicklook for NSTableView & NSCollectionView
@@ -64,11 +65,11 @@ struct GalleryItem: QuicklookPreviewable {
     
     // The file url for quicklook preview.
     let previewItemURL: URL? {
-    return imageURL
+        return imageURL
     }
     
     let previewItemTitle: String? {
-    return title
+        return title
     }
 }
   

@@ -12,19 +12,19 @@ import FZSwiftUtils
 extension NSCollectionView {
     var keyDownMonitor: Any? {
         get { getAssociatedValue(key: "NSCollectionView_keyDownMonitor", object: self, initialValue: nil) }
-        set {  set(associatedValue: newValue, key: "NSCollectionView_keyDownMonitor", object: self) }
+        set { set(associatedValue: newValue, key: "NSCollectionView_keyDownMonitor", object: self) }
     }
-    
+
     var mouseDownMonitor: Any? {
         get { getAssociatedValue(key: "NSCollectionView_mouseDownMonitor", object: self, initialValue: nil) }
-        set {  set(associatedValue: newValue, key: "NSCollectionView_mouseDownMonitor", object: self) }
+        set { set(associatedValue: newValue, key: "NSCollectionView_mouseDownMonitor", object: self) }
     }
-    
+
     var selectionObserver: NSKeyValueObservation? {
         get { getAssociatedValue(key: "NSCollectionView_selectionObserver_", object: self, initialValue: nil) }
-        set {  set(associatedValue: newValue, key: "NSCollectionView_selectionObserver_", object: self) }
+        set { set(associatedValue: newValue, key: "NSCollectionView_selectionObserver_", object: self) }
     }
-    
+
     func setupKeyDownMonitor() {
         if isQuicklookPreviewable {
             guard keyDownMonitor == nil else { return }
@@ -51,15 +51,15 @@ extension NSCollectionView {
                 }
                 return event
             })
-        } else if let keyDownMonitor = self.keyDownMonitor {
+        } else if let keyDownMonitor = keyDownMonitor {
             NSEvent.removeMonitor(keyDownMonitor)
             self.keyDownMonitor = nil
         }
     }
-    
+
     func addSelectionObserver() {
-        if self.selectionObserver == nil {
-            self.selectionObserver = self.observeChanges(for: \.selectionIndexPaths, handler: { [weak self] old, new in
+        if selectionObserver == nil {
+            selectionObserver = observeChanges(for: \.selectionIndexPaths, handler: { [weak self] old, new in
                 guard let self = self else { return }
                 if QuicklookPanel.shared.isVisible {
                     if old != new, new.isEmpty == false {
@@ -71,51 +71,51 @@ extension NSCollectionView {
             })
         }
     }
-    
+
     func removeSelectionObserver() {
-        self.selectionObserver?.invalidate()
-        self.selectionObserver = nil
+        selectionObserver?.invalidate()
+        selectionObserver = nil
     }
-    
+
     func setupMouseDownMonitor() {
         /*
-        if isQuicklookPreviewable {
-            guard mouseDownMonitor == nil else { return }
-            mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown, handler: { [weak self] event in
-                guard let self = self else { return event }
-                
-                Swift.debugPrint("mouseMonitor window", event.window ?? "")
-                /*
-                if let window = event.window {
-                    let previousSelectionIndexPaths = self.selectionIndexPaths
-                    window.contentView?.mouseDown(with: event)
-                    if self.selectionIndexPaths != previousSelectionIndexPaths {
-                        self.quicklookSelectedItems()
-                    }
-                    return nil
-                }
-                */
-                
-                if let contentView = event.window?.contentView {
-                    let location = event.location(in: contentView)
-                    if let hitView = contentView.hitTest(location) {
-                        Swift.debugPrint("mouseMonitor hitview", hitView)
-                        let previousSelectionIndexPaths = self.selectionIndexPaths
-                        hitView.mouseDown(with: event)
-                        if self.selectionIndexPaths != previousSelectionIndexPaths {
-                            self.quicklookSelectedItems()
-                        }
-                        return nil
-                    }
-                    
-                }
+         if isQuicklookPreviewable {
+             guard mouseDownMonitor == nil else { return }
+             mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown, handler: { [weak self] event in
+                 guard let self = self else { return event }
 
-                return event
-            })
-        } else if let mouseDownMonitor = self.mouseDownMonitor {
-            NSEvent.removeMonitor(mouseDownMonitor)
-            self.mouseDownMonitor = nil
-        }
-         */
+                 Swift.debugPrint("mouseMonitor window", event.window ?? "")
+                 /*
+                 if let window = event.window {
+                     let previousSelectionIndexPaths = self.selectionIndexPaths
+                     window.contentView?.mouseDown(with: event)
+                     if self.selectionIndexPaths != previousSelectionIndexPaths {
+                         self.quicklookSelectedItems()
+                     }
+                     return nil
+                 }
+                 */
+
+                 if let contentView = event.window?.contentView {
+                     let location = event.location(in: contentView)
+                     if let hitView = contentView.hitTest(location) {
+                         Swift.debugPrint("mouseMonitor hitview", hitView)
+                         let previousSelectionIndexPaths = self.selectionIndexPaths
+                         hitView.mouseDown(with: event)
+                         if self.selectionIndexPaths != previousSelectionIndexPaths {
+                             self.quicklookSelectedItems()
+                         }
+                         return nil
+                     }
+
+                 }
+
+                 return event
+             })
+         } else if let mouseDownMonitor = self.mouseDownMonitor {
+             NSEvent.removeMonitor(mouseDownMonitor)
+             self.mouseDownMonitor = nil
+         }
+          */
     }
 }

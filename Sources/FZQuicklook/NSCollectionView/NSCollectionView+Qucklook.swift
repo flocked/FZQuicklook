@@ -8,10 +8,10 @@
 import AppKit
 import FZSwiftUtils
 
-extension NSCollectionView {
+public extension NSCollectionView {
     /**
      A Boolean value that indicates whether the user can quicklook preview selected items by pressing space bar.
-     
+
      There are several ways to provide quicklook previews:
      - NSCollectionViewItems's ``AppKit/NSCollectionViewItem/quicklookPreview``
      ```swift
@@ -31,38 +31,38 @@ extension NSCollectionView {
      struct GalleryItem: Hashable, QuicklookPreviewable {
          let title: String
          let imageURL: URL
-         
+
          let previewItemURL: URL? {
          return imageURL
          }
-         
+
          let previewItemTitle: String? {
          return title
          }
      }
-          
+
      collectionView.dataSource = NSCollectionViewDiffableDataSource<Section, GalleryItem>(collectionView: collectionView) { collectionView, indexPath, galleryItem in
         // Configurate collection view item
      }
      ```
      */
-    public var isQuicklookPreviewable: Bool {
+    var isQuicklookPreviewable: Bool {
         get { getAssociatedValue(key: "isQuicklookPreviewable", object: self, initialValue: false) }
-        set {  set(associatedValue: newValue, key: "isQuicklookPreviewable", object: self)
-            self.setupKeyDownMonitor()
+        set { set(associatedValue: newValue, key: "isQuicklookPreviewable", object: self)
+            setupKeyDownMonitor()
         }
     }
-    
+
     /**
      Opens `QuicklookPanel` that presents quicklook previews for the items at the specified indexPaths.
      - Parameter indexPaths: The index paths the quicklook panel previews.
-     - Parameter current: 
+     - Parameter current:
      */
-    public func quicklookItems(at indexPaths: [IndexPath], current: IndexPath? = nil) {
+    func quicklookItems(at indexPaths: [IndexPath], current: IndexPath? = nil) {
         var previewables: [QuicklookPreviewable] = []
         var currentIndex = 0
         for indexPath in indexPaths {
-            if let previewable = self.quicklookPreviewable(for: indexPath) {
+            if let previewable = quicklookPreviewable(for: indexPath) {
                 previewables.append(previewable)
                 if indexPath == current {
                     currentIndex = previewables.count - 1
@@ -70,7 +70,7 @@ extension NSCollectionView {
             }
         }
         if QuicklookPanel.shared.isVisible == false {
-        //    QuicklookPanel.shared.keyDownResponder = self
+            //    QuicklookPanel.shared.keyDownResponder = self
             QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
             QuicklookPanel.shared.hidesOnAppDeactivate = true
         } else {
@@ -83,19 +83,19 @@ extension NSCollectionView {
             guard let self = self else { return }
             self.removeSelectionObserver()
         }
-        self.addSelectionObserver()
+        addSelectionObserver()
     }
-    
+
     /**
      Opens `QuicklookPanel` that presents quicklook previews of the selected items.
      */
-    public func quicklookSelectedItems() {
+    func quicklookSelectedItems() {
         guard selectionIndexPaths.isEmpty == false else { return }
         quicklookItems(at: Array(selectionIndexPaths).sorted())
     }
-    
-    func quicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
-     //   ((self.dataSource as? KeyValueCodable)?.call("quicklookPreviewForItemAt", values: [self, indexPath]) as? QuicklookPreviewable)
-        return (self.dataSource as? NSCollectionViewQuicklookProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
+
+    internal func quicklookPreviewable(for indexPath: IndexPath) -> QuicklookPreviewable? {
+        //   ((self.dataSource as? KeyValueCodable)?.call("quicklookPreviewForItemAt", values: [self, indexPath]) as? QuicklookPreviewable)
+        (dataSource as? NSCollectionViewQuicklookProvider)?.collectionView(self, quicklookPreviewForItemAt: indexPath)
     }
 }

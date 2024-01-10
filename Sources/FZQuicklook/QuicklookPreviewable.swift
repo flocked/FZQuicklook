@@ -5,149 +5,149 @@
 //  Created by Florian Zand on 06.03.23.
 //
 
-import Foundation
 import AppKit
-import Quartz
 import AVKit
+import Foundation
 import FZSwiftUtils
+import Quartz
 
 /**
  A type that can be previewed  by ``QuicklookPanel`` and ``QuicklookView``.
- 
+
  `URL`, `NSURL` and `AVURLAsset` conform to `QuicklookPreviewable`.
- 
+
  Example:
- 
+
  ```swift
  struct GalleryItem: Hashable, QuicklookPreviewable {
      let title: String
      let imageURL: URL
-     
+
      // The file url for quicklook preview.
      let previewItemURL: URL? {
         return imageURL
      }
-     
+
     // The title for quicklook preview.
      let previewItemTitle: String? {
         return title
      }
  }
- 
+
  QuicklookPanel.shared.preset(aGalleryItem)
  ```
  */
 public protocol QuicklookPreviewable {
     /**
      The URL of the item to preview.
-     
+
      ``QuicklookPanel`` and ``QuicklookView`` use this property to get an item’s URL. In typical use, you’d implement a getter method in your preview item class to provide this value.
-     
+
      The value of this property must be a file-type URL.
-     
+
      If the item isn’t available for preview, this property’s getter method should return nil. In this case, the ``QuicklookPanel`` and ``QuicklookView`` displays a “loading” view. Use refreshCurrentPreviewItem() to reload the item once the URL content is available.
      */
     var previewItemURL: URL? { get }
     /**
      The item frame on the screen.
-          
+
      The system invokes this optional property when the preview panel opens or closes to provide a zoom effect.
-     
+
      `NSView` and `NSCollectionViewItem` conforming to `QuicklookPreviewable` provide their frame as default value.
      */
     var previewItemFrame: CGRect? { get }
     /**
      The transition image for the item.
-          
+
      The system invokes this optional property when the preview panel opens or closes to provide a transition image.
-     
+
      `NSView` and `NSCollectionViewItem` conforming to `QuicklookPreviewable` provide default values.
      */
     var previewItemTransitionImage: NSImage? { get }
     /**
      The title to display for the preview item.
-     
+
      If you don’t implement this property, Quick Look examines the URL or content of the previewed item to determine an appropriate title. Return a non-nil value for this property to provide a custom title.
      */
     var previewItemTitle: String? { get }
 }
 
-extension QuicklookPreviewable {
-    public var previewItemFrame: CGRect? {
-        return nil
+public extension QuicklookPreviewable {
+    var previewItemFrame: CGRect? {
+        nil
     }
-    
-    public var previewItemTransitionImage: NSImage? {
-        return nil
+
+    var previewItemTransitionImage: NSImage? {
+        nil
     }
-    
-    public var previewItemTitle: String? {
-        return previewItemURL?.deletingPathExtension().lastPathComponent
+
+    var previewItemTitle: String? {
+        previewItemURL?.deletingPathExtension().lastPathComponent
     }
 }
 
 extension Optional: QuicklookPreviewable where Wrapped: QuicklookPreviewable {
     public var previewItemURL: URL? {
-        self.optional?.previewItemURL
+        optional?.previewItemURL
     }
-    
+
     public var previewItemFrame: CGRect? {
-        self.optional?.previewItemFrame
+        optional?.previewItemFrame
     }
-    
+
     public var previewItemTitle: String? {
-        self.optional?.previewItemTitle
+        optional?.previewItemTitle
     }
-    
+
     public var previewItemTransitionImage: NSImage? {
-        self.optional?.previewItemTransitionImage
+        optional?.previewItemTransitionImage
     }
 }
 
 extension URL: QuicklookPreviewable {
     public var previewItemURL: URL? {
-        return self
+        self
     }
 }
 
 extension NSURL: QuicklookPreviewable {
     public var previewItemURL: URL? {
-        return self as URL
+        self as URL
     }
 }
 
 extension AVURLAsset: QuicklookPreviewable {
     public var previewItemURL: URL? {
-        return url
+        url
     }
-    
+
     public var previewItemTitle: String? {
-        return url.deletingPathExtension().lastPathComponent
+        url.deletingPathExtension().lastPathComponent
     }
 }
 
-extension QuicklookPreviewable where Self: NSView {
-    public var previewItemFrame: CGRect? {
-        return self.frameOnScreen
+public extension QuicklookPreviewable where Self: NSView {
+    var previewItemFrame: CGRect? {
+        frameOnScreen
     }
-    
-    public var previewItemTransitionImage: NSImage? {
-        return self.renderedImage
+
+    var previewItemTransitionImage: NSImage? {
+        renderedImage
     }
 }
 
-extension QuicklookPreviewable where Self: NSImageView {
-    public var previewItemTransitionImage: NSImage? {
-        self.image
+public extension QuicklookPreviewable where Self: NSImageView {
+    var previewItemTransitionImage: NSImage? {
+        image
     }
 }
 
-extension QuicklookPreviewable where Self: NSCollectionViewItem {
-    public var previewItemFrame: CGRect? {
-        self.view.frameOnScreen
+public extension QuicklookPreviewable where Self: NSCollectionViewItem {
+    var previewItemFrame: CGRect? {
+        view.frameOnScreen
     }
-    
-    public var previewItemTransitionImage: NSImage? {
-        return self.view.renderedImage
+
+    var previewItemTransitionImage: NSImage? {
+        view.renderedImage
     }
 }

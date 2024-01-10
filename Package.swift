@@ -9,7 +9,8 @@ let package = Package(
     products: [
         .library(
             name: "FZQuicklook",
-            targets: ["FZQuicklook"]),
+            targets: ["FZQuicklook"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/flocked/FZSwiftUtils.git", branch: "main"),
@@ -17,6 +18,7 @@ let package = Package(
     targets: [
         .target(
             name: "FZQuicklook",
-            dependencies: ["FZSwiftUtils"]),
+            dependencies: ["FZSwiftUtils"]
+        ),
     ]
 )
