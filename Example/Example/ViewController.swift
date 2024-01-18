@@ -51,7 +51,6 @@ class ViewController: NSViewController {
                     QuicklookPanel.shared.present(self.quicklookViews, currentItemIndex: self.previewIndex)
                 }
             }
-            Swift.print(event.keyCode)
             return event
             
         }

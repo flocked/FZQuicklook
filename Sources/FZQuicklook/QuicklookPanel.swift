@@ -160,11 +160,8 @@ public class QuicklookPanel: NSResponder {
      After closing the panel, both ``keyDownResponder`` and ``panelDidCloseHandler`` will be reset to `nil`.
      */
     public func close() {
-        Swift.print("close")
         if previewPanel.isVisible == true {
-            Swift.print("close1")
             currentItemHandler = nil
-            Swift.print("close12")
             previewPanel.close()
             reset()
             //  previewPanel.orderOut(nil)
@@ -254,7 +251,6 @@ public class QuicklookPanel: NSResponder {
             if self.isVisible, let currentItem = self.currentItem {
                 self.currentItemHandler?(currentItem, self.currentItemIndex)
             }
-            Swift.print(new)
         }
     }
 
@@ -271,8 +267,6 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
                 self.currentItemHandler = nil
             }
         }
-        Swift.print("handle", event.keyCode, event.type == .keyDown, event.type == .keyUp)
-        Swift.print("handle2")
         if let keyDownResponder = keyDownResponder, event.type == .keyUp {
             keyDownResponder.keyDown(with: event)
         }
