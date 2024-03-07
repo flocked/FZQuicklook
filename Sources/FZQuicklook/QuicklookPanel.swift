@@ -247,7 +247,7 @@ public class QuicklookPanel: NSResponder {
     override init() {
         super.init()
         hidesOnAppDeactivate = true
-        currentItemIndexObserver = previewPanel.observeChanges(for: \.currentPreviewItemIndex) { old, new in
+        currentItemIndexObserver = previewPanel.observe(\.currentPreviewItemIndex) { old, new in
             if self.isVisible, let currentItem = self.currentItem {
                 self.currentItemHandler?(currentItem, self.currentItemIndex)
             }
