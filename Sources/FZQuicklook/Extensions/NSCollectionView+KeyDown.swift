@@ -59,7 +59,7 @@ extension NSCollectionView {
 
     func addSelectionObserver() {
         if selectionObserver == nil {
-            selectionObserver = observe(\.selectionIndexPaths, handler: { [weak self] old, new in
+            selectionObserver = observeChanges(for: \.selectionIndexPaths, handler: { [weak self] old, new in
                 guard let self = self else { return }
                 if QuicklookPanel.shared.isVisible {
                     if old != new, new.isEmpty == false {

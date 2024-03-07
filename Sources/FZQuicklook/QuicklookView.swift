@@ -103,7 +103,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
 
      func setupWindowObserver() {
          if shouldCloseWithWindow {
-             windowObserver = self.observe(\.window) { [weak self] old, new in
+             windowObserver = self.observeChanges(for: \.window) { [weak self] old, new in
                  guard let self = self, old != new else { return }
                  if let new = new {
                      self.windowCloseObserver =    NotificationCenter.default.observe(NSWindow.willCloseNotification, object: new) { _ in
