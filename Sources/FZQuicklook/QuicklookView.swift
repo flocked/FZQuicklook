@@ -93,7 +93,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     }
 
     var isClosed: Bool = false
-    var windowObserver: NSKeyValueObservation? = nil
+    var windowObserver: KeyValueObservation? = nil
     var windowCloseObserver: NotificationToken? = nil
 
     /*

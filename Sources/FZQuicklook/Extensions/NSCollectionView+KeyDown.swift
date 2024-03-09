@@ -20,7 +20,7 @@ extension NSCollectionView {
         set { set(associatedValue: newValue, key: "NSCollectionView_mouseDownMonitor", object: self) }
     }
 
-    var selectionObserver: NSKeyValueObservation? {
+    var selectionObserver: KeyValueObservation? {
         get { getAssociatedValue(key: "NSCollectionView_selectionObserver_", object: self, initialValue: nil) }
         set { set(associatedValue: newValue, key: "NSCollectionView_selectionObserver_", object: self) }
     }

@@ -243,7 +243,7 @@ public class QuicklookPanel: NSResponder {
         QLPreviewPanel.shared()
     }
 
-    var currentItemIndexObserver: NSKeyValueObservation? = nil
+    var currentItemIndexObserver: KeyValueObservation? = nil
     override init() {
         super.init()
         hidesOnAppDeactivate = true
