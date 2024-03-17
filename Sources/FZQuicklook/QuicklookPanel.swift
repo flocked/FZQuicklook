@@ -265,6 +265,7 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
             if event.keyCode == 49 || event.keyCode == 53 {
                 self.currentItemHandler = nil
             }
+            Swift.print("keyUp", event.keyCode, keyDownResponder != nil)
             if let keyDownResponder = keyDownResponder {
                 event.setType(.keyDown)
                 keyDownResponder.keyUp(with: event)
