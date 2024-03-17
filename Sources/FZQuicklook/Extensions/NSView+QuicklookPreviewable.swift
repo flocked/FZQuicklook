@@ -29,8 +29,8 @@ extension QuicklookPreviewable where Self: NSView {
     }
     
     var quicklookGestureRecognizer: QuicklookGestureRecognizer? {
-        get { getAssociatedValue(key: "quicklookGestureRecognizer", object: self, initialValue: nil) }
-        set { set(associatedValue: newValue, key: "quicklookGestureRecognizer", object: self) }
+        get { getAssociatedValue("quicklookGestureRecognizer", initialValue: nil) }
+        set { setAssociatedValue(newValue, key: "quicklookGestureRecognizer") }
     }
 }
 
@@ -132,13 +132,13 @@ extension NSImageView {
     }
     
     var quicklookGestureRecognizer: QuicklookGestureRecognizer? {
-        get { getAssociatedValue(key: "quicklookGestureRecognizer", object: self, initialValue: nil) }
-        set { set(associatedValue: newValue, key: "quicklookGestureRecognizer", object: self) }
+        get { getAssociatedValue("quicklookGestureRecognizer", initialValue: nil) }
+        set { setAssociatedValue(newValue, key: "quicklookGestureRecognizer") }
     }
         
     var imageObserver: KeyValueObservation? {
-        get { getAssociatedValue(key: "imageObserver", object: self, initialValue: nil) }
-        set { set(associatedValue: newValue, key: "imageObserver", object: self) }
+        get { getAssociatedValue("imageObserver", initialValue: nil) }
+        set { setAssociatedValue(newValue, key: "imageObserver") }
     }
     
     func setupImageObserver(isActive: Bool) {

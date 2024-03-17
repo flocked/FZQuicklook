@@ -17,8 +17,8 @@ public extension NSCollectionViewItem {
      Make sure to reset it's value inside `prepareForReuse()`.
      */
     var quicklookPreview: QuicklookPreviewable? {
-        get { getAssociatedValue(key: "quicklookPreview", object: self, initialValue: nil) }
-        set { set(associatedValue: newValue, key: "quicklookPreview", object: self)
+        get { getAssociatedValue("quicklookPreview", initialValue: nil) }
+        set { setAssociatedValue(newValue, key: "quicklookPreview")
             if newValue != nil {
                 collectionView?.isQuicklookPreviewable = true
             }
