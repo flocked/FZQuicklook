@@ -92,12 +92,11 @@ public extension NSTableView {
         }
 
         if QuicklookPanel.shared.isVisible == false {
-            /*
             QuicklookPanel.shared.keyDownHandler = { [weak self] event in
+                Swift.print("key", self != nil)
                 guard let self = self else { return }
-                self.keyDown(with: event)
+                self.keyUp(with: event)
             }
-             */
             QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
         } else {
             QuicklookPanel.shared.items = previewables
