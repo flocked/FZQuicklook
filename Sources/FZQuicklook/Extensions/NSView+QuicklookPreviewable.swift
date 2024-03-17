@@ -59,6 +59,10 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
         checkSelectedRows()
     }
     
+    override func keyUp(with event: NSEvent) {
+        super.keyUp(with: event)
+    }
+    
     override func magnify(with event: NSEvent) {
         super.magnify(with: event)
     }
@@ -69,6 +73,7 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     }
     
     func checkSelectedRows() {
+        Swift.print("checkSelectedRows")
         guard QuicklookPanel.shared.isVisible else { return }
         if let tableView = tableView,
             tableView.selectedRowIndexes.isEmpty == false,
