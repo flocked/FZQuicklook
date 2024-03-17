@@ -11,7 +11,8 @@ import QuickLookUI
 /// An item used internally to preset items conforming to `QuicklookPreviewable` inside `QuicklookPanel` and `QuicklookView`.
 class QuicklookPreviewItem: NSObject, QLPreviewItem, QuicklookPreviewable {
     let preview: QuicklookPreviewable
-    var view: NSView?
+    weak var view: NSView?
+    var id: String?
 
     var previewItemURL: URL? {
         preview.previewItemURL
@@ -29,8 +30,9 @@ class QuicklookPreviewItem: NSObject, QLPreviewItem, QuicklookPreviewable {
         view?.renderedImage ?? preview.previewItemTransitionImage
     }
 
-    init(_ preview: QuicklookPreviewable, view: NSView? = nil) {
+    init(_ preview: QuicklookPreviewable, view: NSView? = nil, identifier: String? = nil) {
         self.preview = preview
         self.view = view
+        self.id = identifier
     }
 }

@@ -14,7 +14,7 @@ extension NSTableView {
         get { getAssociatedValue(key: "NSTableView_keyDownMonitor", object: self, initialValue: nil) }
         set { set(associatedValue: newValue, key: "NSTableView_keyDownMonitor", object: self) }
     }
-
+    
     func setupKeyDownMonitor() {
         if isQuicklookPreviewable {
             guard keyDownMonitor == nil else { return }

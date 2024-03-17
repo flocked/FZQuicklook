@@ -7,7 +7,7 @@
 
 import AppKit
 
-extension NSView {
+extension NSView {    
     /**
      The frame rectangle, which describes the view’s location and size in its window’s coordinate system.
 

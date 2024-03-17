@@ -126,6 +126,16 @@ extension AVURLAsset: QuicklookPreviewable {
     }
 }
 
+public extension QuicklookPreviewable where Self: NSCollectionViewItem {
+    var previewItemFrame: CGRect? {
+        view.frameOnScreen
+    }
+
+    var previewItemTransitionImage: NSImage? {
+        view.renderedImage
+    }
+}
+
 public extension QuicklookPreviewable where Self: NSView {
     var previewItemFrame: CGRect? {
         frameOnScreen
@@ -136,18 +146,18 @@ public extension QuicklookPreviewable where Self: NSView {
     }
 }
 
+/*
 public extension QuicklookPreviewable where Self: NSImageView {
     var previewItemTransitionImage: NSImage? {
         image
     }
-}
-
-public extension QuicklookPreviewable where Self: NSCollectionViewItem {
+    
     var previewItemFrame: CGRect? {
-        view.frameOnScreen
-    }
-
-    var previewItemTransitionImage: NSImage? {
-        view.renderedImage
+        var previewFrame = frameOnScreen
+        if let imageBounds = value(forKey: "_drawingRectForImage") as? CGRect {
+            previewFrame = window?.convertToScreen(convert(imageBounds, to: nil))
+        }
+        return previewFrame
     }
 }
+ */

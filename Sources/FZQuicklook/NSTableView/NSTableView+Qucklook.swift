@@ -47,10 +47,22 @@ public extension NSTableView {
       ```
       */
     var isQuicklookPreviewable: Bool {
-        get { getAssociatedValue(key: "isQuicklookPreviewable", object: self, initialValue: false) }
-        set { set(associatedValue: newValue, key: "isQuicklookPreviewable", object: self)
-            setupKeyDownMonitor()
+        get { quicklookGestureRecognizer != nil }
+        set { 
+            guard newValue != isQuicklookPreviewable else { return }
+            if newValue {
+                quicklookGestureRecognizer = QuicklookGestureRecognizer()
+                addGestureRecognizer(quicklookGestureRecognizer!)
+            } else {
+                quicklookGestureRecognizer?.removeFromView()
+                quicklookGestureRecognizer = nil
+            }
         }
+    }
+    
+    internal var quicklookGestureRecognizer: QuicklookGestureRecognizer? {
+        get { getAssociatedValue(key: "quicklookGestureRecognizer", object: self, initialValue: nil) }
+        set { set(associatedValue: newValue, key: "quicklookGestureRecognizer", object: self) }
     }
 
     /**
