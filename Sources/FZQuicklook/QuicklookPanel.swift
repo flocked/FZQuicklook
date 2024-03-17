@@ -265,11 +265,11 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
             if event.keyCode == 49 || event.keyCode == 53 {
                 self.currentItemHandler = nil
             }
-            Swift.print("keyUp", event.keyCode, keyDownResponder != nil)
+           let keyDown = NSEvent.keyEvent(with: .keyDown, location: event.locationInWindow, modifierFlags: event.modifierFlags, timestamp: event.timestamp, windowNumber: event.windowNumber, context: nil, characters: event.characters ?? "", charactersIgnoringModifiers: event.charactersIgnoringModifiers ?? "", isARepeat: event.isARepeat, keyCode: event.keyCode)
             if let keyDownResponder = keyDownResponder {
-                event.setType(.keyDown)
-                keyDownResponder.keyUp(with: event)
-                event.setType(.keyUp)
+              //  event.setType(.keyDown)
+                keyDownResponder.keyUp(with: keyDown!)
+              //  event.setType(.keyUp)
             }
         }
 
