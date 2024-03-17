@@ -56,6 +56,7 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
             }
         }
         super.keyDown(with: event)
+        checkSelectedRows()
     }
     
     override func magnify(with event: NSEvent) {
@@ -64,6 +65,10 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
         
     override func mouseDown(with event: NSEvent) {
         super.mouseDown(with: event)
+        checkSelectedRows()
+    }
+    
+    func checkSelectedRows() {
         guard QuicklookPanel.shared.isVisible else { return }
         if let tableView = tableView,
             tableView.selectedRowIndexes.isEmpty == false,
