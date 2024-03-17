@@ -74,7 +74,6 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     }
     
     func checkSelectedRows() {
-        Swift.print("checkSelectedRows", QuicklookPanel.shared.isVisible)
         guard QuicklookPanel.shared.isVisible else { return }
         if let tableView = tableView,
             tableView.selectedRowIndexes.isEmpty == false,
