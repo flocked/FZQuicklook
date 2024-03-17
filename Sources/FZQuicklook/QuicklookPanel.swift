@@ -110,7 +110,7 @@ public class QuicklookPanel: NSResponder {
 
      The responder that handles events whenever the user presses a key when the panel is open.
      */
-    public weak var keyDownResponder: NSResponder? = nil
+    public var keyDownHandler: ((NSEvent)->())? = nil
 
     /// The handler gets called when the panel did close.
     public var panelDidCloseHandler: (() -> Void)? = nil
@@ -202,7 +202,7 @@ public class QuicklookPanel: NSResponder {
     func reset() {
         items.removeAll()
         itemsProviderWindow = nil
-        keyDownResponder = nil
+        keyDownHandler = nil
         needsReload = false
         panelDidCloseHandler = nil
     }
@@ -266,7 +266,7 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
                 self.currentItemHandler = nil
             }
         } else if event.type == .keyDown {
-            keyDownResponder?.keyDown(with: event)
+            keyDownHandler?(event)
         }
         return true
     }
