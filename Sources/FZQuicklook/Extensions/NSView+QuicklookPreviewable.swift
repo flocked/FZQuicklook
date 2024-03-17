@@ -43,6 +43,7 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     var selectedRows: IndexSet = IndexSet()
     
     override func keyDown(with event: NSEvent) {
+        Swift.print("gesture keyDown", event.keyCode)
         if event.keyCode == 49 {
             if let tableView = tableView {
                 if QuicklookPanel.shared.isVisible {
@@ -73,7 +74,7 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     }
     
     func checkSelectedRows() {
-        Swift.print("checkSelectedRows")
+        Swift.print("checkSelectedRows", QuicklookPanel.shared.isVisible)
         guard QuicklookPanel.shared.isVisible else { return }
         if let tableView = tableView,
             tableView.selectedRowIndexes.isEmpty == false,
