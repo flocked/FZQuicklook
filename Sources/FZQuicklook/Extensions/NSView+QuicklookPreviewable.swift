@@ -43,10 +43,8 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     var selectedRows: IndexSet = IndexSet()
     
     override func keyDown(with event: NSEvent) {
-        Swift.print("keyDown", event.keyCode)
-        if event.keyCode == 44, !QuicklookPanel.shared.isVisible {
+        if event.keyCode == 49, !QuicklookPanel.shared.isVisible {
             if let tableView = tableView {
-                Swift.print("gesture spacebar")
                 tableView.quicklookSelectedRows()
                 selectedRows = tableView.selectedRowIndexes
             } else if let item = view as? QuicklookPreviewable {
@@ -57,12 +55,10 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     }
     
     override func magnify(with event: NSEvent) {
-        Swift.print("magnify")
         super.magnify(with: event)
     }
         
     override func mouseDown(with event: NSEvent) {
-        Swift.print("mouseDown")
         super.mouseDown(with: event)
         guard QuicklookPanel.shared.isVisible else { return }
         if let tableView = tableView,
