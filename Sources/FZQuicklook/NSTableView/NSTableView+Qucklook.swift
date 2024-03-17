@@ -49,10 +49,12 @@ public extension NSTableView {
     var isQuicklookPreviewable: Bool {
         get { quicklookGestureRecognizer != nil }
         set { 
+            Swift.print("isQuicklookPreviewable set", newValue, isQuicklookPreviewable)
             guard newValue != isQuicklookPreviewable else { return }
             if newValue {
                 quicklookGestureRecognizer = QuicklookGestureRecognizer()
                 addGestureRecognizer(quicklookGestureRecognizer!)
+                Swift.print(gestureRecognizers.contains(quicklookGestureRecognizer!))
             } else {
                 quicklookGestureRecognizer?.removeFromView()
                 quicklookGestureRecognizer = nil

@@ -234,7 +234,6 @@ public class QuicklookPanel: NSResponder {
     override public func endPreviewPanelControl(_ panel: QLPreviewPanel!) {
         panel.dataSource = nil
         panel.delegate = nil
-        Swift.print("endPreviewPanelControl")
         panelDidCloseHandler?()
         reset()
     }
