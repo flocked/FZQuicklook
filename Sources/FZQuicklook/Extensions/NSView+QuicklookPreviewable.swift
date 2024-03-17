@@ -97,7 +97,6 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     
     override init(target: Any?, action: Selector?) {
         super.init(target: target, action: action)
-        Swift.print("gesture init")
         setupViewObservation()
     }
     

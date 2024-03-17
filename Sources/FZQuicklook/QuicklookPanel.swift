@@ -265,11 +265,11 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
             if event.keyCode == 49 || event.keyCode == 53 {
                 self.currentItemHandler = nil
             }
-           // let keyDown = NSEvent.keyEvent(with: .keyDown, location: event.locationInWindow, modifierFlags: event.modifierFlags, timestamp: event.timestamp, windowNumber: event.windowNumber, context: nil, characters: event.characters ?? "", charactersIgnoringModifiers: event.charactersIgnoringModifiers ?? "", isARepeat: event.isARepeat, keyCode: event.keyCode)
-            Swift.print("panel keyUp")
-            event.setValue(NSEvent.EventType.keyDown.rawValue, forKey: "type")
-            keyDownResponder?.keyUp(with: event)
-            event.setValue(NSEvent.EventType.keyUp.rawValue, forKey: "type")
+            if let keyDownResponder = keyDownResponder {
+                event.setType(.keyDown)
+                keyDownResponder.keyUp(with: event)
+                event.setType(.keyUp)
+            }
         }
 
         return true
@@ -304,5 +304,11 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
 
     public func previewPanel(_: QLPreviewPanel!, transitionImageFor item: QLPreviewItem!, contentRect _: UnsafeMutablePointer<NSRect>!) -> Any! {
         (item as? QuicklookPreviewable)?.previewItemTransitionImage
+    }
+}
+
+extension NSEvent {
+    func setType(_ type: EventType) {
+        setValue(type.rawValue, forKey: "type")
     }
 }
