@@ -268,7 +268,7 @@ extension QuicklookPanel: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
            let keyDown = NSEvent.keyEvent(with: .keyDown, location: event.locationInWindow, modifierFlags: event.modifierFlags, timestamp: event.timestamp, windowNumber: event.windowNumber, context: nil, characters: event.characters ?? "", charactersIgnoringModifiers: event.charactersIgnoringModifiers ?? "", isARepeat: event.isARepeat, keyCode: event.keyCode)
             if let keyDownResponder = keyDownResponder {
               //  event.setType(.keyDown)
-                keyDownResponder.keyUp(with: keyDown!)
+                keyDownResponder.keyDown(with: keyDown!)
               //  event.setType(.keyUp)
             }
         }
