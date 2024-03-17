@@ -43,10 +43,14 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     var selectedRows: IndexSet = IndexSet()
     
     override func keyDown(with event: NSEvent) {
-        if event.keyCode == 49, !QuicklookPanel.shared.isVisible {
+        if event.keyCode == 49 {
             if let tableView = tableView {
-                tableView.quicklookSelectedRows()
-                selectedRows = tableView.selectedRowIndexes
+                if QuicklookPanel.shared.isVisible {
+                    QuicklookPanel.shared.close()
+                } else {
+                    tableView.quicklookSelectedRows()
+                    selectedRows = tableView.selectedRowIndexes
+                }
             } else if let item = view as? QuicklookPreviewable {
                 QuicklookPanel.shared.present([item])
             }
