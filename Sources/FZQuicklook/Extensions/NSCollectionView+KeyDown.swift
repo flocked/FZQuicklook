@@ -38,8 +38,8 @@ extension NSCollectionView {
                     }
                     return nil
                 } else {
-                    Swift.print("gere")
-                    self.keyDown(with: event)
+                 //   Swift.print("gere")
+                  //  self.keyDown(with: event)
                     /*
                     if QuicklookPanel.shared.isVisible {
                         let currentSelection = self.selectionIndexPaths
