@@ -70,7 +70,10 @@ public extension NSCollectionView {
             }
         }
         if QuicklookPanel.shared.isVisible == false {
-            //    QuicklookPanel.shared.keyDownResponder = self
+            QuicklookPanel.shared.keyDownHandler = { [weak self] event in
+                guard let self = self else { return }
+                self.keyDown(with: event)
+            }            
             QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
             QuicklookPanel.shared.hidesOnAppDeactivate = true
         } else {
