@@ -41,7 +41,7 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     var tableView: NSTableView? { view as? NSTableView }
     var collectionView: NSCollectionView? { view as? NSCollectionView }
     var selectedRows: IndexSet = IndexSet()
-    var selectionObserver: Any?
+    var selectionObserver: NotificationToken?
     
     override func keyDown(with event: NSEvent) {
         if event.keyCode == 49 {
@@ -60,21 +60,6 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
                         }
                         tableView.quicklookSelectedRows()
                     }
-                }
-            } else if let collectionView = collectionView {
-                if QuicklookPanel.shared.isVisible {
-                    QuicklookPanel.shared.close()
-                    selectionObserver = nil
-                } else {
-                    collectionView.quicklookSelectedItems()
-                    selectionObserver = collectionView.observeChanges(for: \.selectionIndexPaths, handler: { [weak self] old, new in
-                        guard let self = self else { return }
-                        guard QuicklookPanel.shared.isVisible else {
-                            self.selectionObserver = nil
-                            return
-                        }
-                        collectionView.quicklookSelectedItems()
-                    })
                 }
             } else if let item = view as? QuicklookPreviewable {
                 QuicklookPanel.shared.present([item])

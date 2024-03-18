@@ -47,22 +47,10 @@ public extension NSCollectionView {
      ```
      */
     var isQuicklookPreviewable: Bool {
-        get { quicklookGestureRecognizer != nil }
-        set {
-            guard newValue != isQuicklookPreviewable else { return }
-            if newValue {
-                quicklookGestureRecognizer = QuicklookGestureRecognizer()
-                addGestureRecognizer(quicklookGestureRecognizer!)
-            } else {
-                quicklookGestureRecognizer?.removeFromView()
-                quicklookGestureRecognizer = nil
-            }
+        get { getAssociatedValue("isQuicklookPreviewable", initialValue: false) }
+        set { setAssociatedValue(newValue, key: "isQuicklookPreviewable")
+            setupKeyDownMonitor()
         }
-    }
-    
-    internal var quicklookGestureRecognizer: QuicklookGestureRecognizer? {
-        get { getAssociatedValue("quicklookGestureRecognizer", initialValue: nil) }
-        set { setAssociatedValue(newValue, key: "quicklookGestureRecognizer") }
     }
 
     /**
@@ -82,10 +70,7 @@ public extension NSCollectionView {
             }
         }
         if QuicklookPanel.shared.isVisible == false {
-            QuicklookPanel.shared.keyDownHandler = { [weak self] event in
-                guard let self = self else { return }
-                self.keyDown(with: event)
-            }
+            //    QuicklookPanel.shared.keyDownResponder = self
             QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
             QuicklookPanel.shared.hidesOnAppDeactivate = true
         } else {
@@ -94,6 +79,11 @@ public extension NSCollectionView {
                 QuicklookPanel.shared.currentItemIndex = currentIndex
             }
         }
+        QuicklookPanel.shared.panelDidCloseHandler = { [weak self] in
+            guard let self = self else { return }
+            self.removeSelectionObserver()
+        }
+        addSelectionObserver()
     }
 
     /**
