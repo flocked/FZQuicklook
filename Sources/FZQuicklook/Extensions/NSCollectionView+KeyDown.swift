@@ -33,6 +33,10 @@ extension NSCollectionView {
                 if self.isQuicklookPreviewable, event.keyCode == 49 {
                     if QuicklookPanel.shared.isVisible == false {
                         self.quicklookSelectedItems()
+                        QuicklookPanel.shared.keyDownHandler = { [weak self] event in
+                            guard let self = self else { return }
+                            self.keyDown(with: event)
+                        }
                     } else {
                         QuicklookPanel.shared.close()
                     }
