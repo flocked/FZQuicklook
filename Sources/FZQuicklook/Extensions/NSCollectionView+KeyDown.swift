@@ -38,6 +38,7 @@ extension NSCollectionView {
                     }
                     return nil
                 } else {
+                    /*
                     if QuicklookPanel.shared.isVisible {
                         let currentSelection = self.selectionIndexPaths
                         if currentSelection.count <= 1 {
@@ -48,6 +49,7 @@ extension NSCollectionView {
                             return nil
                         }
                     }
+                    */
                 }
                 return event
             })
@@ -62,9 +64,8 @@ extension NSCollectionView {
             selectionObserver = observeChanges(for: \.selectionIndexPaths, handler: { [weak self] old, new in
                 guard let self = self else { return }
                 if QuicklookPanel.shared.isVisible {
-                    if old != new, new.isEmpty == false {
-                        self.quicklookSelectedItems()
-                    }
+                    guard old != new else { return }
+                    self.quicklookSelectedItems()
                 } else {
                     removeSelectionObserver()
                 }

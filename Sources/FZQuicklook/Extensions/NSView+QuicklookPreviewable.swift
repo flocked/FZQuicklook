@@ -41,46 +41,31 @@ class QuicklookGestureRecognizer: NSGestureRecognizer {
     var tableView: NSTableView? { view as? NSTableView }
     var collectionView: NSCollectionView? { view as? NSCollectionView }
     var selectedRows: IndexSet = IndexSet()
+    var selectionObserver: NotificationToken?
     
     override func keyDown(with event: NSEvent) {
-        Swift.print("gesture keyDown", event.keyCode)
         if event.keyCode == 49 {
             if let tableView = tableView {
                 if QuicklookPanel.shared.isVisible {
                     QuicklookPanel.shared.close()
+                    selectionObserver = nil
                 } else {
                     tableView.quicklookSelectedRows()
                     selectedRows = tableView.selectedRowIndexes
+                    selectionObserver = NotificationCenter.default.observe(NSTableView.selectionDidChangeNotification, object: tableView) { [weak self] _ in
+                        guard let self = self else { return }
+                        guard QuicklookPanel.shared.isVisible else {
+                            self.selectionObserver = nil
+                            return
+                        }
+                        tableView.quicklookSelectedRows()
+                    }
                 }
             } else if let item = view as? QuicklookPreviewable {
                 QuicklookPanel.shared.present([item])
             }
         }
         super.keyDown(with: event)
-        checkSelectedRows()
-    }
-    
-    override func keyUp(with event: NSEvent) {
-        super.keyUp(with: event)
-    }
-    
-    override func magnify(with event: NSEvent) {
-        super.magnify(with: event)
-    }
-        
-    override func mouseDown(with event: NSEvent) {
-        super.mouseDown(with: event)
-        checkSelectedRows()
-    }
-    
-    func checkSelectedRows() {
-        guard QuicklookPanel.shared.isVisible else { return }
-        if let tableView = tableView,
-            tableView.selectedRowIndexes.isEmpty == false,
-            tableView.selectedRowIndexes != selectedRows {
-            selectedRows = tableView.selectedRowIndexes
-            tableView.quicklookSelectedRows()
-        }
     }
     
     func setupViewObservation() {
