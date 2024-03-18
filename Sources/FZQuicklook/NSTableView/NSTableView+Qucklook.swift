@@ -93,7 +93,6 @@ public extension NSTableView {
             QuicklookPanel.shared.keyDownHandler = { [weak self] event in
                 guard let self = self else { return }
                 self.keyDown(with: event)
-                self.quicklookGestureRecognizer?.checkSelectedRows()
             }
             QuicklookPanel.shared.present(previewables, currentItemIndex: currentIndex)
         } else {
