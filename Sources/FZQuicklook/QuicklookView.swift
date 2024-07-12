@@ -31,7 +31,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
             return previousItem
         }
         set {
-            if let newValue = newValue, window != nil {
+            if let newValue = newValue {
                 qlPreviewView.previewItem = QuicklookPreviewItem(newValue)
             } else {
                 qlPreviewView.previewItem = nil
