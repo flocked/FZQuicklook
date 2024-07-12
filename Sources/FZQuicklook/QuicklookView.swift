@@ -83,6 +83,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
         if shouldCloseWithWindow, newWindow == nil, let item = item {
             previousItem = item
             isClosed = true
+            close()
         } else if newWindow != nil, let previousItem = previousItem {
             replaceQLPreviewView(includingItem: false)
             item = previousItem
@@ -97,6 +98,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
      You only need to call this method if ``shouldCloseWithWindow`` is set to `false`. If you don’t close a `QuicklookView` when you are done using it, your app will leak memory.
      */
     open func close() {
+        guard !shouldCloseWithWindow else { return }
         qlPreviewView.close()
         isClosed = true
     }
