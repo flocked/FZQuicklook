@@ -130,6 +130,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     }
     
     deinit {
+        Swift.print("deinit")
         qlPreviewView.removeFromSuperview()
     }
     
