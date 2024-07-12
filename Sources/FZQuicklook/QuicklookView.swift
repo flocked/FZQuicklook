@@ -16,6 +16,9 @@ import Quartz
  */
 open class QuicklookView: NSView, QuicklookPreviewable {
     var qlPreviewView: QLPreviewView!
+    var previousItem: QuicklookPreviewable?
+    var isClosed: Bool = false
+    
     /**
      The item to preview.
 
@@ -75,6 +78,18 @@ open class QuicklookView: NSView, QuicklookPreviewable {
         }
     }
 
+    open override func viewWillMove(toWindow newWindow: NSWindow?) {
+        if shouldCloseWithWindow, let item = item {
+            previousItem = item
+            isClosed = true
+        } else if newWindow != nil, let previousItem = previousItem {
+            replaceQLPreviewView(includingItem: false)
+            item = previousItem
+            self.previousItem = nil
+        }
+        super.viewWillMove(toWindow: newWindow)
+    }
+
     /**
      Closes the view, releasing the current item.
 
@@ -97,9 +112,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
         self.item = includingItem ? item : nil
         addSubview(withConstraint: qlPreviewView)
     }
-
-    var isClosed: Bool = false
-
+    
     /**
      Creates a preview view with the provided item and style.
 
