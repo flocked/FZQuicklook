@@ -17,7 +17,6 @@ import Quartz
 open class QuicklookView: NSView, QuicklookPreviewable {
     var qlPreviewView: QLPreviewView!
     var previousItem: QuicklookPreviewable?
-    var isClosed: Bool = false
     
     /**
      The item to preview.
@@ -25,12 +24,14 @@ open class QuicklookView: NSView, QuicklookPreviewable {
      You can preview any item conforming to ``QuicklookPreviewable``. When you set this property, the `QuicklookView` loads the preview asynchronously. Due to this asynchronous behavior, don’t assume that the preview is ready immediately after assigning it to this property.
      */
     open var item: QuicklookPreviewable? {
-        get { (qlPreviewView.previewItem as? QuicklookPreviewItem)?.preview }
+        get {
+            if let item = (qlPreviewView.previewItem as? QuicklookPreviewItem)?.preview {
+                return item
+            }
+            return previousItem
+        }
         set {
-            if let newValue = newValue {
-                if isClosed {
-                    replaceQLPreviewView(includingItem: false)
-                }
+            if let newValue = newValue, window != nil {
                 qlPreviewView.previewItem = QuicklookPreviewItem(newValue)
             } else {
                 qlPreviewView.previewItem = nil
@@ -73,19 +74,9 @@ open class QuicklookView: NSView, QuicklookPreviewable {
             qlPreviewView.shouldCloseWithWindow = newValue
         }
     }
-
-    func close() {
-        guard !shouldCloseWithWindow else { return }
-        qlPreviewView.close()
-        isClosed = true
-    }
     
     open override func viewWillMove(toWindow newWindow: NSWindow?) {
-        if shouldCloseWithWindow, newWindow == nil, let item = item {
-            previousItem = item
-            isClosed = true
-            close()
-        } else if newWindow != nil, let previousItem = previousItem {
+        if newWindow != nil, let previousItem = previousItem {
             replaceQLPreviewView(includingItem: false)
             item = previousItem
             self.previousItem = nil
@@ -94,7 +85,6 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     }
     
     func replaceQLPreviewView(includingItem: Bool) {
-        isClosed = false
         let item = includingItem ? item : nil
         let starts = autostarts
         let shouldClose = shouldCloseWithWindow
@@ -140,8 +130,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     }
     
     deinit {
-        guard !isClosed else { return }
-        close()
+        qlPreviewView.close()
     }
     
     public var previewItemURL: URL? {
