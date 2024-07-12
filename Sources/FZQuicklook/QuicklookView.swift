@@ -77,7 +77,6 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     
     open override func viewWillMove(toWindow newWindow: NSWindow?) {
         if newWindow == nil {
-            Swift.print("WILL REMOVE")
             qlPreviewView.removeFromSuperview()
         } else if let previousItem = previousItem {
             replaceQLPreviewView(includingItem: false)
@@ -133,7 +132,6 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     }
     
     deinit {
-        Swift.print("deinit")
         qlPreviewView.removeFromSuperview()
     }
     
