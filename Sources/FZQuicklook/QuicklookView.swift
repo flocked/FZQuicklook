@@ -68,7 +68,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     /**
      A Boolean value that determines whether the preview should close when its window closes.
 
-     The default value of this property is `true`, which means that the preview automatically closes when its window closes. If you set this property to `false`, close the preview by calling the ``close()`` method when finished with it. Once you close a `QuicklookView`, it won’t accept any more preview items.
+     The default value of this property is `true`, which means that the preview automatically closes when its window closes. If you set this property to `false`, close the preview by calling the ``close()`` method when finished with it.
      */
     open var shouldCloseWithWindow: Bool {
         get { qlPreviewView.shouldCloseWithWindow }
