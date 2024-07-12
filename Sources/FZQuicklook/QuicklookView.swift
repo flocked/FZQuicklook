@@ -66,12 +66,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
         set { qlPreviewView.autostarts = newValue }
     }
 
-    /**
-     A Boolean value that determines whether the preview should close when its window closes.
-
-     The default value of this property is `true`, which means that the preview automatically closes when its window closes. If you set this property to `false`, close the preview by calling the ``close()`` method when finished with it.
-     */
-    open var shouldCloseWithWindow: Bool {
+    var shouldCloseWithWindow: Bool {
         get { qlPreviewView.shouldCloseWithWindow }
         set {
             guard newValue != shouldCloseWithWindow else { return }
@@ -79,6 +74,12 @@ open class QuicklookView: NSView, QuicklookPreviewable {
         }
     }
 
+    func close() {
+        guard !shouldCloseWithWindow else { return }
+        qlPreviewView.close()
+        isClosed = true
+    }
+    
     open override func viewWillMove(toWindow newWindow: NSWindow?) {
         if shouldCloseWithWindow, newWindow == nil, let item = item {
             previousItem = item
@@ -90,17 +91,6 @@ open class QuicklookView: NSView, QuicklookPreviewable {
             self.previousItem = nil
         }
         super.viewWillMove(toWindow: newWindow)
-    }
-
-    /**
-     Closes the view, releasing the current item.
-
-     You only need to call this method if ``shouldCloseWithWindow`` is set to `false`. If you don’t close a `QuicklookView` when you are done using it, your app will leak memory.
-     */
-    open func close() {
-        guard !shouldCloseWithWindow else { return }
-        qlPreviewView.close()
-        isClosed = true
     }
     
     func replaceQLPreviewView(includingItem: Bool) {
