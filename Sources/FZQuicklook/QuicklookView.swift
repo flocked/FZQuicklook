@@ -72,14 +72,13 @@ open class QuicklookView: NSView, QuicklookPreviewable {
         set {
             guard newValue != shouldCloseWithWindow else { return }
             qlPreviewView.shouldCloseWithWindow = newValue
-            // setupWindowObserver()
         }
     }
 
     /**
      Closes the view, releasing the current item.
 
-     Once a QuicklookView is closed, it won’t accept any more preview items. You only need to call this method if ``shouldCloseWithWindow`` is set to `false`. If you don’t close a `QuicklookView` when you are done using it, your app will leak memory.
+     You only need to call this method if ``shouldCloseWithWindow`` is set to `false`. If you don’t close a `QuicklookView` when you are done using it, your app will leak memory.
      */
     open func close() {
         qlPreviewView.close()
