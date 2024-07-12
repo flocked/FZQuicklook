@@ -130,7 +130,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     }
     
     deinit {
-        qlPreviewView.close()
+        qlPreviewView.removeFromSuperview()
     }
     
     public var previewItemURL: URL? {
