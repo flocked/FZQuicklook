@@ -82,11 +82,13 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     
     open override func viewWillMove(toWindow newWindow: NSWindow?) {
         if shouldCloseWithWindow, newWindow == nil, let item = item {
+            Swift.print("WILL Close")
             previousItem = item
             isClosed = true
             close()
         } else if newWindow != nil, let previousItem = previousItem {
             replaceQLPreviewView(includingItem: false)
+            Swift.print("WILL add")
             item = previousItem
             self.previousItem = nil
         }
