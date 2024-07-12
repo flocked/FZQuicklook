@@ -79,7 +79,7 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     }
 
     open override func viewWillMove(toWindow newWindow: NSWindow?) {
-        if shouldCloseWithWindow, let item = item {
+        if shouldCloseWithWindow, newWindow == nil, let item = item {
             previousItem = item
             isClosed = true
         } else if newWindow != nil, let previousItem = previousItem {
