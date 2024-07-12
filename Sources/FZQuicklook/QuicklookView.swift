@@ -9,7 +9,11 @@ import AppKit
 import FZSwiftUtils
 import Quartz
 
-/// A Quick Look preview of an item that you can embed into your view hierarchy.
+/**
+ A Quick Look preview of an item that you can embed into your view hierarchy.
+ 
+ To enable quicklock of the preview item by spacebar, use ``QuicklookPreviewable/isPreviewableBySpacebar``
+ */
 open class QuicklookView: NSView, QuicklookPreviewable {
     var qlPreviewView: QLPreviewView!
     /**
@@ -21,23 +25,14 @@ open class QuicklookView: NSView, QuicklookPreviewable {
         get { (qlPreviewView.previewItem as? QuicklookPreviewItem)?.preview }
         set {
             if let newValue = newValue {
+                if isClosed {
+                    replaceQLPreviewView(includingItem: false)
+                }
                 qlPreviewView.previewItem = QuicklookPreviewItem(newValue)
             } else {
                 qlPreviewView.previewItem = nil
             }
         }
-    }
-
-    func replaceQLPreviewView(includingItem: Bool) {
-        qlPreviewView.removeFromSuperview()
-        let autostarts = autostarts
-        let shouldClose = shouldCloseWithWindow
-        let item = includingItem ? item : nil
-        qlPreviewView = QLPreviewView(frame: .zero, style: style)
-        self.autostarts = autostarts
-        shouldCloseWithWindow = shouldClose
-        self.item = item
-        addSubview(withConstraint: qlPreviewView)
     }
 
     /**
@@ -52,9 +47,8 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     /// The style of the preview.
     open var style: QLPreviewViewStyle = .normal {
         didSet {
-            if style != oldValue {
-                replaceQLPreviewView(includingItem: true)
-            }
+            guard style != oldValue else { return }
+            replaceQLPreviewView(includingItem: true)
         }
     }
 
@@ -85,42 +79,27 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     /**
      Closes the view, releasing the current item.
 
-     Once a QuicklookView is closed, it won’t accept any more preview items. You only need to call this method if ``shouldCloseWithWindow`` is set to false. If you don’t close a `QuicklookView when you are done using it, your app will leak memory.
+     Once a QuicklookView is closed, it won’t accept any more preview items. You only need to call this method if ``shouldCloseWithWindow`` is set to `false`. If you don’t close a `QuicklookView` when you are done using it, your app will leak memory.
      */
     open func close() {
         qlPreviewView.close()
         isClosed = true
     }
+    
+    func replaceQLPreviewView(includingItem: Bool) {
+        isClosed = false
+        let item = includingItem ? item : nil
+        let starts = autostarts
+        let shouldClose = shouldCloseWithWindow
+        qlPreviewView.removeFromSuperview()
+        qlPreviewView = QLPreviewView(frame: .zero, style: style)
+        autostarts = starts
+        shouldCloseWithWindow = shouldClose
+        self.item = includingItem ? item : nil
+        addSubview(withConstraint: qlPreviewView)
+    }
 
     var isClosed: Bool = false
-    var windowObserver: KeyValueObservation? = nil
-    var windowCloseObserver: NotificationToken? = nil
-
-    /*
-     func setupWindowCloseObserver() {
-
-     }
-
-     func setupWindowObserver() {
-         if shouldCloseWithWindow {
-             windowObserver = self.observeChanges(for: \.window) { [weak self] old, new in
-                 guard let self = self, old != new else { return }
-                 if let new = new {
-                     self.windowCloseObserver =    NotificationCenter.default.observe(NSWindow.willCloseNotification, object: new) { _ in
-                         self.isClosed = true
-                         self.windowCloseObserver = nil
-                         self.windowObserver = nil
-                     }
-                 } else {
-                     self.isClosed = true
-                 }
-             }
-         } else {
-             windowObserver = nil
-             windowCloseObserver = nil
-         }
-     }
-      */
 
     /**
      Creates a preview view with the provided item and style.
@@ -133,8 +112,10 @@ open class QuicklookView: NSView, QuicklookPreviewable {
      - Returns: Returns a `QuicklookView` object with the designated item, style and frame.
 
      */
-    public init(item: QuicklookPreviewable, style _: QLPreviewViewStyle = .normal, frame: NSRect) {
+    public init(item: QuicklookPreviewable, style: QLPreviewViewStyle = .normal, frame: NSRect) {
         super.init(frame: frame)
+        sharedInit()
+        self.style = style
         self.item = item
     }
 
@@ -151,6 +132,11 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     func sharedInit() {
         qlPreviewView = QLPreviewView(frame: .zero, style: style)
         addSubview(withConstraint: qlPreviewView)
+    }
+    
+    deinit {
+        guard !isClosed else { return }
+        close()
     }
     
     public var previewItemURL: URL? {
