@@ -76,7 +76,9 @@ open class QuicklookView: NSView, QuicklookPreviewable {
     }
     
     open override func viewWillMove(toWindow newWindow: NSWindow?) {
-        if newWindow != nil, let previousItem = previousItem {
+        if newWindow == nil {
+            qlPreviewView.removeFromSuperview()
+        } else if let previousItem = previousItem {
             replaceQLPreviewView(includingItem: false)
             qlPreviewView.previewItem = QuicklookPreviewItem(previousItem)
             self.previousItem = nil
