@@ -55,8 +55,9 @@ public extension NSCollectionView {
 
     /**
      Opens `QuicklookPanel` that presents quicklook previews for the items at the specified indexPaths.
-     - Parameter indexPaths: The index paths the quicklook panel previews.
-     - Parameter current:
+     
+     - Parameter indexPaths: The index paths of the items to the quicklook panel previews.
+     - Parameter current: The index path of the current item.
      */
     func quicklookItems(at indexPaths: [IndexPath], current: IndexPath? = nil) {
         var previewables: [QuicklookPreviewable] = []
@@ -86,9 +87,7 @@ public extension NSCollectionView {
         addSelectionObserver()
     }
 
-    /**
-     Opens `QuicklookPanel` that presents quicklook previews of the selected items.
-     */
+    /// Opens `QuicklookPanel` that presents quicklook previews of the selected items.
     func quicklookSelectedItems() {
         guard selectionIndexPaths.isEmpty == false else { return }
         quicklookItems(at: Array(selectionIndexPaths).sorted())

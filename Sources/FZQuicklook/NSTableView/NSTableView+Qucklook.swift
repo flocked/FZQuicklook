@@ -65,9 +65,7 @@ public extension NSTableView {
         set { setAssociatedValue(newValue, key: "quicklookGestureRecognizer") }
     }
 
-    /**
-     Opens `QuicklookPanel` that presents quicklook previews of the selected rows.
-     */
+    ///Opens `QuicklookPanel` that presents quicklook previews of the selected rows.
     func quicklookSelectedRows() {
         quicklookRows(at: selectedRowIndexes.sorted())
     }
@@ -75,7 +73,7 @@ public extension NSTableView {
     /**
      Opens `QuicklookPanel` that presents quicklook previews for the rows at the specified indexes.
      - Parameter rowIndexes: The indexes of the rows.
-     - Parameter current:
+     - Parameter current: The index of the current row.
      */
     func quicklookRows(at rowIndexes: [Int], current: Int? = nil) {
         var previewables: [QuicklookPreviewable] = []
@@ -89,7 +87,7 @@ public extension NSTableView {
             }
         }
 
-        if QuicklookPanel.shared.isVisible == false {
+        if !QuicklookPanel.shared.isVisible {
             QuicklookPanel.shared.keyDownHandler = { [weak self] event in
                 guard let self = self else { return }
                 self.keyDown(with: event)
