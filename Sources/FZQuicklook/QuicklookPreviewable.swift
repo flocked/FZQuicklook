@@ -45,7 +45,7 @@ public protocol QuicklookPreviewable {
 
      The value of this property must be a file-type URL.
 
-     If the item isn’t available for preview, this property’s getter method should return nil. In this case, the ``QuicklookPanel`` and ``QuicklookView`` displays a “loading” view. Use refreshCurrentPreviewItem() to reload the item once the URL content is available.
+     If the item isn’t available for preview eturn `nil`. In this case, the ``QuicklookPanel`` and ``QuicklookView`` displays a “loading” view. Use ``QuicklookPanel/refreshCurrentItem()`` to reload the item once the URL content is available.
      */
     var previewItemURL: URL? { get }
     /**
@@ -146,18 +146,12 @@ public extension QuicklookPreviewable where Self: NSView {
     }
 }
 
-/*
 public extension QuicklookPreviewable where Self: NSImageView {
+    var previewItemFrame: CGRect? {
+        return image != nil ? window?.convertToScreen(convert(imageBounds, to: nil)) : frameOnScreen
+    }
+    
     var previewItemTransitionImage: NSImage? {
         image
     }
-    
-    var previewItemFrame: CGRect? {
-        var previewFrame = frameOnScreen
-        if let imageBounds = value(forKey: "_drawingRectForImage") as? CGRect {
-            previewFrame = window?.convertToScreen(convert(imageBounds, to: nil))
-        }
-        return previewFrame
-    }
 }
- */
