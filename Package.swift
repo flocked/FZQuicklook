@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "FZQuicklook",
-    platforms: [.macOS("10.15.1")],
+    platforms: [.macOS(.v10_15)],
     products: [
         .library(
             name: "FZQuicklook",
