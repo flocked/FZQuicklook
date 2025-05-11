@@ -28,6 +28,7 @@ public extension NSCollectionViewQuicklookProvider {
     }
 }
 
+@available(macOS 10.15.1, *)
 extension NSCollectionViewDiffableDataSource: NSCollectionViewQuicklookProvider {
     public func collectionView(_ collectionView: NSCollectionView, quicklookPreviewForItemAt indexPath: IndexPath) -> QuicklookPreviewable? {
         if let item = collectionView.item(at: indexPath), let previewable = itemIdentifier(for: indexPath) as? QuicklookPreviewable {
