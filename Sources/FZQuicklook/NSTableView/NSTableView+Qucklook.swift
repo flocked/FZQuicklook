@@ -61,7 +61,7 @@ public extension NSTableView {
     }
     
     internal var quicklookGestureRecognizer: QuicklookGestureRecognizer? {
-        get { getAssociatedValue("quicklookGestureRecognizer", initial: nil) }
+        get { associatedValue(for: "quicklookGestureRecognizer", initial: nil) }
         set { setAssociatedValue(newValue, for: "quicklookGestureRecognizer") }
     }
 

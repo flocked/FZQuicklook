@@ -17,7 +17,7 @@ public extension NSCollectionViewItem {
      Make sure to reset it's value inside `prepareForReuse()`.
      */
     var quicklookPreview: QuicklookPreviewable? {
-        get { getAssociatedValue("quicklookPreview", initial: nil) }
+        get { associatedValue(for: "quicklookPreview", initial: nil) }
         set { setAssociatedValue(newValue, for: "quicklookPreview")
             guard newValue != nil else { return }
             collectionView?.isQuicklookPreviewable = true
@@ -79,7 +79,7 @@ extension NSCollectionView {
     }
     
     internal var quicklookGestureRecognizer: QuicklookGestureRecognizer? {
-        get { getAssociatedValue("quicklookGestureRecognizer", initial: nil) }
+        get { associatedValue(for: "quicklookGestureRecognizer", initial: nil) }
         set { setAssociatedValue(newValue, key: "quicklookGestureRecognizer") }
     }
 }

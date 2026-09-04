@@ -47,7 +47,7 @@ public extension NSCollectionView {
      ```
      */
     var isQuicklookPreviewable: Bool {
-        get { getAssociatedValue("isQuicklookPreviewable", initial: false) }
+        get { associatedValue(for: "isQuicklookPreviewable", initial: false) }
         set { setAssociatedValue(newValue, for: "isQuicklookPreviewable")
             setupKeyDownMonitor()
         }
