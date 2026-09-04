@@ -61,8 +61,8 @@ public extension NSTableView {
     }
     
     internal var quicklookGestureRecognizer: QuicklookGestureRecognizer? {
-        get { getAssociatedValue("quicklookGestureRecognizer", initialValue: nil) }
-        set { setAssociatedValue(newValue, key: "quicklookGestureRecognizer") }
+        get { getAssociatedValue("quicklookGestureRecognizer", initial: nil) }
+        set { setAssociatedValue(newValue, for: "quicklookGestureRecognizer") }
     }
 
     ///Opens `QuicklookPanel` that presents quicklook previews of the selected rows.

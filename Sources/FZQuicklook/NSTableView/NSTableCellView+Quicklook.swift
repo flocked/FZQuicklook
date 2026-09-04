@@ -17,11 +17,10 @@ public extension NSTableCellView {
      Make sure to reset it's value inside `prepareForReuse()`.
      */
     var quicklookPreview: QuicklookPreviewable? {
-        get { getAssociatedValue("quicklookPreview", initialValue: nil) }
-        set { setAssociatedValue(newValue, key: "quicklookPreview")
-            if newValue != nil {
-                tableView?.isQuicklookPreviewable = true
-            }
+        get { getAssociatedValue("quicklookPreview", initial: nil) }
+        set { setAssociatedValue(newValue, for: "quicklookPreview")
+            guard newValue != nil else { return }
+            tableView?.isQuicklookPreviewable = true
         }
     }
 }

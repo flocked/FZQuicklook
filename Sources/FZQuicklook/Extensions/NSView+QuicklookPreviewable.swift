@@ -29,8 +29,8 @@ extension QuicklookPreviewable where Self: NSView {
     }
     
     var quicklookGestureRecognizer: QuicklookGestureRecognizer? {
-        get { getAssociatedValue("quicklookGestureRecognizer", initialValue: nil) }
-        set { setAssociatedValue(newValue, key: "quicklookGestureRecognizer") }
+        get { getAssociatedValue("quicklookGestureRecognizer", initial: nil) }
+        set { setAssociatedValue(newValue, for: "quicklookGestureRecognizer") }
     }
 }
 
